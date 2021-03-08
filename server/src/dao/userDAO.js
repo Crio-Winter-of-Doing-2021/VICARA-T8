@@ -1,8 +1,6 @@
-import User from "../models/User.js";
+import User from '../models/User.js';
 class userDAO {
-  constructor() {
-    console.log("yolo");
-  }
+  constructor() {}
 
   async create(entity) {
     return await User.create(entity);

@@ -1,10 +1,10 @@
-import logger from "../utils/logger.js";
-import { authSchema } from "../utils/validator.js";
-import userDAO from "../dao/userDAO";
+import logger from '../utils/logger.js';
+import { authSchema } from '../utils/validator.js';
+import userDAO from '../dao/userDAO';
+import ErrorResponse from '../utils/ErrorResponse';
 class UserService extends Error {
   constructor() {
     super();
-    console.log("yolo2");
   }
 
   async create(userData) {
@@ -16,7 +16,7 @@ class UserService extends Error {
 
     if (doesExist) {
       //TODO: Error Handler
-      throw new Error("NOT FOUND");
+      throw new ErrorResponse('Email Already exist', 403);
     }
 
     return await userDAO.create(entity);

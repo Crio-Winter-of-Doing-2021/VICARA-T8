@@ -5,6 +5,7 @@ import logger from "./utils/logger.js";
 import morgan from "morgan";
 import user from "./routes/user.js";
 import mongoose from "mongoose";
+import errorHandler from "./middleware/errorHandler";
 
 dotenv.config();
 
@@ -39,6 +40,7 @@ if (process.env.NODE_ENV === "development") {
 
 //Routes
 app.use("/api", user);
+app.use(errorHandler);
 
 // TODO: Seprate the Server Connection
 // Setup Connection on and off

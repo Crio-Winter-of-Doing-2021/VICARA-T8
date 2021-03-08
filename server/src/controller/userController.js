@@ -1,5 +1,5 @@
-import userService from "../services/userService.js";
-import logger from "../utils/logger.js";
+import userService from '../services/userService.js';
+import logger from '../utils/logger.js';
 class UserController {
   constructor() {}
 
@@ -9,15 +9,14 @@ class UserController {
       const createdUser = await userService.create(userData);
       res.status(201).json(createdUser);
     } catch (err) {
-      console.log(err);
-      next();
+      next(err);
     }
   }
 
   async signIn(req, res, next) {
     try {
       const { body } = req;
-      res.send("SignIn");
+      res.send('SignIn');
     } catch (err) {
       res.send(err);
     }
