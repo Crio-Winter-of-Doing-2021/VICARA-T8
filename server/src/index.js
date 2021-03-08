@@ -3,7 +3,7 @@ import http from "http";
 import dotenv from "dotenv";
 import logger from "./utils/logger.js";
 import morgan from "morgan";
-import users from "./routes/users.js";
+import user from "./routes/user.js";
 import mongoose from "mongoose";
 
 dotenv.config();
@@ -20,6 +20,7 @@ mongoose
     useNewUrlParser: true,
     userFindAndModify: false,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   })
   .then((conn) => {
     logger.info(`Mongoose Connected: ${conn.connection.host}`);
@@ -31,14 +32,16 @@ mongoose
 //Middlewares
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
 //Routes
-app.use("/api", users);
+app.use("/api", user);
 
 // TODO: Seprate the Server Connection
+// Setup Connection on and off
 //Start Server
 
 var server = http.createServer(app);
