@@ -1,26 +1,27 @@
 import userService from '../services/userService.js';
 import logger from '../utils/logger.js';
+
+//Convert Classes to UperCase
 class UserController {
   constructor() {}
 
-  async signUp(req, res, next) {
+  async register(req, res, next) {
     try {
       const userData = req.body;
-      const createdUser = await userService.create(userData);
-      console.log(createdUser);
-      const token = await userService.generateToken(createdUser.id);
-      res.status(201).json({ data: createdUser, token: token });
+      const accessToken = await userService.create(userData);
+      res.status(201).json({ accessToken });
     } catch (err) {
       next(err);
     }
   }
 
-  async signIn(req, res, next) {
+  async login(req, res, next) {
     try {
-      const { body } = req;
-      res.send('SignIn');
+      const userData = req.body;
+      const accessToken = await userService.login(userData);
+      res.status(200).json(accessToken);
     } catch (err) {
-      res.send(err);
+      next(err);
     }
   }
 }
