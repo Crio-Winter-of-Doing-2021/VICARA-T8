@@ -2,8 +2,13 @@ import logger from '../utils/logger.js';
 import { authSchema } from '../utils/validator.js';
 import userDAO from '../dao/userDAO';
 import createError from 'http-errors';
-import { signAccessToken } from '../utils/jwtHelper';
+import {
+  signAccessToken,
+  signRefreshToken,
+  verifyRefreshToken,
+} from '../utils/jwtHelper';
 import bcrypt from 'bcrypt';
+import { verify } from 'jsonwebtoken';
 
 //TODO: Can be broken in methods like checking a user
 //TODO: Add token generation here
@@ -24,8 +29,9 @@ class UserService {
     }
 
     const creadtedUser = await userDAO.create(entity);
-    const accessToken = await this._generateToken(creadtedUser.id);
-    return accessToken;
+    const accessToken = await this._generateAccessToken(creadtedUser.id);
+    const refreshToken = await this._generateRefreshToken(creadtedUser.id);
+    return { accessToken, refreshToken };
   }
 
   async login(userData) {
@@ -45,11 +51,28 @@ class UserService {
       throw createError.Unauthorized('Email/Password not valid');
     }
     const accessToken = await this._generateAccessToken(user.id);
-    return accessToken;
+    const refreshToken = await this._generateRefreshToken(user.id);
+    return { accessToken, refreshToken };
+  }
+
+  async refershToken(token) {
+    if (!token) throw createError.BadRequest();
+    const userId = await this._verifyRefreshToken(token);
+    const accessToken = await this._generateAccessToken(userId);
+    const refreshToken = await this._generateRefreshToken(userId);
+    return { accessToken, refreshToken };
+  }
+
+  async _verifyRefreshToken(token) {
+    return await verifyRefreshToken(token);
   }
 
   async _generateAccessToken(userId) {
     return await signAccessToken(userId);
+  }
+
+  async _generateRefreshToken(userId) {
+    return await signRefreshToken(userId);
   }
 }
 

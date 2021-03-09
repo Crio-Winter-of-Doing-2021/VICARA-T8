@@ -1,11 +1,12 @@
-import express from "express";
-import http from "http";
-import dotenv from "dotenv";
-import logger from "./utils/logger.js";
-import morgan from "morgan";
-import user from "./routes/user.js";
-import mongoose from "mongoose";
-import errorHandler from "./middleware/errorHandler";
+import express from 'express';
+import http from 'http';
+import dotenv from 'dotenv';
+import logger from './utils/logger.js';
+import morgan from 'morgan';
+import user from './routes/user.js';
+import { verifyAccessToken } from './utils/jwtHelper';
+import mongoose from 'mongoose';
+import errorHandler from './middleware/errorHandler';
 
 dotenv.config();
 
@@ -34,12 +35,15 @@ mongoose
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-if (process.env.NODE_ENV === "development") {
-  app.use(morgan("dev"));
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
 }
 
 //Routes
-app.use("/api", user);
+app.get('/api', verifyAccessToken, async (req, res, next) => {
+  res.send('Protected Routes');
+});
+app.use('/api/auth', user);
 app.use(errorHandler);
 
 // TODO: Seprate the Server Connection
