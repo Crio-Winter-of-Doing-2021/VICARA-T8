@@ -1,5 +1,5 @@
-import User from '../models/User.js';
-class userDAO {
+const User = require('../models/User.js');
+class UserDAO {
   constructor() {}
 
   async create(entity) {
@@ -11,4 +11,4 @@ class userDAO {
   }
 }
 
-module.exports = new userDAO();
+module.exports = UserDAO;

@@ -1,7 +1,7 @@
-import JWT from 'jsonwebtoken';
-import createError from 'http-errors';
+const JWT = require('jsonwebtoken');
+const createError = require('http-errors');
 
-//Check Refresh token Validity in DB
+//Check Refresh token Validity in --> REDIS
 //Expires and issue values must be constant from
 module.exports = {
   signAccessToken: (userId) => {
@@ -49,6 +49,8 @@ module.exports = {
       };
       JWT.sign(payload, secret, options, (err, token) => {
         if (err) reject(createError.InternalServerError());
+        //Added Locally
+
         resolve(token);
       });
     });
@@ -59,7 +61,7 @@ module.exports = {
       JWT.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, payload) => {
         if (err) return reject(createError.Unauthorized());
         const userId = payload.aud;
-        console.log(payload);
+        //console.log(payload);
         resolve(userId);
       });
     });

@@ -1,4 +1,4 @@
-import logger from '../utils/logger';
+const logger = require('../utils/logger');
 const errorHandler = (error, req, res, next) => {
   logger.error(`${error.name}`, error);
   let statusCode = error.statusCode;

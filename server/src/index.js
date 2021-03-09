@@ -1,12 +1,12 @@
-import express from 'express';
-import http from 'http';
-import dotenv from 'dotenv';
-import logger from './utils/logger.js';
-import morgan from 'morgan';
-import user from './routes/user.js';
-import { verifyAccessToken } from './utils/jwtHelper';
-import mongoose from 'mongoose';
-import errorHandler from './middleware/errorHandler';
+const express = require('express');
+const http = require('http');
+const dotenv = require('dotenv');
+const logger = require('./utils/logger');
+const morgan = require('morgan');
+const auth = require('./routes/auth');
+const { verifyAccessToken } = require('./utils/jwtHelper');
+const mongoose = require('mongoose');
+const errorHandler = require('./middleware/errorHandler');
 
 dotenv.config();
 
@@ -14,7 +14,7 @@ const app = express();
 
 //DB Connection
 // TODO: Seprate the DB Connection
-// db Connection
+// db Connection Disconnection
 const CONNECTION_URL = process.env.MONGO_URL;
 mongoose
   .connect(CONNECTION_URL, {
@@ -43,7 +43,7 @@ if (process.env.NODE_ENV === 'development') {
 app.get('/api', verifyAccessToken, async (req, res, next) => {
   res.send('Protected Routes');
 });
-app.use('/api/auth', user);
+app.use('/api/auth', auth);
 app.use(errorHandler);
 
 // TODO: Seprate the Server Connection

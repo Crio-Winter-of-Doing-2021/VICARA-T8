@@ -1,4 +1,4 @@
-import Joi from '@hapi/joi';
+const Joi = require('@hapi/joi');
 
 //TODO: Add Name field and Regex for password, Custom Error Messages
 const authSchema = Joi.object({

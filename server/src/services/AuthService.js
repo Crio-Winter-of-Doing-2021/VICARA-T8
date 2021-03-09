@@ -1,34 +1,37 @@
-import logger from '../utils/logger.js';
-import { authSchema } from '../utils/validator.js';
-import userDAO from '../dao/userDAO';
-import createError from 'http-errors';
-import {
+const { authSchema } = require('../utils/validator.js');
+const UserDAO = require('../dao/UserDAO');
+const createError = require('http-errors');
+const {
   signAccessToken,
   signRefreshToken,
   verifyRefreshToken,
-} from '../utils/jwtHelper';
-import bcrypt from 'bcrypt';
-import { verify } from 'jsonwebtoken';
+} = require('../utils/jwtHelper');
+const bcrypt = require('bcrypt');
 
 //TODO: Can be broken in methods like checking a user
 //TODO: Add token generation here
 //TODO Private Protected Type Kuch
-class UserService {
-  constructor() {}
+class AuthService {
+  constructor() {
+    this.userDAO = new UserDAO();
+    this.create = this.create.bind(this);
+    this.login = this.login.bind(this);
+    this.refreshToken = this.refreshToken.bind(this);
+  }
 
   async create(userData) {
     const entity = await authSchema.validateAsync(userData, {
       abortEarly: false,
     });
 
-    const doesExist = await userDAO.exists(entity.email);
+    const doesExist = await this.userDAO.exists(entity.email);
 
     if (doesExist) {
       //TODO: Error Handler
       throw createError.Forbidden('Email Already exist');
     }
 
-    const creadtedUser = await userDAO.create(entity);
+    const creadtedUser = await this.userDAO.create(entity);
     const accessToken = await this._generateAccessToken(creadtedUser.id);
     const refreshToken = await this._generateRefreshToken(creadtedUser.id);
     return { accessToken, refreshToken };
@@ -39,7 +42,7 @@ class UserService {
       abortEarly: false,
     });
 
-    const user = await userDAO.exists(entity.email);
+    const user = await this.userDAO.exists(entity.email);
     console.log(user);
     if (!user) {
       //TODO: Error Handler
@@ -55,12 +58,12 @@ class UserService {
     return { accessToken, refreshToken };
   }
 
-  async refershToken(token) {
+  async refreshToken(token) {
     if (!token) throw createError.BadRequest();
     const userId = await this._verifyRefreshToken(token);
     const accessToken = await this._generateAccessToken(userId);
-    const refreshToken = await this._generateRefreshToken(userId);
-    return { accessToken, refreshToken };
+    //const refreshToken = await this._generateRefreshToken(userId);
+    return { accessToken };
   }
 
   async _verifyRefreshToken(token) {
@@ -76,4 +79,4 @@ class UserService {
   }
 }
 
-module.exports = new UserService();
+module.exports = AuthService;
