@@ -7,7 +7,9 @@ class UserController {
     try {
       const userData = req.body;
       const createdUser = await userService.create(userData);
-      res.status(201).json(createdUser);
+      console.log(createdUser);
+      const token = await userService.generateToken(createdUser.id);
+      res.status(201).json({ data: createdUser, token: token });
     } catch (err) {
       next(err);
     }

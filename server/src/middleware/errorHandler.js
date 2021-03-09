@@ -1,19 +1,18 @@
 import logger from '../utils/logger';
-import ErrorResponse from '../utils/ErrorResponse';
-const errorHandler = (err, req, res, next) => {
-  let error = { ...err };
-  error.message = err.message;
+const errorHandler = (error, req, res, next) => {
   logger.error(`${error.name}`, error);
-
+  let statusCode = error.statusCode;
+  let message = error.message;
   //Joi validation error
-  if (err.name === 'ValidationError') {
-    const message = Object.values(err.details).map((val) => val.message);
-    error = new ErrorResponse(message, 400);
+  if (error.name === 'ValidationError') {
+    message = Object.values(error.details).map((val) => val.message);
+    statusCode = 400;
+    //error = new ErrorResponse(message, 400);
   }
 
-  res.status(error.statusCode || 500).json({
-    message: error.message || 'Server Error',
-    statusCode: error.statusCode,
+  res.status(statusCode || 500).json({
+    message: message || 'Server Error',
+    statusCode: statusCode,
   });
 };
 

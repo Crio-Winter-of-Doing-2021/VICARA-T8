@@ -1,7 +1,8 @@
 import logger from '../utils/logger.js';
 import { authSchema } from '../utils/validator.js';
 import userDAO from '../dao/userDAO';
-import ErrorResponse from '../utils/ErrorResponse';
+import createError from 'http-errors';
+import { signAccessToken } from '../utils/jwtHelper';
 class UserService extends Error {
   constructor() {
     super();
@@ -16,10 +17,15 @@ class UserService extends Error {
 
     if (doesExist) {
       //TODO: Error Handler
-      throw new ErrorResponse('Email Already exist', 403);
+      throw new createError(403, 'Email Already exist');
     }
 
     return await userDAO.create(entity);
+  }
+
+  async generateToken(userId) {
+    console.log(userId);
+    return await signAccessToken(userId);
   }
 }
 
