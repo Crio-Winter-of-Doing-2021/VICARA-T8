@@ -7,9 +7,11 @@ const registerSchema = Joi.object({
   }),
   email: Joi.string().email().lowercase().required().messages({
     'string.empty': `Email is a required field.`,
+    'string.email': 'Email is not valid.',
   }),
-  password: Joi.string().min(2).required().messages({
+  password: Joi.string().min(6).required().messages({
     'string.empty': 'Password is a required field.',
+    'string.min': 'Password must be atleast 6 characters.',
   }),
 });
 
@@ -17,7 +19,7 @@ const loginSchema = Joi.object({
   email: Joi.string().email().lowercase().required().messages({
     'string.empty': `Email is a required field.`,
   }),
-  password: Joi.string().min(2).required().messages({
+  password: Joi.string().required().messages({
     'string.empty': 'Password is a required field.',
   }),
 });
