@@ -6,6 +6,7 @@ class AuthController {
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
     this.refresh = this.refresh.bind(this);
+    this.googleOAuth = this.googleOAuth.bind(this);
   }
 
   async register(req, res, next) {
@@ -33,6 +34,16 @@ class AuthController {
       console.log('1');
       const { refreshToken } = req.body;
       const tokens = await this.authService.refreshToken(refreshToken);
+      res.status(200).json(tokens);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async googleOAuth(req, res, next) {
+    try {
+      const userData = req.user._json;
+      const tokens = await this.authService.googleOAuth(userData);
       res.status(200).json(tokens);
     } catch (err) {
       next(err);

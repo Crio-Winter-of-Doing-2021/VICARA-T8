@@ -7,6 +7,7 @@ const auth = require('./routes/auth');
 const { verifyAccessToken } = require('./utils/jwtHelper');
 const mongoose = require('mongoose');
 const errorHandler = require('./middleware/errorHandler');
+const passport = require('passport');
 
 dotenv.config();
 
@@ -38,6 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+app.use(passport.initialize());
 
 //Routes
 app.get('/api', verifyAccessToken, async (req, res, next) => {

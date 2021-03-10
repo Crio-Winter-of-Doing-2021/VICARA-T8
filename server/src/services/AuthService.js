@@ -1,4 +1,4 @@
-const { authSchema } = require('../utils/validator.js');
+const { registerSchema, loginSchema } = require('../utils/validator.js');
 const UserDAO = require('../dao/UserDAO');
 const createError = require('http-errors');
 const {
@@ -17,17 +17,26 @@ class AuthService {
     this.create = this.create.bind(this);
     this.login = this.login.bind(this);
     this.refreshToken = this.refreshToken.bind(this);
+    this.googleOAuth = this.googleOAuth.bind(this);
   }
 
   async create(userData) {
-    const entity = await authSchema.validateAsync(userData, {
+    const entity = await registerSchema.validateAsync(userData, {
       abortEarly: false,
     });
 
     const doesExist = await this.userDAO.exists(entity.email);
 
+    const salt = await bcrypt.genSalt(10);
+    entity.password = await bcrypt.hash(entity.password, salt);
+
     if (doesExist) {
-      //TODO: Error Handler
+      if (doesExist.password == null) {
+        let updatedUser = await this.userDAO.update(doesExist.id, entity);
+        let accToken = await this._generateAccessToken(updatedUser.id);
+        let refToken = await this._generateRefreshToken(updatedUser.id);
+        return { accessToken: accToken, refreshToken: refToken };
+      }
       throw createError.Forbidden('Email Already exist');
     }
 
@@ -38,7 +47,7 @@ class AuthService {
   }
 
   async login(userData) {
-    const entity = await authSchema.validateAsync(userData, {
+    const entity = await loginSchema.validateAsync(userData, {
       abortEarly: false,
     });
 
@@ -55,6 +64,21 @@ class AuthService {
     }
     const accessToken = await this._generateAccessToken(user.id);
     const refreshToken = await this._generateRefreshToken(user.id);
+    return { accessToken, refreshToken };
+  }
+
+  async googleOAuth(user) {
+    let result = await this.userDAO.exists(user.email);
+    console.log('yello');
+    console.log(user.email);
+    if (!result) {
+      result = await this.userDAO.create({
+        name: user.name,
+        email: user.email,
+      });
+    }
+    const accessToken = await this._generateAccessToken(result.id);
+    const refreshToken = await this._generateRefreshToken(result.id);
     return { accessToken, refreshToken };
   }
 
