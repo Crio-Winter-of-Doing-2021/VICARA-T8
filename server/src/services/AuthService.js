@@ -11,6 +11,8 @@ const bcrypt = require('bcrypt');
 //TODO: Can be broken in methods like checking a user
 //TODO: Add token generation here
 //TODO Private Protected Type Kuch
+
+// @desc Authorization Service Class
 class AuthService {
   constructor() {
     this.userDAO = new UserDAO();
@@ -20,6 +22,7 @@ class AuthService {
     this.googleOAuth = this.googleOAuth.bind(this);
   }
 
+  // @desc Create a new User
   async create(userData) {
     const entity = await registerSchema.validateAsync(userData, {
       abortEarly: false,
@@ -46,6 +49,7 @@ class AuthService {
     return { accessToken, refreshToken };
   }
 
+  // @desc Login a User
   async login(userData) {
     const entity = await loginSchema.validateAsync(userData, {
       abortEarly: false,
@@ -67,6 +71,7 @@ class AuthService {
     return { accessToken, refreshToken };
   }
 
+  // @desc Google OAuth
   async googleOAuth(user) {
     let result = await this.userDAO.exists(user.email);
     console.log('yello');
@@ -82,6 +87,7 @@ class AuthService {
     return { accessToken, refreshToken };
   }
 
+  // @desc Refresh Token
   async refreshToken(token) {
     if (!token) throw createError.BadRequest();
     const userId = await this._verifyRefreshToken(token);

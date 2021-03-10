@@ -1,5 +1,6 @@
 const AuthService = require('../services/AuthService');
 
+// @desc AuthController Class
 class AuthController {
   constructor() {
     this.authService = new AuthService();
@@ -9,6 +10,7 @@ class AuthController {
     this.googleOAuth = this.googleOAuth.bind(this);
   }
 
+  // @desc Register
   async register(req, res, next) {
     try {
       const userData = req.body;
@@ -19,6 +21,7 @@ class AuthController {
     }
   }
 
+  // @desc Login
   async login(req, res, next) {
     try {
       const userData = req.body;
@@ -29,6 +32,7 @@ class AuthController {
     }
   }
 
+  // @desc Refresh Token
   async refresh(req, res, next) {
     try {
       console.log('1');
@@ -40,6 +44,7 @@ class AuthController {
     }
   }
 
+  // @method Google OAuth
   async googleOAuth(req, res, next) {
     try {
       const userData = req.user._json;
