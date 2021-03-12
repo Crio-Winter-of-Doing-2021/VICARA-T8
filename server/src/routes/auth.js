@@ -4,6 +4,7 @@ const router = Router();
 const passport = require('passport');
 const conf = require('../utils/passport');
 
+// Add DI
 const authController = new AuthController();
 
 //  @desc Login

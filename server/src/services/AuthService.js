@@ -56,7 +56,6 @@ class AuthService {
     });
 
     const user = await this.userDAO.exists(entity.email);
-    console.log(user);
     if (!user) {
       //TODO: Error Handler
       throw createError.NotFound('User Not Found');
@@ -74,8 +73,7 @@ class AuthService {
   // @desc Google OAuth
   async googleOAuth(user) {
     let result = await this.userDAO.exists(user.email);
-    console.log('yello');
-    console.log(user.email);
+
     if (!result) {
       result = await this.userDAO.create({
         name: user.name,
