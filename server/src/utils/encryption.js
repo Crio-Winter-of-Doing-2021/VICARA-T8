@@ -3,6 +3,8 @@ require('dotenv').config();
 
 const IV_LENGTH = 16; // For AES, this is always 16
 
+//TODO Add a random Intilization Vector
+
 function encryptStream(key) {
   let iv = Buffer.from(process.env.IV, 'hex');
   let ENCRYPTION_KEY = crypto.createHash('sha256').update(key).digest();

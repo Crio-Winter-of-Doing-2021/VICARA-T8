@@ -1,30 +1,63 @@
 const S3DAO = require('../dao/S3DAO');
 const parseStreamData = require('../utils/parseStreamData');
 const { encryptStream } = require('../utils/encryption');
+const uuid = require('uuid');
+const createError = require('http-errors');
 
 //TODO Encryption and Zipping
 class FileService {
   constructor() {
     this.s3DAO = new S3DAO();
     this.upload = this.upload.bind(this);
+    this.getPublicLink = this.getPublicLink.bind(this);
   }
 
-  async upload(busboy) {
-    const { file, filename, formData, mimetype } = await parseStreamData(
-      busboy
-    );
-    const cipherStream = encryptStream('123');
-    const params = {
-      Key: 'ola',
-      Body: file.pipe(cipherStream),
-      Bucket: process.env.BUCKET_NAME,
-    };
+  async upload(userId, busboy) {
+    try {
+      const { file, filename, formData, mimetype } = await parseStreamData(
+        busboy
+      );
+      const size = 11;
+      const S3ID = uuid.v4();
+      const params = {
+        Key: S3ID,
+        Body: file,
+        Bucket: process.env.BUCKET_NAME,
+      };
+      // Add parent list
+      let metadata = {
+        owner: userId,
+        size,
+        mimetype,
+        s3ID: S3ID,
+      };
+      console.log(S3ID);
+      const success = await this.s3DAO.upload(params);
+      if (!success) throw createError.InternalServerError();
 
-    // Create a cipher service
+      // const file = await this.fileStructDAO.upload(metadata);
+      // TODO Update Size of File
+      return { success: 'true' };
+    } catch (err) {
+      throw err;
+    }
+  }
 
-    const data = this.s3DAO.upload(params);
-    if (data instanceof Error) throw data;
-    return data;
+  async download() {}
+
+  async getPublicLink(Id) {
+    try {
+      //Check Owner
+      const param = {
+        Key: Id,
+        Bucket: process.env.BUCKET_NAME,
+      };
+      const url = await this.s3DAO.getPublicLink(param);
+      if (!url) throw createError.Forbidden();
+      return { success: 'true', url: url };
+    } catch (err) {
+      throw err;
+    }
   }
 }
 

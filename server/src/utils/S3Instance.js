@@ -8,6 +8,7 @@ const S3 = new AWS.S3({
   secretAccessKey: process.env.aws_secret_access_key,
   sessionToken: process.env.aws_session_token,
   apiVersion: '2006-03-01',
+  signatureVersion: 'v4',
 });
 
 module.exports = S3;

@@ -4,7 +4,6 @@ class UserDAO {
 
   //@desc Create a new User
   async create(entity) {
-    console.log(entity);
     return await User.create(entity);
   }
 

@@ -25,4 +25,8 @@ router.get('/files', fileController.getList);
 //  @route delete /files/:id
 router.delete('/files/:id', fileController.delete);
 
+//  @desc Public URL
+//  @route get /files/:id/public
+router.get('/files/:id/public', fileController.getPublicLink);
+
 module.exports = router;
