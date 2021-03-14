@@ -1,5 +1,6 @@
 const S3 = require('../utils/S3Instance');
 const http = require('http-errors');
+const { ConfigService } = require('aws-sdk');
 
 //PART Storage
 // Increase conccurent request and partfilesize in params
@@ -27,8 +28,21 @@ class S3DAO {
     });
   }
 
+  async download(params) {
+    return new Promise((resolve, reject) => {
+      const stream = S3.getObject(params)
+        .createReadStream()
+        .on('error', () => {
+          reject('Cannot Read');
+        });
+
+      resolve(stream);
+    });
+  }
+
   async deleteObject(params) {
     //can add here bucket
+    console.log(err);
     return newPromise((resolve, reject) => {
       S3.deleteObject(params, (err, data) => {
         if (err) reject(err);

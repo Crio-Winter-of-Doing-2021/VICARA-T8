@@ -31,8 +31,15 @@ class FileController {
 
   async download(req, res, next) {
     try {
+      //const Id = req.params.id;
       const data = await this.fileService.download();
-      res.status(200).json(data);
+      res.set('Content-Type', 'binary/octet-stream');
+      res.set(
+        'Content-Disposition',
+        'attachment; filename="' + 'currentFile.filename' + '"'
+      );
+      //res.set('Content-Length', currentFile.metadata.size.toString());
+      data.pipe(res);
     } catch (err) {}
   }
 
@@ -43,8 +50,8 @@ class FileController {
 
   async delete(req, res, next) {
     try {
-      //const data = await this.fileService.delete();
-      res.status(200).json('data');
+      const data = await this.fileService.delete();
+      res.status(200).json(data);
     } catch (err) {}
   }
 

@@ -19,23 +19,26 @@ class FileService {
       const { file, filename, formData, mimetype } = await parseStreamData(
         busboy
       );
-      const size = 11;
+      const size = '11';
       const S3ID = uuid.v4();
-      const params = {
-        Key: S3ID,
-        Body: file,
-        Bucket: process.env.BUCKET_NAME,
-      };
+
       // Add parent list
       let metadata = {
-        owner: userId,
+        owner: 'userId',
         size,
         mimetype,
         s3ID: S3ID,
       };
+
+      const params = {
+        Key: S3ID,
+        Body: file,
+        Bucket: process.env.BUCKET_NAME,
+        Metadata: metadata,
+      };
       console.log(S3ID);
-      const success = await this.s3DAO.upload(params);
-      if (!success) throw createError.InternalServerError();
+      const status = await this.s3DAO.upload(params);
+      if (!status) throw createError.InternalServerError();
 
       // const file = await this.fileStructDAO.upload(metadata);
       // TODO Update Size of File
@@ -47,7 +50,16 @@ class FileService {
 
   async download() {
     try {
-    } catch (err) {}
+      const params = {
+        Key: '48ad84d7-40a4-422a-ae33-1a9c3496a215',
+        Bucket: process.env.BUCKET_NAME,
+      };
+      const stream = await this.s3DAO.download(params);
+
+      return stream;
+    } catch (err) {
+      throw err;
+    }
   }
 
   async delete() {
@@ -56,7 +68,9 @@ class FileService {
         Key: olaas,
         Bucket: process.env.BUCKET_NAME,
       };
-      const download = await this.S3DAO.delete(params);
+      const status = await this.s3DAO.delete(params);
+      if (!status) throw createError.InternalServerError();
+      return { success: 'true' };
     } catch (err) {
       throw err;
     }
