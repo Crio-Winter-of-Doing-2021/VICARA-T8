@@ -26,6 +26,17 @@ class S3DAO {
       });
     });
   }
+
+  async deleteObject(params) {
+    //can add here bucket
+    return newPromise((resolve, reject) => {
+      S3.deleteObject(params, (err, data) => {
+        if (err) reject(err);
+        console.log(err);
+        resolve(true);
+      });
+    });
+  }
 }
 
 module.exports = S3DAO;

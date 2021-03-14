@@ -10,6 +10,8 @@ class FileService {
     this.s3DAO = new S3DAO();
     this.upload = this.upload.bind(this);
     this.getPublicLink = this.getPublicLink.bind(this);
+    this.download = this.download.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   async upload(userId, busboy) {
@@ -43,7 +45,22 @@ class FileService {
     }
   }
 
-  async download() {}
+  async download() {
+    try {
+    } catch (err) {}
+  }
+
+  async delete() {
+    try {
+      const params = {
+        Key: olaas,
+        Bucket: process.env.BUCKET_NAME,
+      };
+      const download = await this.S3DAO.delete(params);
+    } catch (err) {
+      throw err;
+    }
+  }
 
   async getPublicLink(Id) {
     try {
