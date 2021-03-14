@@ -20,7 +20,7 @@ class FileController {
       const busboy = req.busboy;
       req.pipe(busboy);
       const data = await this.fileService.upload(busboy);
-      res.status(200).json({ data });
+      res.status(200).json({ success: data });
     } catch (err) {
       next(err);
     }

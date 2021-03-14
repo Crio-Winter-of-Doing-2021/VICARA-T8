@@ -1,4 +1,7 @@
 const S3 = require('../utils/S3Instance');
+
+//PART Storage
+// Increase conccurent request and partfilesize in params
 class S3DAO {
   constructor() {}
 
@@ -6,7 +9,8 @@ class S3DAO {
     return new Promise((resolve, reject) => {
       S3.upload(params, (err, data) => {
         if (err) reject(err);
-        resolve(data);
+        console.log(data);
+        resolve('true');
       }).on('httpUploadProgress', function (progress) {
         console.log(progress);
       });
