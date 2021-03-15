@@ -1,4 +1,6 @@
 const S3DAO = require('../dao/S3DAO');
+const FileDAO = require('../dao/FileDAO');
+const UserDAO = require('../dao/UserDAO');
 const parseStreamData = require('../utils/parseStreamData');
 const { encryptStream } = require('../utils/encryption');
 const uuid = require('uuid');
@@ -8,6 +10,7 @@ const createError = require('http-errors');
 class FileService {
   constructor() {
     this.s3DAO = new S3DAO();
+    this.fileDAO = new FileDAO();
     this.upload = this.upload.bind(this);
     this.getPublicLink = this.getPublicLink.bind(this);
     this.download = this.download.bind(this);
@@ -24,10 +27,10 @@ class FileService {
 
       // Add parent list
       let metadata = {
-        owner: 'userId',
+        ownerId: 'userId',
         size,
         mimetype,
-        s3ID: S3ID,
+        fileId: S3ID,
       };
 
       const params = {
@@ -40,8 +43,19 @@ class FileService {
       const status = await this.s3DAO.upload(params);
       if (!status) throw createError.InternalServerError();
 
-      // const file = await this.fileStructDAO.upload(metadata);
+      // Update in File DB
+      const object = {
+        name: filename,
+        parent: '1',
+        parentList: '1',
+        metadata,
+      };
+
+      const updateFileStatus = await this.fileDAO.add(object);
+      if (!updateFileStatus) throw createError.InternalServerError();
       // TODO Update Size of File
+      const updateStorageStatus = await this.userDAO.addStorage(size);
+      if (!updateStorageStatus) throw createError.InternalServerError();
       return { success: 'true' };
     } catch (err) {
       throw err;

@@ -6,12 +6,18 @@ const FileSchema = mongoose.Schema(
       type: string,
       require: true,
     },
+    parent: {
+      type: string,
+    },
+    parentList: {
+      type: string,
+    },
     metadata: {
       type: {
         ownerId: String,
         fileId: String,
         size: Number,
-        type: String,
+        mimetype: String,
       },
       require: true,
     },
