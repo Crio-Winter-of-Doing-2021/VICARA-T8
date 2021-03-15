@@ -18,6 +18,40 @@ class UserDAO {
 
     return await User.findByIdAndUpdate(id, { password }, { new: true });
   }
+
+  async UpdateStorage(id, size, operation) {
+    try {
+      const status = false;
+      const user = await User.findById(id);
+      const newsize;
+      switch (operation) {
+        case 'add':
+          newsize = user.size - size;
+          if (newsize > 0) {
+            const user = await User.findByIdAndUpdate(
+              id,
+              { size: newsize },
+              { new: true }
+            );
+            if (user) status = true;
+          }
+          break;
+        case 'substract':
+          newsize = user.size + size;
+          const user = await User.findByIdAndUpdate(
+            id,
+            { size: newsize },
+            { new: true }
+          );
+          if (user) status = true;
+
+          break;
+      }
+      return status;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 module.exports = UserDAO;

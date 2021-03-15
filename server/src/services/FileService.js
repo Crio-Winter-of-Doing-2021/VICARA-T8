@@ -54,7 +54,7 @@ class FileService {
       const updateFileStatus = await this.fileDAO.add(object);
       if (!updateFileStatus) throw createError.InternalServerError();
       // TODO Update Size of File
-      const updateStorageStatus = await this.userDAO.addStorage(size);
+      const updateStorageStatus = await this.userDAO.addToStorage(size);
       if (!updateStorageStatus) throw createError.InternalServerError();
       return { success: 'true' };
     } catch (err) {
