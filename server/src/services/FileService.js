@@ -54,8 +54,10 @@ class FileService {
       const updateFileStatus = await this.fileDAO.add(object);
       if (!updateFileStatus) throw createError.InternalServerError();
       // TODO Update Size of File
-      const updateStorageStatus = await this.userDAO.addToStorage(size);
-      if (!updateStorageStatus) throw createError.InternalServerError();
+      //upar daldo
+      const updateStorageStatus = await this.userDAO.UpdateStorage(size);
+      if (!updateStorageStatus)
+        throw createError.NotAcceptable('Storage Limit Exceed');
       return { success: 'true' };
     } catch (err) {
       throw err;
@@ -88,6 +90,14 @@ class FileService {
     } catch (err) {
       throw err;
     }
+  }
+
+  async getInfo(id) {
+    try {
+      const data = await this.fileDAO.getInfo(id);
+      if (!data) throw createError.NotFound('File Not Found');
+      return data;
+    } catch (err) {}
   }
 
   async getPublicLink(Id) {

@@ -13,7 +13,12 @@ class FileController {
 
   async getInfo(req, res, next) {
     try {
-    } catch (err) {}
+      const id = req.params.id;
+      const data = await this.fileService.getInfo(id);
+      res.status(200).json({ success: 'true', data });
+    } catch (err) {
+      throw err;
+    }
   }
 
   async upload(req, res, next) {

@@ -17,6 +17,14 @@ class FileDAO {
     }
   }
 
+  async getInfo(id) {
+    try {
+      return await File.findById(id);
+    } catch (err) {
+      throw err;
+    }
+  }
+
   async update(object) {
     try {
       // To Be Implemented
