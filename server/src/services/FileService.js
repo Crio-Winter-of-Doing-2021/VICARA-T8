@@ -100,6 +100,14 @@ class FileService {
     } catch (err) {}
   }
 
+  async getList(id,query) {
+    try {
+      const data = 
+    } catch (err) {
+      throw err;
+    }
+  }
+
   async getPublicLink(Id) {
     try {
       //Check Owner

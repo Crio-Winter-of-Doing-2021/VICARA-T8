@@ -50,7 +50,13 @@ class FileController {
 
   async getList(req, res, next) {
     try {
-    } catch (err) {}
+      const id = 1;
+      const query = req.query;
+      const data = await this.fileService.getList(id, query);
+      res.status(200).json({ status: 'success', data });
+    } catch (err) {
+      throw err;
+    }
   }
 
   async delete(req, res, next) {
