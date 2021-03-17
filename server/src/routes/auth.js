@@ -1,11 +1,14 @@
 const { Router } = require('express');
 const AuthController = require('../controller/AuthController');
+const AuthService = require('../services/AuthService');
+const UserDAO = require('../dao/UserDAO');
+const User = require('../models/User');
 const router = Router();
 const passport = require('passport');
 const conf = require('../utils/passport');
 
 // Add DI
-const authController = new AuthController();
+const authController = new AuthController(new AuthService(new UserDAO(User)));
 
 //  @desc Login
 //  @route POST /login

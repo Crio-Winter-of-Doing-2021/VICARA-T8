@@ -1,28 +1,29 @@
-const User = require('../models/User.js');
 class UserDAO {
-  constructor() {}
+  constructor(User) {
+    this.user = User;
+  }
 
   //@desc Create a new User
   async create(entity) {
-    return await User.create(entity);
+    return await this.user.create(entity);
   }
 
   //@desc Check an existing User
   async exists(email) {
-    return await User.findOne({ email });
+    return await this.user.findOne({ email });
   }
 
   //@desc Update an existing User (only password rightnow)
   async update(id, entity) {
     const { password } = entity;
 
-    return await User.findByIdAndUpdate(id, { password }, { new: true });
+    return await this.user.findByIdAndUpdate(id, { password }, { new: true });
   }
 
   async UpdateStorage(id, size, operation) {
     try {
       const status = false;
-      const user = await User.findById(id);
+      const user = await this.user.findById(id);
       let newsize;
       switch (operation) {
         case 'add':
@@ -38,7 +39,7 @@ class UserDAO {
           break;
         case 'substract':
           newsize = user.size + size;
-          const user = await User.findByIdAndUpdate(
+          const user = await this.user.findByIdAndUpdate(
             id,
             { size: newsize },
             { new: true }

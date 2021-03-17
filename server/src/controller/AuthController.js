@@ -1,66 +1,60 @@
-const AuthService = require('../services/AuthService');
-
 // @desc AuthController Class
 class AuthController {
-  constructor() {
-    this.authService = new AuthService();
-    this.register = this.register.bind(this);
-    this.login = this.login.bind(this);
-    this.refresh = this.refresh.bind(this);
-    this.googleOAuth = this.googleOAuth.bind(this);
+  constructor(AuthService) {
+    this.authService = AuthService;
   }
 
   // @desc Register
-  async register(req, res, next) {
+  register = async (req, res, next) => {
     try {
       const userData = req.body;
       const tokens = await this.authService.create(userData);
-      res.status(201).json(tokens);
+      res.status(201).json({ status: 'success', tokens });
     } catch (err) {
       next(err);
     }
-  }
+  };
 
   // @desc Login
-  async login(req, res, next) {
+  login = async (req, res, next) => {
     try {
       const userData = req.body;
       const tokens = await this.authService.login(userData);
-      res.status(200).json(tokens);
+      res.status(200).json({ status: 'success', tokens });
     } catch (err) {
       next(err);
     }
-  }
+  };
 
   // @desc Refresh Token
-  async refresh(req, res, next) {
+  refresh = async (req, res, next) => {
     try {
       console.log('1');
       const { refreshToken } = req.body;
       const tokens = await this.authService.refreshToken(refreshToken);
-      res.status(200).json(tokens);
+      res.status(200).json({ status: 'success', tokens });
     } catch (err) {
       next(err);
     }
-  }
+  };
 
   // @method Google OAuth
-  async googleOAuth(req, res, next) {
+  googleOAuth = async (req, res, next) => {
     try {
       const userData = req.user._json;
       const tokens = await this.authService.googleOAuth(userData);
-      res.status(200).json(tokens);
+      res.status(200).json({ status: 'success', tokens });
     } catch (err) {
       next(err);
     }
-  }
+  };
 
-  async logout(req, res, next) {
+  logout = async (req, res, next) => {
     try {
       // TODO Logout the User
-      res.send(200).json({ message: 'success' });
+      res.send(200).json({ status: 'success' });
     } catch (err) {}
-  }
+  };
 }
 
 module.exports = AuthController;

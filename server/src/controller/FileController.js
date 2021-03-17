@@ -24,6 +24,7 @@ class FileController {
   async upload(req, res, next) {
     try {
       const busboy = req.busboy;
+
       const Id = req.payload.aud;
       req.pipe(busboy);
       const data = await this.fileService.upload(Id, busboy);

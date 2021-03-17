@@ -1,5 +1,4 @@
 const { registerSchema, loginSchema } = require('../utils/validator.js');
-const UserDAO = require('../dao/UserDAO');
 const createError = require('http-errors');
 const {
   signAccessToken,
@@ -9,21 +8,15 @@ const {
 const bcrypt = require('bcrypt');
 
 //TODO: Can be broken in methods like checking a user
-//TODO: Add token generation here
-//TODO Private Protected Type Kuch
 
 // @desc Authorization Service Class
 class AuthService {
-  constructor() {
-    this.userDAO = new UserDAO();
-    this.create = this.create.bind(this);
-    this.login = this.login.bind(this);
-    this.refreshToken = this.refreshToken.bind(this);
-    this.googleOAuth = this.googleOAuth.bind(this);
+  constructor(UserDAO) {
+    this.userDAO = UserDAO;
   }
 
   // @desc Create a new User
-  async create(userData) {
+  create = async (userData) => {
     const entity = await registerSchema.validateAsync(userData, {
       abortEarly: false,
     });
@@ -47,10 +40,10 @@ class AuthService {
     const accessToken = await this._generateAccessToken(creadtedUser.id);
     const refreshToken = await this._generateRefreshToken(creadtedUser.id);
     return { accessToken, refreshToken };
-  }
+  };
 
   // @desc Login a User
-  async login(userData) {
+  login = async (userData) => {
     const entity = await loginSchema.validateAsync(userData, {
       abortEarly: false,
     });
@@ -68,10 +61,10 @@ class AuthService {
     const accessToken = await this._generateAccessToken(user.id);
     const refreshToken = await this._generateRefreshToken(user.id);
     return { accessToken, refreshToken };
-  }
+  };
 
   // @desc Google OAuth
-  async googleOAuth(user) {
+  googleOAuth = async (user) => {
     let result = await this.userDAO.exists(user.email);
 
     if (!result) {
@@ -83,16 +76,16 @@ class AuthService {
     const accessToken = await this._generateAccessToken(result.id);
     const refreshToken = await this._generateRefreshToken(result.id);
     return { accessToken, refreshToken };
-  }
+  };
 
   // @desc Refresh Token
-  async refreshToken(token) {
+  refreshToken = async (token) => {
     if (!token) throw createError.BadRequest();
     const userId = await this._verifyRefreshToken(token);
     const accessToken = await this._generateAccessToken(userId);
     //const refreshToken = await this._generateRefreshToken(userId);
     return { accessToken };
-  }
+  };
 
   async _verifyRefreshToken(token) {
     return await verifyRefreshToken(token);

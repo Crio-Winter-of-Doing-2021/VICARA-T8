@@ -49,8 +49,8 @@ app.use(busboy());
 //   res.send('Protected Routes');
 // });
 
-app.use('/api', file);
 app.use('/api/auth', auth);
+app.use('/api', verifyAccessToken, file);
 app.use(errorHandler);
 
 // TODO: Seprate the Server Connection
