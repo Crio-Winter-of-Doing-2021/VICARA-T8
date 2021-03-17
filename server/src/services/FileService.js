@@ -1,6 +1,7 @@
 const S3DAO = require('../dao/S3DAO');
 const FileDAO = require('../dao/FileDAO');
 const UserDAO = require('../dao/UserDAO');
+const User = require('../models/User');
 const parseStreamData = require('../utils/parseStreamData');
 const { encryptStream } = require('../utils/encryption');
 const uuid = require('uuid');
@@ -11,24 +12,30 @@ class FileService {
   constructor() {
     this.s3DAO = new S3DAO();
     this.fileDAO = new FileDAO();
-    this.upload = this.upload.bind(this);
+    this.userDAO = new UserDAO(User);
     this.getPublicLink = this.getPublicLink.bind(this);
     this.download = this.download.bind(this);
     this.delete = this.delete.bind(this);
   }
 
-  async upload(userId, busboy) {
+  upload = async (userId, busboy) => {
     try {
       const { file, filename, formData, mimetype } = await parseStreamData(
         busboy
       );
-      const size = '11';
+      const size = parseInt(formData.get('size'));
       const S3ID = uuid.v4();
-
-      // Add parent list
-      let metadata = {
-        ownerId: 'userId',
+      const updateStorageStatus = await this.userDAO.UpdateStorage(
+        userId,
         size,
+        'add'
+      );
+      if (!updateStorageStatus)
+        throw createError.NotAcceptable('Storage Limit Exceed');
+
+      let metadata = {
+        ownerId: userId,
+        size: size.toString(),
         mimetype,
         fileId: S3ID,
       };
@@ -39,15 +46,12 @@ class FileService {
         Bucket: process.env.BUCKET_NAME,
         Metadata: metadata,
       };
-      console.log(S3ID);
       const status = await this.s3DAO.upload(params);
       if (!status) throw createError.InternalServerError();
 
       // Update in File DB
       const object = {
         name: filename,
-        parent: '1',
-        parentList: '1',
         metadata,
       };
 
@@ -55,14 +59,12 @@ class FileService {
       if (!updateFileStatus) throw createError.InternalServerError();
       // TODO Update Size of File
       //upar daldo
-      const updateStorageStatus = await this.userDAO.UpdateStorage(size);
-      if (!updateStorageStatus)
-        throw createError.NotAcceptable('Storage Limit Exceed');
-      return { success: 'true' };
+
+      return { status: 'success' };
     } catch (err) {
       throw err;
     }
-  }
+  };
 
   async download() {
     try {

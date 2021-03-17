@@ -4,7 +4,6 @@ class FileController {
   constructor() {
     this.fileService = new FileService();
     this.getInfo = this.getInfo.bind(this);
-    this.upload = this.upload.bind(this);
     this.download = this.download.bind(this);
     this.getList = this.getList.bind(this);
     this.delete = this.delete.bind(this);
@@ -21,18 +20,17 @@ class FileController {
     }
   }
 
-  async upload(req, res, next) {
+  upload = async (req, res, next) => {
     try {
       const busboy = req.busboy;
-
       const Id = req.payload.aud;
       req.pipe(busboy);
       const data = await this.fileService.upload(Id, busboy);
-      res.status(200).json(data);
+      res.status(201).json(data);
     } catch (err) {
       next(err);
     }
-  }
+  };
 
   async download(req, res, next) {
     try {

@@ -22,30 +22,32 @@ class UserDAO {
 
   async UpdateStorage(id, size, operation) {
     try {
-      const status = false;
-      const user = await this.user.findById(id);
+      let status = false;
+      const userobject = await this.user.findById(id);
+
       let newsize;
+      let limit = userobject.storage.limit;
       switch (operation) {
         case 'add':
-          newsize = user.size - size;
-          if (newsize > 0) {
-            const user = await User.findByIdAndUpdate(
+          newsize = parseInt(userobject.storage.size) + size;
+          if (limit > newsize) {
+            let success = await this.user.findByIdAndUpdate(
               id,
-              { size: newsize },
+              { 'storage.size': newsize },
               { new: true }
             );
-            if (user) status = true;
+
+            if (success) status = true;
           }
           break;
         case 'substract':
-          newsize = user.size + size;
-          const user = await this.user.findByIdAndUpdate(
+          newsize = parseInt(userobject.size) - size;
+          let success = await this.user.findByIdAndUpdate(
             id,
-            { size: newsize },
+            { 'storage.size': newsize },
             { new: true }
           );
-          if (user) status = true;
-
+          if (success) status = true;
           break;
       }
       return status;

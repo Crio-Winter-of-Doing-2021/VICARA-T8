@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     },
     limit: {
       type: Number,
-      default: 150000,
+      default: 16106127360,
     },
   },
 });
