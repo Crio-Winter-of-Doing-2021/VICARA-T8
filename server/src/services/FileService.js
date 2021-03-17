@@ -66,10 +66,14 @@ class FileService {
     }
   };
 
-  async download() {
+  async download(userId, fileId) {
     try {
+      console.log(fileId);
+      const exist = await this.fileDAO.getInfo(userId, fileId);
+      if (!exist) throw createError.NotFound('File Not Found');
+
       const params = {
-        Key: '48ad84d7-40a4-422a-ae33-1a9c3496a215',
+        Key: fileId,
         Bucket: process.env.BUCKET_NAME,
       };
       const stream = await this.s3DAO.download(params);

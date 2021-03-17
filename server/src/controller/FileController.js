@@ -4,7 +4,6 @@ class FileController {
   constructor() {
     this.fileService = new FileService();
     this.getInfo = this.getInfo.bind(this);
-    this.download = this.download.bind(this);
     this.getList = this.getList.bind(this);
     this.delete = this.delete.bind(this);
     this.getPublicLink = this.getPublicLink.bind(this);
@@ -32,10 +31,11 @@ class FileController {
     }
   };
 
-  async download(req, res, next) {
+  download = async (req, res, next) => {
     try {
-      //const Id = req.params.id;
-      const data = await this.fileService.download();
+      const fileId = req.params.id;
+      const userId = req.payload.aud;
+      const data = await this.fileService.download(userId, fileId);
       res.set('Content-Type', 'binary/octet-stream');
       res.set(
         'Content-Disposition',
@@ -43,8 +43,10 @@ class FileController {
       );
       //res.set('Content-Length', currentFile.metadata.size.toString());
       data.pipe(res);
-    } catch (err) {}
-  }
+    } catch (err) {
+      next(err);
+    }
+  };
 
   async getList(req, res, next) {
     try {
@@ -53,7 +55,7 @@ class FileController {
       const data = await this.fileService.getList(id, query);
       res.status(200).json({ status: 'success', data });
     } catch (err) {
-      throw err;
+      next(err);
     }
   }
 
@@ -61,7 +63,9 @@ class FileController {
     try {
       const data = await this.fileService.delete();
       res.status(200).json(data);
-    } catch (err) {}
+    } catch (err) {
+      next(err);
+    }
   }
 
   async getPublicLink(req, res, next) {

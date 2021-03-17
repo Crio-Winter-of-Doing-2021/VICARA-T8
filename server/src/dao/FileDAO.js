@@ -17,9 +17,13 @@ class FileDAO {
     }
   }
 
-  async getInfo(id) {
+  async getInfo(userId, fileId) {
     try {
-      return await File.findById(id);
+      const val = await File.findOne({
+        'metadata.ownerId': userId,
+        'metadata.fileId': fileId,
+      });
+      return val;
     } catch (err) {
       throw err;
     }
