@@ -23,7 +23,7 @@ class UserDAO {
     try {
       const status = false;
       const user = await User.findById(id);
-      const newsize;
+      let newsize;
       switch (operation) {
         case 'add':
           newsize = user.size - size;

@@ -100,9 +100,16 @@ class FileService {
     } catch (err) {}
   }
 
-  async getList(id,query) {
+  async getList(id, query) {
     try {
-      const data = 
+      let match = {};
+      if (query.q) match.name = { $regex: req.query.q, $options: 'i' };
+      let limit = parseInt(req.query.limit) || 5;
+      let sort = { createdDate: 1, name: 1 };
+      sort.createdDate = query.sortBy && query.sortBy === 'desc' ? -1 : 1;
+      sort.name = query.name && query.name === 'desc' ? -1 : 1;
+      const data = await this.fileDAO.getList(match, sort, limit);
+      return data;
     } catch (err) {
       throw err;
     }

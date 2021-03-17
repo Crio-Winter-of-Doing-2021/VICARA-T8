@@ -3,14 +3,8 @@ const mongoose = require('mongoose');
 const FileSchema = mongoose.Schema(
   {
     name: {
-      type: string,
+      type: String,
       require: true,
-    },
-    parent: {
-      type: string,
-    },
-    parentList: {
-      type: string,
     },
     metadata: {
       type: {

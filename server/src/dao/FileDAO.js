@@ -25,6 +25,14 @@ class FileDAO {
     }
   }
 
+  async getList(match, sort, limit) {
+    try {
+      return await (await File.find(match).sort(sort)).limit(limit);
+    } catch (err) {
+      throw err;
+    }
+  }
+
   async update(object) {
     try {
       // To Be Implemented
