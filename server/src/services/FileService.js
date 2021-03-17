@@ -13,7 +13,6 @@ class FileService {
     this.s3DAO = new S3DAO();
     this.fileDAO = new FileDAO();
     this.userDAO = new UserDAO(User);
-    this.getPublicLink = this.getPublicLink.bind(this);
   }
   // desc Upload with streams
   upload = async (userId, busboy) => {
@@ -100,13 +99,15 @@ class FileService {
     }
   };
 
-  async getInfo(id) {
+  getInfo = async (userId, fileId) => {
     try {
-      const data = await this.fileDAO.getInfo(id);
+      const data = await this.fileDAO.getInfo(userId, fileId);
       if (!data) throw createError.NotFound('File Not Found');
       return data;
-    } catch (err) {}
-  }
+    } catch (err) {
+      throw err;
+    }
+  };
 
   async getList(id, query) {
     try {
@@ -123,11 +124,12 @@ class FileService {
     }
   }
 
-  async getPublicLink(Id) {
+  getPublicLink = async (userId, fileId) => {
     try {
-      //Check Owner
+      const exist = await this.fileDAO.getInfo(userId, fileId);
+      if (!exist) throw createError.NotFound('File Not Found');
       const param = {
-        Key: Id,
+        Key: fileId,
         Bucket: process.env.BUCKET_NAME,
       };
       const url = await this.s3DAO.getPublicLink(param);
@@ -136,7 +138,7 @@ class FileService {
     } catch (err) {
       throw err;
     }
-  }
+  };
 }
 
 module.exports = FileService;

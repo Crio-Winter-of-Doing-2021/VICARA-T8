@@ -3,21 +3,19 @@ const FileService = require('../services/FileService');
 class FileController {
   constructor() {
     this.fileService = new FileService();
-    this.getInfo = this.getInfo.bind(this);
     this.getList = this.getList.bind(this);
-    this.delete = this.delete.bind(this);
-    this.getPublicLink = this.getPublicLink.bind(this);
   }
 
-  async getInfo(req, res, next) {
+  getInfo = async (req, res, next) => {
     try {
-      const id = req.params.id;
-      const data = await this.fileService.getInfo(id);
-      res.status(200).json({ success: 'true', data });
+      const userId = req.payload.aud;
+      const fileId = req.params.id;
+      const data = await this.fileService.getInfo(userId, fileId);
+      res.status(200).json({ status: 'success', data });
     } catch (err) {
-      throw err;
+      next(err);
     }
-  }
+  };
 
   upload = async (req, res, next) => {
     try {
@@ -70,16 +68,16 @@ class FileController {
     }
   };
 
-  async getPublicLink(req, res, next) {
+  getPublicLink = async (req, res, next) => {
     try {
-      const id = req.params.id;
-      //Check Owner
-      const data = await this.fileService.getPublicLink(id);
-      res.status(200).json(data);
+      const fileId = req.params.id;
+      const userId = req.payload.aud;
+      const data = await this.fileService.getPublicLink(userId, fileId);
+      res.status(200).json({ status: 'success', data });
     } catch (err) {
       next(err);
     }
-  }
+  };
 }
 
 module.exports = FileController;
