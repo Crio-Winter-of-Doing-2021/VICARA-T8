@@ -6,36 +6,18 @@ const morgan = require('morgan');
 const auth = require('./routes/auth');
 const file = require('./routes/file');
 const { verifyAccessToken } = require('./utils/jwtHelper');
-const mongoose = require('mongoose');
 const errorHandler = require('./middleware/errorHandler');
 const passport = require('passport');
 const busboy = require('connect-busboy');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
-
+const connectDB = require('./config/connectDB.js');
+connectDB();
 dotenv.config();
 
 const app = express();
 //TODO : CORS ERROR , BackPressuringThis effectively allows a fixed amount of memory to be used at any given time for a [.pipe()][] function. There will be no memory leakage, no infinite buffering, and the garbage collector will only have to deal with one area in memory! Watermark
-//DB Connection
-// TODO: Seprate the DB Connection
-// db Connection Disconnection
-const CONNECTION_URL = process.env.MONGO_URL;
-mongoose
-  .connect(CONNECTION_URL, {
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    userFindAndModify: false,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .then((conn) => {
-    logger.info(`Mongoose Connected: ${conn.connection.host}`);
-  })
-  .catch((err) => {
-    logger.error(`Error occured: ${err}`);
-  });
 
 //Middlewares
 app.use(cors());
@@ -47,7 +29,14 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 app.use(passport.initialize());
-app.use(busboy());
+app.use(
+  busboy({
+    highWaterMark: 2 * 1024 * 1024,
+    limits: {
+      fileSize: 10 * 1024 * 1024,
+    },
+  })
+);
 
 // Routes
 app.use('/api/auth', auth);
@@ -62,4 +51,13 @@ var server = http.createServer(app);
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => logger.info(`Server is listening on port ${PORT}`));
+
+//Handle unhandled promise rejections
+
+process.on('unhandledRejection', (err, promise) => {
+  console.log(`Error: ${err.message}`.red);
+  //close server
+  server.close(() => process.exit(1));
+});
+
 module.exports = app;
