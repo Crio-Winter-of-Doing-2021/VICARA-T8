@@ -1,9 +1,18 @@
 const { Router } = require('express');
 const FileController = require('../controller/FileController');
+const FileService = require('../services/FileService');
+const S3DAO = require('../dao/S3DAO');
+const UserDAO = require('../dao/UserDAO');
+const FileDAO = require('../dao/FileDAO');
+const User = require('../models/User');
+const File = require('../models/File');
+const S3 = require('../utils/S3Instance');
 const router = Router();
 
 //ADD DI
-let fileController = new FileController();
+let fileController = new FileController(
+  new FileService(new S3DAO(S3), new UserDAO(User), new FileDAO(File))
+);
 
 //  @desc Details
 //  @route get /files/:id

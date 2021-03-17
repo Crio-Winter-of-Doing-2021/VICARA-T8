@@ -1,18 +1,13 @@
-const S3DAO = require('../dao/S3DAO');
-const FileDAO = require('../dao/FileDAO');
-const UserDAO = require('../dao/UserDAO');
-const User = require('../models/User');
 const parseStreamData = require('../utils/parseStreamData');
-const { encryptStream } = require('../utils/encryption');
 const uuid = require('uuid');
 const createError = require('http-errors');
 
 //TODO Encryption and Zipping
 class FileService {
-  constructor() {
-    this.s3DAO = new S3DAO();
-    this.fileDAO = new FileDAO();
-    this.userDAO = new UserDAO(User);
+  constructor(S3DAO, UserDAO, FileDAO) {
+    this.s3DAO = S3DAO;
+    this.userDAO = UserDAO;
+    this.fileDAO = FileDAO;
   }
   // desc Upload with streams
   upload = async (userId, busboy) => {
@@ -45,8 +40,6 @@ class FileService {
       };
       const status = await this.s3DAO.upload(params);
       if (!status) throw createError.InternalServerError();
-
-      // Update in File DB
       const object = {
         name: filename,
         metadata,
@@ -54,8 +47,6 @@ class FileService {
 
       const updateFileStatus = await this.fileDAO.add(object);
       if (!updateFileStatus) throw createError.InternalServerError();
-      // TODO Update Size of File
-      //upar daldo
 
       return { status: 'success' };
     } catch (err) {
@@ -79,7 +70,7 @@ class FileService {
       throw err;
     }
   };
-
+  //@desc File Delete Service
   delete = async (userId, fileId) => {
     try {
       const exist = await this.fileDAO.getInfo(userId, fileId);
@@ -99,6 +90,7 @@ class FileService {
     }
   };
 
+  //@desc File Info
   getInfo = async (userId, fileId) => {
     try {
       const data = await this.fileDAO.getInfo(userId, fileId);
@@ -109,6 +101,7 @@ class FileService {
     }
   };
 
+  //@desc File List Query/Filter/Sorting
   getList = async (userId, query) => {
     try {
       let match = { 'metadata.ownerId': userId };
@@ -124,7 +117,7 @@ class FileService {
       throw err;
     }
   };
-
+  //@desc Get The Public Linl
   getPublicLink = async (userId, fileId) => {
     try {
       const exist = await this.fileDAO.getInfo(userId, fileId);

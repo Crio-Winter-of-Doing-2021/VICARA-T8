@@ -1,10 +1,9 @@
-const FileService = require('../services/FileService');
-
 class FileController {
-  constructor() {
-    this.fileService = new FileService();
+  constructor(FileService) {
+    this.fileService = FileService;
   }
 
+  //@desc Get File Info
   getInfo = async (req, res, next) => {
     try {
       const userId = req.payload.aud;
@@ -15,7 +14,7 @@ class FileController {
       next(err);
     }
   };
-
+  //@desc Upload File Controller
   upload = async (req, res, next) => {
     try {
       const busboy = req.busboy;
@@ -28,6 +27,7 @@ class FileController {
     }
   };
 
+  //@desc Download File COntroller
   download = async (req, res, next) => {
     try {
       const fileId = req.params.id;
@@ -45,6 +45,7 @@ class FileController {
     }
   };
 
+  //@desc Searching/Filtering/Sorting List
   getList = async (req, res, next) => {
     try {
       const userId = req.payload.aud;
@@ -56,6 +57,7 @@ class FileController {
     }
   };
 
+  //@desc Delete the File
   delete = async (req, res, next) => {
     try {
       const fileId = req.params.id;
@@ -67,6 +69,7 @@ class FileController {
     }
   };
 
+  //@desc Get the public Link
   getPublicLink = async (req, res, next) => {
     try {
       const fileId = req.params.id;

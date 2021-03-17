@@ -1,17 +1,19 @@
-const File = require('../models/File');
-
 class FileDAO {
+  constructor(File) {
+    this.file = File;
+  }
+  //@desc Create
   async add(object) {
     try {
-      return await File.create(object);
+      return await this.file.create(object);
     } catch (err) {
       throw err;
     }
   }
-
+  //@desc Delete
   async delete(userId, fileId) {
     try {
-      return await File.deleteOne({
+      return await this.file.deleteOne({
         'metadata.ownerId': userId,
         'metadata.fileId': fileId,
       });
@@ -19,10 +21,10 @@ class FileDAO {
       throw err;
     }
   }
-
+  //@desc Info
   async getInfo(userId, fileId) {
     try {
-      const val = await File.findOne({
+      const val = await this.file.findOne({
         'metadata.ownerId': userId,
         'metadata.fileId': fileId,
       });
@@ -31,15 +33,15 @@ class FileDAO {
       throw err;
     }
   }
-
+  //@desc Filter
   async getList(match, sort, limit) {
     try {
-      return await File.find(match).sort(sort).limit(limit);
+      return await this.file.find(match).sort(sort).limit(limit);
     } catch (err) {
       throw err;
     }
   }
-
+  ////@desc Update
   async update(object) {
     try {
       // To Be Implemented

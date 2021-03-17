@@ -1,16 +1,14 @@
-const S3 = require('../utils/S3Instance');
-const http = require('http-errors');
-const { ConfigService } = require('aws-sdk');
-
-//PART Storage
+//Store File in Chunks
 // Increase conccurent request and partfilesize in params
 class S3DAO {
-  constructor() {}
+  constructor(S3) {
+    this.s3 = S3;
+  }
 
   //Add options for concurrent upload
   async upload(params) {
     return new Promise((resolve, reject) => {
-      S3.upload(params, (err, data) => {
+      this.s3.upload(params, (err, data) => {
         if (err) reject(err);
         resolve(true);
       });
@@ -19,7 +17,7 @@ class S3DAO {
 
   async getPublicLink(params) {
     return new Promise((resolve, reject) => {
-      S3.getSignedUrl('getObject', params, (err, url) => {
+      this.s3.getSignedUrl('getObject', params, (err, url) => {
         if (err) reject(err);
         resolve(url);
       });
@@ -28,7 +26,8 @@ class S3DAO {
 
   async download(params) {
     return new Promise((resolve, reject) => {
-      const stream = S3.getObject(params)
+      const stream = this.s3
+        .getObject(params)
         .createReadStream()
         .on('error', () => {
           reject('Cannot Read');
@@ -40,7 +39,7 @@ class S3DAO {
 
   async delete(params) {
     return new Promise((resolve, reject) => {
-      S3.deleteObject(params, (err, data) => {
+      this.s3.deleteObject(params, (err, data) => {
         if (err) reject(err);
         resolve(true);
       });
