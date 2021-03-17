@@ -59,14 +59,16 @@ class FileController {
     }
   }
 
-  async delete(req, res, next) {
+  delete = async (req, res, next) => {
     try {
-      const data = await this.fileService.delete();
+      const fileId = req.params.id;
+      const userId = req.payload.aud;
+      const data = await this.fileService.delete(userId, fileId);
       res.status(200).json(data);
     } catch (err) {
       next(err);
     }
-  }
+  };
 
   async getPublicLink(req, res, next) {
     try {

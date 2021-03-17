@@ -14,8 +14,6 @@ class FileService {
     this.fileDAO = new FileDAO();
     this.userDAO = new UserDAO(User);
     this.getPublicLink = this.getPublicLink.bind(this);
-    this.download = this.download.bind(this);
-    this.delete = this.delete.bind(this);
   }
   // desc Upload with streams
   upload = async (userId, busboy) => {
@@ -68,7 +66,6 @@ class FileService {
   // desc Downloading with streams
   download = async (userId, fileId) => {
     try {
-      console.log(fileId);
       const exist = await this.fileDAO.getInfo(userId, fileId);
       if (!exist) throw createError.NotFound('File Not Found');
 
@@ -84,19 +81,24 @@ class FileService {
     }
   };
 
-  async delete() {
+  delete = async (userId, fileId) => {
     try {
+      const exist = await this.fileDAO.getInfo(userId, fileId);
+      if (!exist) throw createError.NotFound('File Not Found');
+
+      const deleted = await this.fileDAO.delete(userId, fileId);
+      if (!deleted) throw createError.NotAcceptable('Cannot be Deleted');
       const params = {
-        Key: olaas,
+        Key: fileId,
         Bucket: process.env.BUCKET_NAME,
       };
       const status = await this.s3DAO.delete(params);
       if (!status) throw createError.InternalServerError();
-      return { success: 'true' };
+      return { status: 'success' };
     } catch (err) {
       throw err;
     }
-  }
+  };
 
   async getInfo(id) {
     try {

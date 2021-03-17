@@ -12,7 +12,6 @@ class S3DAO {
     return new Promise((resolve, reject) => {
       S3.upload(params, (err, data) => {
         if (err) reject(err);
-        //console.log(data);
         resolve(true);
       });
     });
@@ -21,7 +20,6 @@ class S3DAO {
   async getPublicLink(params) {
     return new Promise((resolve, reject) => {
       S3.getSignedUrl('getObject', params, (err, url) => {
-        console.log(url);
         if (err) reject(err);
         resolve(url);
       });
@@ -40,13 +38,10 @@ class S3DAO {
     });
   }
 
-  async deleteObject(params) {
-    //can add here bucket
-    console.log(err);
-    return newPromise((resolve, reject) => {
+  async delete(params) {
+    return new Promise((resolve, reject) => {
       S3.deleteObject(params, (err, data) => {
         if (err) reject(err);
-        console.log(err);
         resolve(true);
       });
     });

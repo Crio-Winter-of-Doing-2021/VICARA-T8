@@ -9,9 +9,12 @@ class FileDAO {
     }
   }
 
-  async delete(object) {
+  async delete(userId, fileId) {
     try {
-      return await File.deleteOne(object);
+      return await File.deleteOne({
+        'metadata.ownerId': userId,
+        'metadata.fileId': fileId,
+      });
     } catch (err) {
       throw err;
     }
