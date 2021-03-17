@@ -36,13 +36,13 @@ class FileController {
       const fileId = req.params.id;
       const userId = req.payload.aud;
       const data = await this.fileService.download(userId, fileId);
-      res.set('Content-Type', 'binary/octet-stream');
+      res.set('Content-Type', data.metadata.mimetype);
       res.set(
         'Content-Disposition',
-        'attachment; filename="' + 'currentFile.filename' + '"'
+        'attachment; filename="' + data.filename + '"'
       );
-      //res.set('Content-Length', currentFile.metadata.size.toString());
-      data.pipe(res);
+      res.set('Content-Length', data.metadata.size.toString());
+      data.stream.pipe(res);
     } catch (err) {
       next(err);
     }

@@ -17,7 +17,7 @@ class FileService {
     this.download = this.download.bind(this);
     this.delete = this.delete.bind(this);
   }
-
+  // desc Upload with streams
   upload = async (userId, busboy) => {
     try {
       const { file, filename, formData, mimetype } = await parseStreamData(
@@ -65,8 +65,8 @@ class FileService {
       throw err;
     }
   };
-
-  async download(userId, fileId) {
+  // desc Downloading with streams
+  download = async (userId, fileId) => {
     try {
       console.log(fileId);
       const exist = await this.fileDAO.getInfo(userId, fileId);
@@ -78,11 +78,11 @@ class FileService {
       };
       const stream = await this.s3DAO.download(params);
 
-      return stream;
+      return { filename: exist.name, metadata: exist.metadata, stream };
     } catch (err) {
       throw err;
     }
-  }
+  };
 
   async delete() {
     try {
