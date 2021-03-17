@@ -3,7 +3,6 @@ const FileService = require('../services/FileService');
 class FileController {
   constructor() {
     this.fileService = new FileService();
-    this.getList = this.getList.bind(this);
   }
 
   getInfo = async (req, res, next) => {
@@ -46,16 +45,16 @@ class FileController {
     }
   };
 
-  async getList(req, res, next) {
+  getList = async (req, res, next) => {
     try {
-      const id = 1;
+      const userId = req.payload.aud;
       const query = req.query;
-      const data = await this.fileService.getList(id, query);
-      res.status(200).json({ status: 'success', data });
+      const data = await this.fileService.getList(userId, query);
+      res.status(200).json({ status: 'success', length: data.length, data });
     } catch (err) {
       next(err);
     }
-  }
+  };
 
   delete = async (req, res, next) => {
     try {

@@ -109,20 +109,21 @@ class FileService {
     }
   };
 
-  async getList(id, query) {
+  getList = async (userId, query) => {
     try {
-      let match = {};
-      if (query.q) match.name = { $regex: req.query.q, $options: 'i' };
-      let limit = parseInt(req.query.limit) || 5;
-      let sort = { createdDate: 1, name: 1 };
-      sort.createdDate = query.sortBy && query.sortBy === 'desc' ? -1 : 1;
-      sort.name = query.name && query.name === 'desc' ? -1 : 1;
+      let match = { 'metadata.ownerId': userId };
+      if (query.s) match.name = { $regex: query.s, $options: 'i' };
+      let limit = parseInt(query.limit) || 5;
+      let sort = { createdAt: 1, name: 1 };
+      sort.createdAt = query.sortByDate && query.sortByDate === 'desc' ? -1 : 1;
+      sort.name = query.sortByName && query.sortByName === 'desc' ? -1 : 1;
+      console.log(match, sort, limit);
       const data = await this.fileDAO.getList(match, sort, limit);
       return data;
     } catch (err) {
       throw err;
     }
-  }
+  };
 
   getPublicLink = async (userId, fileId) => {
     try {
