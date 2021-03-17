@@ -10,6 +10,9 @@ const mongoose = require('mongoose');
 const errorHandler = require('./middleware/errorHandler');
 const passport = require('passport');
 const busboy = require('connect-busboy');
+const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
 
 dotenv.config();
 
@@ -35,7 +38,9 @@ mongoose
   });
 
 //Middlewares
-
+app.use(cors());
+app.use(helmet());
+app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 if (process.env.NODE_ENV === 'development') {
@@ -44,11 +49,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(passport.initialize());
 app.use(busboy());
 
-//Routes
-// app.get('/api', verifyAccessToken, async (req, res, next) => {
-//   res.send('Protected Routes');
-// });
-
+// Routes
 app.use('/api/auth', auth);
 app.use('/api', verifyAccessToken, file);
 app.use(errorHandler);
