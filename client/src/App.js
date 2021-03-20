@@ -1,9 +1,10 @@
+import Header from './component/header/Header';
+import Main from './component/landing/Main';
 const App = () => {
   return (
     <div className="App">
-      <div className="container mx-auto px-4">
-        <h1>Hello</h1>
-      </div>
+      <Header></Header>
+      <Main></Main>
     </div>
   );
 };
