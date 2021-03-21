@@ -1,7 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Register = () => {
+  const [user, setUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+    error: {},
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setUser((user) => ({ ...user, [name]: value }));
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    setSubmitted(true);
+    // if (user.firstName && user.lastName && user.username && user.password) {
+    //   dispatch(userActions.register(user));
+    // }
+  }
+
   return (
     <div className=" bg-blue-200  ">
       <div className=" mx-auto flex items-center relative">
@@ -30,10 +52,10 @@ const Register = () => {
                 <h3 class="my-4 text-2xl font-semibold text-gray-700 text-center">
                   Register
                 </h3>
-                <form action="#" class="flex flex-col space-y-5">
+                <form onSubmit={handleSubmit} class="flex flex-col space-y-5">
                   <div class="flex flex-col space-y-1">
                     <label
-                      for="name"
+                      htmlFor="name"
                       class="text-sm font-semibold text-gray-500"
                     >
                       Name
@@ -41,13 +63,19 @@ const Register = () => {
                     <input
                       type="name"
                       id="name"
+                      name="name"
+                      value={user.name}
+                      onChange={handleChange}
                       autofocus
                       class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                     />
+                    {submitted && !user.name && (
+                      <div className="text-red-500"> Name is required</div>
+                    )}
                   </div>
                   <div class="flex flex-col space-y-1">
                     <label
-                      for="email"
+                      htmlFor="email"
                       class="text-sm font-semibold text-gray-500"
                     >
                       Email address
@@ -55,14 +83,20 @@ const Register = () => {
                     <input
                       type="email"
                       id="email"
+                      name="email"
+                      value={user.email}
+                      onChange={handleChange}
                       autofocus
                       class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                     />
+                    {submitted && !user.email && (
+                      <div className="text-red-500">Email is required</div>
+                    )}
                   </div>
                   <div class="flex flex-col space-y-1">
                     <div class="flex items-center justify-between">
                       <label
-                        for="password"
+                        htmlFor="password"
                         class="text-sm font-semibold text-gray-500"
                       >
                         Password
@@ -71,8 +105,14 @@ const Register = () => {
                     <input
                       type="password"
                       id="password"
+                      name="password"
+                      value={user.password}
+                      onChange={handleChange}
                       class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                     />
+                    {submitted && !user.password && (
+                      <div className="text-red-500">Password is required</div>
+                    )}
                   </div>
                   <div class="flex items-center space-x-2">
                     <input
@@ -81,7 +121,7 @@ const Register = () => {
                       class="w-4 h-4 transition duration-300 rounded focus:ring-2 focus:ring-offset-0 focus:outline-none focus:ring-blue-200"
                     />
                     <label
-                      for="remember"
+                      htmlFor="remember"
                       class="text-sm font-semibold text-gray-500"
                     >
                       Remember me

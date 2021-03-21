@@ -1,7 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
+  const [user, setUser] = useState({
+    email: '',
+    password: '',
+    error: {},
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setUser((user) => ({ ...user, [name]: value }));
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    setSubmitted(true);
+    // if (user.firstName && user.lastName && user.username && user.password) {
+    //   dispatch(userActions.register(user));
+    // }
+  }
   return (
     <div className=" bg-blue-200  ">
       <div className=" mx-auto flex items-center relative ">
@@ -33,7 +53,7 @@ const Login = () => {
                 <form action="#" class="flex flex-col space-y-5">
                   <div class="flex flex-col space-y-1">
                     <label
-                      for="email"
+                      forHtml="email"
                       class="text-sm font-semibold text-gray-500"
                     >
                       Email address
@@ -41,14 +61,20 @@ const Login = () => {
                     <input
                       type="email"
                       id="email"
+                      name="email"
+                      value={user.email}
+                      onChange={handleChange}
                       autofocus
                       class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                     />
+                    {submitted && !user.email && (
+                      <div className="text-red-500">Email is required</div>
+                    )}
                   </div>
                   <div class="flex flex-col space-y-1">
                     <div class="flex items-center justify-between">
                       <label
-                        for="password"
+                        forHtml="password"
                         class="text-sm font-semibold text-gray-500"
                       >
                         Password
@@ -63,8 +89,14 @@ const Login = () => {
                     <input
                       type="password"
                       id="password"
+                      name="password"
+                      value={user.password}
+                      onChange={handleChange}
                       class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                     />
+                    {submitted && !user.password && (
+                      <div className="text-red-500">Password is required</div>
+                    )}
                   </div>
                   <div class="flex items-center space-x-2">
                     <input
@@ -73,7 +105,7 @@ const Login = () => {
                       class="w-4 h-4 transition duration-300 rounded focus:ring-2 focus:ring-offset-0 focus:outline-none focus:ring-blue-200"
                     />
                     <label
-                      for="remember"
+                      forHtml="remember"
                       class="text-sm font-semibold text-gray-500"
                     >
                       Remember me
