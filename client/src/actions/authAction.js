@@ -7,8 +7,7 @@ import url from '../constants/BaseURL';
 export const loadUser = () => async (dispatch, getState) => {
   try {
     dispatch({ type: authConstants.USER_LOADING });
-    const token = getState().auth.token;
-    const config = { headers: authHeader() };
+    const config = authHeader(getState);
     const { data } = await axios.get(`${url}/auth/user`, config);
     console.log(data);
 

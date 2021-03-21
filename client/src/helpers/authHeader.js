@@ -1,9 +1,9 @@
-export default function authHeader() {
+export default function authHeader(getState) {
   // return authorization header with jwt token
-  let user = JSON.parse(localStorage.getItem('user'));
-
+  let user = getState().auth;
+  const config = { Authorization: 'Bearer ' + user.token };
   if (user && user.token) {
-    return { Authorization: 'Bearer ' + user.token };
+    return config;
   } else {
     return {};
   }
