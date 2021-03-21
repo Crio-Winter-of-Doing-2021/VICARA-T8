@@ -8,7 +8,7 @@ const Footer = () => {
           <li className="my-2">
             <a
               className="text-gray-800 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
-              href="#"
+              to="#"
             >
               Github
             </a>
@@ -102,8 +102,16 @@ const Footer = () => {
         <div className="text-center text-gray-800 dark:text-gray-200 pt-2 sm:pt-4 font-light flex items-center justify-center">
           <p>
             Developed with{' '}
-            <i className="fas fa-heart " style={{ color: 'red' }}></i> by Manas
-            and Rajat
+            <i className="fas fa-heart " style={{ color: 'red' }}></i> by{' '}
+            <span>
+              {' '}
+              <a href="https://www.github.com/ManasUniyal">Manas </a>
+            </span>
+            and{' '}
+            <span>
+              {' '}
+              <a href="https://www.github.com/991rajat">Rajat </a>
+            </span>
           </p>
         </div>
       </div>

@@ -31,7 +31,11 @@ const Main = () => {
           </div>
           <div className="hidden sm:block sm:w-1/3 lg:w-2/5 relative ">
             <div className="flex content-center h-full">
-              <img src={logo} className="w-70 md:max-w-xs m-auto mt-auto" />
+              <img
+                src={logo}
+                className="w-70 md:max-w-xs m-auto mt-auto"
+                alt=""
+              />
             </div>
           </div>
         </div>
