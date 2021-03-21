@@ -1,35 +1,49 @@
 import React from 'react';
 
-const Login = () => {
+const Register = () => {
   return (
     <div className=" bg-blue-200  ">
       <div className=" mx-auto flex items-center relative">
         <div className="hidden md:block lg:w-3/6 px-10">
           <span className="w-20 h-2 bg-gray-800 dark:bg-white mb-5"></span>
           <h1 className="font-bebas-neue uppercase text-6xl sm:text-8xl font-black flex flex-col leading-none dark:text-white text-gray-800">
-            A little
-            <span className="text-5xl sm:text-7xl"> sign here.</span>
+            Let's Get
+            <span className="text-5xl sm:text-7xl"> Started.</span>
           </h1>
           <p className="text-sm sm:text-base text-gray-700 dark:text-white">
-            Don't have an account?
+            Already have an account?
           </p>
           <div className="flex mt-2">
             <a
               href="#"
               className="uppercase py-2 px-4 rounded-lg bg-gray-900 border-2 border-transparent text-white text-md mr-4 hover:bg-gray-700"
             >
-              Create One
+              Login
             </a>
           </div>
         </div>
         <div className=" w-full  lg:w-4/6 relative flex justify-center items-center bg-white">
-          <div className="    flex justify-center items-center sm:max-w-md w-full">
+          <div className="    flex justify-center items-center sm:max-w-md  w-full">
             <div class="flex flex-col overflow-hidden  max md:flex-row md:flex-1 ">
               <div class="p-5 bg-white md:flex-1">
                 <h3 class="my-4 text-2xl font-semibold text-gray-700 text-center">
-                  Login
+                  Register
                 </h3>
                 <form action="#" class="flex flex-col space-y-5">
+                  <div class="flex flex-col space-y-1">
+                    <label
+                      for="name"
+                      class="text-sm font-semibold text-gray-500"
+                    >
+                      Name
+                    </label>
+                    <input
+                      type="name"
+                      id="name"
+                      autofocus
+                      class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
+                    />
+                  </div>
                   <div class="flex flex-col space-y-1">
                     <label
                       for="email"
@@ -52,12 +66,6 @@ const Login = () => {
                       >
                         Password
                       </label>
-                      <a
-                        href="#"
-                        class="text-sm text-blue-600 hover:underline focus:text-blue-800"
-                      >
-                        Forgot Password?
-                      </a>
                     </div>
                     <input
                       type="password"
@@ -90,7 +98,7 @@ const Login = () => {
                     <span class="flex items-center justify-center space-x-2">
                       <span class="h-px bg-gray-400 w-14"></span>
                       <span class="font-normal text-gray-500">
-                        or login with
+                        or Register with
                       </span>
                       <span class="h-px bg-gray-400 w-14"></span>
                     </span>
@@ -127,4 +135,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
