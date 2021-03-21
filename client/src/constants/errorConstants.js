@@ -1,4 +1,4 @@
-export default errorConstants = {
+export const errorConstants = {
   GET_ERRORS: 'GET_ERRORS',
   CLEAR_ERRORS: 'CLEAR_ERRORS',
 };
