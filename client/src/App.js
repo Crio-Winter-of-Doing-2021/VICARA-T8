@@ -1,16 +1,27 @@
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Header from './component/header/Header';
 import Main from './component/landing/Main';
-import Footer from './component/footer/Footer';
 import Login from './component/auth/Login';
 import Register from './component/auth/Register';
+
 const App = () => {
   return (
     <div className="App">
-      <Header></Header>
-      <Main></Main>
-      <Login></Login>
-      <Register></Register>
-      <Footer></Footer>
+      <Router>
+        <Header></Header>
+        <Switch>
+          <Route exact path="/">
+            <Main></Main>
+          </Route>
+          <Route exact path="/login">
+            <Login></Login>
+          </Route>
+          <Route exact path="/register">
+            <Register></Register>
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 };

@@ -2,12 +2,12 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-blue-200 dark:bg-gray-800 w-full py-4  mt-40 md:mt-20">
+    <footer className="bg-gray-200 dark:bg-gray-800 w-full py-4  mt-40 md:mt-20">
       <div className="max-w-screen-xl mx-auto px-4">
         <ul className="max-w-screen-md mx-auto text-lg font-light flex flex-wrap justify-around">
           <li className="my-2">
             <a
-              className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
+              className="text-gray-800 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
               href="#"
             >
               Github
@@ -15,7 +15,7 @@ const Footer = () => {
           </li>
           <li className="my-2">
             <a
-              className="text-gray-400 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
+              className="text-gray-800 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
               href="#"
             >
               LinkedIn
@@ -99,7 +99,7 @@ const Footer = () => {
             </svg>
           </a>
         </div> */}
-        <div className="text-center text-gray-500 dark:text-gray-200 pt-2 sm:pt-4 font-light flex items-center justify-center">
+        <div className="text-center text-gray-800 dark:text-gray-200 pt-2 sm:pt-4 font-light flex items-center justify-center">
           <p>
             Developed with{' '}
             <i className="fas fa-heart " style={{ color: 'red' }}></i> by Manas
