@@ -12,8 +12,8 @@ const { verifyAccessToken } = require('../utils/jwtHelper');
 const authController = new AuthController(new AuthService(new UserDAO(User)));
 
 //  @desc Get User
-//  @desc GET /user/:id
-router.get('/user/:id', verifyAccessToken, authController.getUser);
+//  @desc GET /user
+router.get('/user/', verifyAccessToken, authController.getUser);
 
 //  @desc Login
 //  @route POST /login

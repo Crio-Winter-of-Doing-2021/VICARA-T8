@@ -7,8 +7,7 @@ class AuthController {
   // @desc Get User
   getUser = async (req, res, next) => {
     try {
-      const id = req.params.id;
-      console.log(id);
+      const id = req.payload.aud;
       const user = await this.authService.getUser(id);
       res.status(201).json({ status: 'success', user: user });
     } catch (err) {
