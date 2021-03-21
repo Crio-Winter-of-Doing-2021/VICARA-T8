@@ -4,6 +4,18 @@ class AuthController {
     this.authService = AuthService;
   }
 
+  // @desc Get User
+  getUser = async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      console.log(id);
+      const user = await this.authService.getUser(id);
+      res.status(201).json({ status: 'success', user: user });
+    } catch (err) {
+      next(err);
+    }
+  };
+
   // @desc Register
   register = async (req, res, next) => {
     try {
@@ -29,7 +41,6 @@ class AuthController {
   // @desc Refresh Token
   refresh = async (req, res, next) => {
     try {
-      console.log('1');
       const { refreshToken } = req.body;
       const tokens = await this.authService.refreshToken(refreshToken);
       res.status(200).json({ status: 'success', tokens });

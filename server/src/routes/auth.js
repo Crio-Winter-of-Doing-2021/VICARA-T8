@@ -6,9 +6,14 @@ const User = require('../models/User');
 const router = Router();
 const passport = require('passport');
 const conf = require('../utils/passport');
+const { verifyAccessToken } = require('../utils/jwtHelper');
 
 // Add DI
 const authController = new AuthController(new AuthService(new UserDAO(User)));
+
+//  @desc Get User
+//  @desc GET /user/:id
+router.get('/user/:id', verifyAccessToken, authController.getUser);
 
 //  @desc Login
 //  @route POST /login

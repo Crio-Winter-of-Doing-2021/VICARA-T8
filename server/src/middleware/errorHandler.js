@@ -12,6 +12,11 @@ const errorHandler = (error, req, res, next) => {
     statusCode = 400;
   }
 
+  if (error.name === 'CastError') {
+    message = 'User not found.';
+    statusCode = 404;
+  }
+
   res.status(statusCode || 500).json({
     message: message || 'Server Error',
     statusCode: statusCode,

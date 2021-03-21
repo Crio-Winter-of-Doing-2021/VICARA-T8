@@ -3,6 +3,12 @@ class UserDAO {
     this.user = User;
   }
 
+  //@desc Get a User by Id
+
+  async getUser(id) {
+    return await this.user.findById(id);
+  }
+
   //@desc Create a new User
   async create(entity) {
     return await this.user.create(entity);
@@ -20,6 +26,7 @@ class UserDAO {
     return await this.user.findByIdAndUpdate(id, { password }, { new: true });
   }
 
+  //@desc Update the Size of Storage
   async UpdateStorage(id, size, operation) {
     try {
       let status = false;

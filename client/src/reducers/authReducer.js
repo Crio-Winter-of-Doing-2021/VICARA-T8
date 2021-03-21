@@ -7,7 +7,7 @@ const intialState = {
   user: null,
 };
 
-export default function (state = intialState, action) {
+export default function authReducer(state = intialState, action) {
   switch (action.type) {
     case authConstants.USER_LOADING:
       return {

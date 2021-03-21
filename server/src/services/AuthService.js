@@ -15,6 +15,17 @@ class AuthService {
     this.userDAO = UserDAO;
   }
 
+  //@desc Get a User
+  getUser = async (id) => {
+    try {
+      const user = await this.userDAO.getUser(id);
+      if (!user) throw createError.NotFound('User Not Exist');
+      return user;
+    } catch (err) {
+      throw err;
+    }
+  };
+
   // @desc Create a new User
   create = async (userData) => {
     const entity = await registerSchema.validateAsync(userData, {
