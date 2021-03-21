@@ -4,7 +4,7 @@ import logo from '../../assets/favicon.ico';
 const Header = () => {
   return (
     <div>
-      <header class="h-20 sm:h-20 flex items-center z-30 w-full bg-blue-200 shadow-sm rounded-b-lg">
+      <header class="h-20 sm:h-20 flex items-center z-30 w-full bg-blue-200 ">
         <div class="container mx-auto px-6 flex items-center justify-between">
           <div className="flex items-center">
             <a href="#">
