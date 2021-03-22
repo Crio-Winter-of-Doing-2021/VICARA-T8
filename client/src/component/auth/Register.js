@@ -24,6 +24,8 @@ const Register = () => {
     if (user.name && user.email && user.password) {
       dispatch(register(user));
     }
+
+    setSubmitted(false);
   }
 
   return (
@@ -72,9 +74,13 @@ const Register = () => {
                       autoComplete="off"
                       class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                     />
-                    {submitted && !user.name && (
-                      <div className="text-red-500"> Name is required</div>
-                    )}
+                    {submitted &&
+                      ((!user.name && (
+                        <div className="text-red-500"> Name is required</div>
+                      )) ||
+                        (!user.error.name && (
+                          <div className="text-red-500"> {user.error.name}</div>
+                        )))}
                   </div>
                   <div class="flex flex-col space-y-1">
                     <label
@@ -92,9 +98,13 @@ const Register = () => {
                       autofocus
                       class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                     />
-                    {submitted && !user.email && (
-                      <div className="text-red-500">Email is required</div>
-                    )}
+                    {submitted &&
+                      ((!user.email && (
+                        <div className="text-red-500">Email is required</div>
+                      )) ||
+                        (!user.error.email && (
+                          <div className="text-red-500">{user.error.email}</div>
+                        )))}
                   </div>
                   <div class="flex flex-col space-y-1">
                     <div class="flex items-center justify-between">
@@ -113,9 +123,15 @@ const Register = () => {
                       onChange={handleChange}
                       class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                     />
-                    {submitted && !user.password && (
-                      <div className="text-red-500">Password is required</div>
-                    )}
+                    {submitted &&
+                      ((!user.password && (
+                        <div className="text-red-500">Password is required</div>
+                      )) ||
+                        (!user.error.password && (
+                          <div className="text-red-500">
+                            {user.error.password}
+                          </div>
+                        )))}
                   </div>
                   <div class="flex items-center space-x-2">
                     <input

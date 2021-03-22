@@ -7,11 +7,14 @@ import url from '../constants/BaseURL';
 // Register User
 export const register = ({ name, email, password }) => async (dispatch) => {
   try {
+    dispatch({ type: authConstants.REGISTER_REQUEST });
     const body = JSON.parse(JSON.stringify({ name, email, password }));
     console.log(body);
     const { data } = await axios.post(`${url}/auth/register`, body);
     console.log(data);
+
     dispatch({ type: authConstants.REGISTER_SUCCESS, payload: data });
+    dispatch(loadUser());
   } catch (err) {
     console.log(err.response.data);
     dispatch(

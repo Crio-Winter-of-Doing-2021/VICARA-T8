@@ -1,7 +1,7 @@
 import authConstants from '../constants/authConstants';
 
 const intialState = {
-  token: localStorage.getItem('token'),
+  tokens: localStorage.getItem('tokens'),
   isAuthenticated: null,
   isLoading: false,
   user: null,
@@ -19,25 +19,33 @@ export default function authReducer(state = intialState, action) {
         ...state,
         isAuthenticated: true,
         isLoading: false,
-        user: action.payload,
+        user: action.payload.user,
+      };
+    case authConstants.LOGIN_REQUEST:
+    case authConstants.REGISTER_REQUEST:
+      return {
+        tokens: null,
+        isAuthenticated: false,
+        isLoading: true,
+        user: null,
       };
     case authConstants.LOGIN_SUCCESS:
     case authConstants.REGISTER_SUCCESS:
-      localStorage.setItem('token', action.payload.token);
+      localStorage.setItem('tokens', action.payload.tokens);
       return {
-        ...state,
-        ...action.payload,
+        tokens: action.payload.tokens,
         isAuthenticated: true,
         isLoading: false,
+        user: null,
       };
     case authConstants.AUTH_ERROR:
     case authConstants.LOGIN_FAILURE:
     case authConstants.LOGOUT:
     case authConstants.REGISTER_FAILURE:
-      localStorage.removeItem('token');
+      localStorage.removeItem('tokens');
       return {
         ...state,
-        token: null,
+        tokens: null,
         user: null,
         isAuthenticated: false,
         isLoading: false,

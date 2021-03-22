@@ -16,7 +16,7 @@ class UserDAO {
 
   //@desc Check an existing User
   async exists(email) {
-    return await this.user.findOne({ email });
+    return await this.user.findOne({ email }).select('+password');
   }
 
   //@desc Update an existing User (only password rightnow)
