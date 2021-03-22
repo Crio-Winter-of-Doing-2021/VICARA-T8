@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { register } from '../../actions/authAction';
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -9,7 +11,7 @@ const Register = () => {
     error: {},
   });
   const [submitted, setSubmitted] = useState(false);
-
+  const dispatch = useDispatch();
   function handleChange(e) {
     const { name, value } = e.target;
     setUser((user) => ({ ...user, [name]: value }));
@@ -19,13 +21,13 @@ const Register = () => {
     e.preventDefault();
 
     setSubmitted(true);
-    // if (user.firstName && user.lastName && user.username && user.password) {
-    //   dispatch(userActions.register(user));
-    // }
+    if (user.name && user.email && user.password) {
+      dispatch(register(user));
+    }
   }
 
   return (
-    <div className=" bg-blue-200  ">
+    <div className=" bg-blue-200">
       <div className=" mx-auto flex items-center relative">
         <div className="hidden md:block lg:w-3/6 px-10 py-16">
           <span className="w-20 h-2 bg-gray-800 dark:bg-white mb-5"></span>
@@ -67,6 +69,7 @@ const Register = () => {
                       value={user.name}
                       onChange={handleChange}
                       autofocus
+                      autoComplete="off"
                       class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                     />
                     {submitted && !user.name && (

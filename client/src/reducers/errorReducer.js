@@ -3,6 +3,7 @@ import { errorConstants } from '../constants/errorConstants';
 const intialState = {
   message: {},
   status: null,
+  id: null,
 };
 
 export default function errorReducer(state = intialState, action) {
@@ -11,6 +12,7 @@ export default function errorReducer(state = intialState, action) {
       return {
         message: action.payload.message,
         status: action.payload.status,
+        id: action.payload.id,
       };
     case errorConstants.CLEAR_ERRORS:
       return {

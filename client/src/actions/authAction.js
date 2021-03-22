@@ -4,6 +4,30 @@ import authHeader from '../helpers/authHeader';
 import { returnErrors } from './errorAction';
 import url from '../constants/BaseURL';
 
+// Register User
+export const register = ({ name, email, password }) => async (dispatch) => {
+  try {
+    const body = JSON.parse(JSON.stringify({ name, email, password }));
+    console.log(body);
+    const { data } = await axios.post(`${url}/auth/register`, body);
+    console.log(data);
+    dispatch({ type: authConstants.REGISTER_SUCCESS, payload: data });
+  } catch (err) {
+    console.log(err.response.data);
+    dispatch(
+      returnErrors(
+        err.response.data.message,
+        err.response.status,
+        'REGISTER_FAILURE'
+      )
+    );
+    dispatch({
+      type: authConstants.REGISTER_FAILURE,
+    });
+  }
+};
+
+// Load User
 export const loadUser = () => async (dispatch, getState) => {
   try {
     dispatch({ type: authConstants.USER_LOADING });
