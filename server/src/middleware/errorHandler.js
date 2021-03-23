@@ -8,11 +8,14 @@ const errorHandler = (error, req, res, next) => {
 
   //Joi validation error
   if (error.name === 'ValidationError') {
-    message = Object.values(error.details).map((val) => {
+    message = {};
+    let arr = Object.values(error.details).map((val) => {
       let key = val.context.label;
       let value = val.message;
+      message[key] = value;
       return { [key]: value };
     });
+
     statusCode = 400;
   }
 

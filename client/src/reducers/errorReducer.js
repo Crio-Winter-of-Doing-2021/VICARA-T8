@@ -1,4 +1,4 @@
-import { errorConstants } from '../constants/errorConstants';
+import errorConstants from '../constants/errorConstants';
 
 const intialState = {
   message: {},
@@ -10,16 +10,19 @@ export default function errorReducer(state = intialState, action) {
   switch (action.type) {
     case errorConstants.GET_ERRORS:
       return {
+        ...state,
         message: action.payload.message,
         status: action.payload.status,
         id: action.payload.id,
       };
     case errorConstants.CLEAR_ERRORS:
       return {
+        ...state,
         message: {},
         status: null,
+        id: null,
       };
     default:
-      return intialState;
+      return state;
   }
 }

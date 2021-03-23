@@ -1,7 +1,7 @@
 import authConstants from '../constants/authConstants';
 
 const intialState = {
-  tokens: localStorage.getItem('tokens'),
+  tokens: JSON.parse(localStorage.getItem('tokens')),
   isAuthenticated: null,
   isLoading: false,
   user: null,
@@ -24,6 +24,7 @@ export default function authReducer(state = intialState, action) {
     case authConstants.LOGIN_REQUEST:
     case authConstants.REGISTER_REQUEST:
       return {
+        ...state,
         tokens: null,
         isAuthenticated: false,
         isLoading: true,
@@ -31,8 +32,9 @@ export default function authReducer(state = intialState, action) {
       };
     case authConstants.LOGIN_SUCCESS:
     case authConstants.REGISTER_SUCCESS:
-      localStorage.setItem('tokens', action.payload.tokens);
+      localStorage.setItem('tokens', JSON.stringify(action.payload.tokens));
       return {
+        ...state,
         tokens: action.payload.tokens,
         isAuthenticated: true,
         isLoading: false,
@@ -46,9 +48,9 @@ export default function authReducer(state = intialState, action) {
       return {
         ...state,
         tokens: null,
-        user: null,
         isAuthenticated: false,
         isLoading: false,
+        user: null,
       };
     default:
       return state;

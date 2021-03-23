@@ -34,7 +34,8 @@ export const register = ({ name, email, password }) => async (dispatch) => {
 export const loadUser = () => async (dispatch, getState) => {
   try {
     dispatch({ type: authConstants.USER_LOADING });
-    const config = authHeader(getState);
+    const config = { headers: authHeader(getState) };
+    console.log(config);
     const { data } = await axios.get(`${url}/auth/user`, config);
     console.log(data);
 

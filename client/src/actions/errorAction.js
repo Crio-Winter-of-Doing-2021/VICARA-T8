@@ -1,4 +1,4 @@
-import { errorConstants } from '../constants/errorConstants';
+import errorConstants from '../constants/errorConstants';
 // RETURN ERRORS
 export const returnErrors = (message, status, id = null) => {
   return {
