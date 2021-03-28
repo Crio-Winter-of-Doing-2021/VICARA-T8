@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { login } from '../../actions/authAction';
+import authConstants from '../../constants/authConstants';
+import errorConstants from '../../constants/errorConstants';
 
 const Login = () => {
   const [user, setUser] = useState({
     email: '',
     password: '',
-    error: {},
   });
+  const error = useSelector((state) => state.error);
+  const isLoading = useSelector((state) => state.auth.isLoading);
   const [submitted, setSubmitted] = useState(false);
-
+  const dispatch = useDispatch();
   function handleChange(e) {
     const { name, value } = e.target;
     setUser((user) => ({ ...user, [name]: value }));
@@ -18,9 +23,14 @@ const Login = () => {
     e.preventDefault();
 
     setSubmitted(true);
-    // if (user.firstName && user.lastName && user.username && user.password) {
-    //   dispatch(userActions.register(user));
-    // }
+    if (user.email && user.password) {
+      dispatch(login(user));
+    }
+
+    setTimeout(() => {
+      setSubmitted(false);
+      dispatch({ type: errorConstants.CLEAR_ERRORS });
+    }, 3000);
   }
   return (
     <div className=" bg-blue-200  ">
@@ -70,6 +80,11 @@ const Login = () => {
                     {submitted && !user.email && (
                       <div className="text-red-500">Email is required</div>
                     )}
+                    {submitted &&
+                      error.id === authConstants.LOGIN_FAILURE &&
+                      error.message && (
+                        <div className="text-red-500"> {error.message}</div>
+                      )}
                   </div>
                   <div class="flex flex-col space-y-1">
                     <div class="flex items-center justify-between">
@@ -114,6 +129,7 @@ const Login = () => {
                   <div>
                     <button
                       type="submit"
+                      onClick={handleSubmit}
                       class="w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-blue-500 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-blue-200 focus:ring-4"
                     >
                       Log in

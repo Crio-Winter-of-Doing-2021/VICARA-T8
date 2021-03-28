@@ -30,6 +30,32 @@ export const register = ({ name, email, password }) => async (dispatch) => {
   }
 };
 
+// Login User
+export const login = ({ email, password }) => async (dispatch) => {
+  try {
+    dispatch({ type: authConstants.LOGIN_REQUEST });
+    const body = JSON.parse(JSON.stringify({ email, password }));
+    console.log(body);
+    const { data } = await axios.post(`${url}/auth/login`, body);
+    console.log(data);
+
+    dispatch({ type: authConstants.LOGIN_SUCCESS, payload: data });
+    dispatch(loadUser());
+  } catch (err) {
+    console.log(err.response.data);
+    dispatch(
+      returnErrors(
+        err.response.data.message,
+        err.response.status,
+        'LOGIN_FAILURE'
+      )
+    );
+    dispatch({
+      type: authConstants.LOGIN_FAILURE,
+    });
+  }
+};
+
 // Load User
 export const loadUser = () => async (dispatch, getState) => {
   try {
