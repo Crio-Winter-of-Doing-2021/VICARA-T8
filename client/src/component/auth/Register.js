@@ -12,7 +12,7 @@ const Register = () => {
     email: '',
     password: '',
   });
-  const { isLoading, success, error } = useSelector((state) => state.auth);
+  const { isLoading, isError, error } = useSelector((state) => state.auth);
   const [submitted, setSubmitted] = useState(false);
   const dispatch = useDispatch();
   function handleChange(e) {
@@ -55,9 +55,9 @@ const Register = () => {
             </Link>
           </div>
         </div>
-        <div className="py-16 w-full  lg:w-4/6 relative flex justify-center items-center bg-white">
-          <div className="    flex justify-center items-center sm:max-w-md  w-full">
-            <div className="flex flex-col overflow-hidden  max md:flex-row md:flex-1 ">
+        <div className="md:py-16 py-2 w-full lg:w-4/6 relative flex justify-center items-center bg-white border">
+          <div className="    flex justify-center items-center sm:max-w-md w-full">
+            <div className="flex flex-col overflow-hidden  max md:flex-row md:flex-1 w-full">
               <div className="p-5 bg-white md:flex-1">
                 <h3 className="my-4 text-2xl font-semibold text-gray-700 text-center">
                   Register
@@ -85,9 +85,15 @@ const Register = () => {
                     {submitted && !user.name && (
                       <div className="text-red-500"> Name is required</div>
                     )}
-                    {submitted && !success && error.message.name && (
-                      <div className="text-red-500"> {error.message.name}</div>
-                    )}
+                    {submitted &&
+                      isError &&
+                      error.message &&
+                      error.message.name && (
+                        <div className="text-red-500">
+                          {' '}
+                          {error.message.name}
+                        </div>
+                      )}
                   </div>
                   <div className="flex flex-col space-y-1">
                     <label
@@ -107,12 +113,20 @@ const Register = () => {
                     {submitted && !user.email && (
                       <div className="text-red-500">Email is required</div>
                     )}
-                    {submitted && !success && error.message.email && (
-                      <div className="text-red-500"> {error.message.email}</div>
-                    )}
-                    {submitted && !success && error.message && (
-                      <div className="text-red-500"> {error.message}</div>
-                    )}
+                    {submitted &&
+                      isError &&
+                      error.message &&
+                      error.message.email && (
+                        <div className="text-red-500">
+                          {' '}
+                          {error.message.email}
+                        </div>
+                      )}
+                    {submitted &&
+                      isError &&
+                      typeof error.message === 'string' && (
+                        <div className="text-red-500"> {error.message}</div>
+                      )}
                   </div>
                   <div className="flex flex-col space-y-1">
                     <div className="flex items-center justify-between">
@@ -134,12 +148,15 @@ const Register = () => {
                     {submitted && !user.password && (
                       <div className="text-red-500">Password is required</div>
                     )}
-                    {submitted && !success && error.message.password && (
-                      <div className="text-red-500">
-                        {' '}
-                        {error.message.password}
-                      </div>
-                    )}
+                    {submitted &&
+                      isError &&
+                      error.message &&
+                      error.message.password && (
+                        <div className="text-red-500">
+                          {' '}
+                          {error.message.password}
+                        </div>
+                      )}
                   </div>
                   <div className="flex items-center space-x-2">
                     <input
