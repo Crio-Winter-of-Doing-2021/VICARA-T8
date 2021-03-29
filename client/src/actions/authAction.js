@@ -14,18 +14,18 @@ export const register = ({ name, email, password }) => async (dispatch) => {
     console.log(data);
 
     dispatch({ type: authConstants.REGISTER_SUCCESS, payload: data });
-    dispatch(loadUser());
   } catch (err) {
     console.log(err.response.data);
-    dispatch(
-      returnErrors(
-        err.response.data.message,
-        err.response.status,
-        'REGISTER_FAILURE'
-      )
-    );
+    // dispatch(
+    //   returnErrors(
+    //     err.response.data.message,
+    //     err.response.status,
+    //     'REGISTER_FAILURE'
+    //   )
+    // );
     dispatch({
       type: authConstants.REGISTER_FAILURE,
+      payload: err.response.data,
     });
   }
 };
@@ -40,18 +40,41 @@ export const login = ({ email, password }) => async (dispatch) => {
     console.log(data);
 
     dispatch({ type: authConstants.LOGIN_SUCCESS, payload: data });
-    dispatch(loadUser());
   } catch (err) {
     console.log(err.response.data);
-    dispatch(
-      returnErrors(
-        err.response.data.message,
-        err.response.status,
-        'LOGIN_FAILURE'
-      )
-    );
+    // dispatch(
+    //   returnErrors(
+    //     err.response.data.message,
+    //     err.response.status,
+    //     'LOGIN_FAILURE'
+    //   )
+    // );
     dispatch({
       type: authConstants.LOGIN_FAILURE,
+      payload: err.response.data,
+    });
+  }
+};
+
+// OAuth User
+export const googleOAuth = (user, token) => async (dispatch) => {
+  try {
+    dispatch({ type: authConstants.OAUTH_REQUEST });
+    const body = JSON.parse(JSON.stringify({ user, token }));
+    const { data } = await axios.post(`${url}/auth/oauth/google`, body);
+    dispatch({ type: authConstants.OAUTH_SUCCESS, payload: data });
+  } catch (err) {
+    console.log(err.response.data);
+    // dispatch(
+    //   returnErrors(
+    //     err.response.data.message,
+    //     err.response.status,
+    //     'OAUTH_FAILURE'
+    //   )
+    // );
+    dispatch({
+      type: authConstants.OAUTH_FAILURE,
+      payload: err.response.data,
     });
   }
 };
@@ -71,10 +94,10 @@ export const loadUser = () => async (dispatch, getState) => {
     });
   } catch (err) {
     console.log(err);
-    dispatch(returnErrors(err.response.data.message, err.response.status));
+    // dispatch(returnErrors(err.response.data.message, err.response.status));
     dispatch({
       type: authConstants.AUTH_ERROR,
-      payload: err,
+      payload: err.response.data,
     });
   }
 };

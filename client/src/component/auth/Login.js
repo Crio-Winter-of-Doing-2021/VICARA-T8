@@ -3,15 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { login } from '../../actions/authAction';
 import authConstants from '../../constants/authConstants';
-import errorConstants from '../../constants/errorConstants';
+import GoogleOAuth from './GoogleOAuth';
 
 const Login = () => {
   const [user, setUser] = useState({
     email: '',
     password: '',
   });
-  const error = useSelector((state) => state.error);
-  const isLoading = useSelector((state) => state.auth.isLoading);
+  // const error = useSelector((state) => state.auth.error);
+  // const success = useSelector((state) => state.auth.success);
+  // const isLoading = useSelector((state) => state.auth.isLoading);
+
+  const { isLoading, success, error } = useSelector((state) => state.auth);
   const [submitted, setSubmitted] = useState(false);
   const dispatch = useDispatch();
   function handleChange(e) {
@@ -29,9 +32,10 @@ const Login = () => {
 
     setTimeout(() => {
       setSubmitted(false);
-      dispatch({ type: errorConstants.CLEAR_ERRORS });
+      dispatch({ type: authConstants.AUTH_CLEAR_ERRORS });
     }, 3000);
   }
+
   return (
     <div className=" bg-blue-200  ">
       <div className=" mx-auto flex items-center relative ">
@@ -80,11 +84,9 @@ const Login = () => {
                     {submitted && !user.email && (
                       <div className="text-red-500">Email is required</div>
                     )}
-                    {submitted &&
-                      error.id === authConstants.LOGIN_FAILURE &&
-                      error.message && (
-                        <div className="text-red-500"> {error.message}</div>
-                      )}
+                    {submitted && !success && error && (
+                      <div className="text-red-500"> {error}</div>
+                    )}
                   </div>
                   <div class="flex flex-col space-y-1">
                     <div class="flex items-center justify-between">
@@ -94,12 +96,12 @@ const Login = () => {
                       >
                         Password
                       </label>
-                      <a
+                      {/* <a
                         href="#"
                         class="text-sm text-blue-600 hover:underline focus:text-blue-800"
                       >
                         Forgot Password?
-                      </a>
+                      </a> */}
                     </div>
                     <input
                       type="password"
@@ -143,27 +145,8 @@ const Login = () => {
                       </span>
                       <span class="h-px bg-gray-400 w-14"></span>
                     </span>
-                    <div class="flex flex-col space-y-4">
-                      <a
-                        href="#"
-                        class="flex items-center justify-center px-2 py-3 space-x-2 transition-colors duration-300 border bg-gray-800 rounded-md group hover:bg-red-600 focus:outline-none bg-opacity-90"
-                      >
-                        <span>
-                          <svg
-                            width="20"
-                            height="20"
-                            fill="#ffffff"
-                            class="mr-2"
-                            viewBox="0 0 1792 1792"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path d="M896 786h725q12 67 12 128 0 217-91 387.5t-259.5 266.5-386.5 96q-157 0-299-60.5t-245-163.5-163.5-245-60.5-299 60.5-299 163.5-245 245-163.5 299-60.5q300 0 515 201l-209 201q-123-119-306-119-129 0-238.5 65t-173.5 176.5-64 243.5 64 243.5 173.5 176.5 238.5 65q87 0 160-24t120-60 82-82 51.5-87 22.5-78h-436v-264z"></path>
-                          </svg>
-                        </span>
-                        <span class="text-sm font-medium text-white group-hover:text-white">
-                          Google
-                        </span>
-                      </a>
+                    <div>
+                      <GoogleOAuth></GoogleOAuth>
                     </div>
                   </div>
                 </form>

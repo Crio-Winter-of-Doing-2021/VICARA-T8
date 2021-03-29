@@ -48,10 +48,21 @@ class AuthController {
     }
   };
 
-  // @method Google OAuth
+  // @method Google OAuth Backend
   googleOAuth = async (req, res, next) => {
     try {
       const userData = req.user._json;
+      const tokens = await this.authService.googleOAuth(userData);
+      res.status(200).json({ status: 'success', tokens });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  // @method Google Frontend
+  googleFEOAuth = async (req, res, next) => {
+    try {
+      const userData = req.body.user;
       const tokens = await this.authService.googleOAuth(userData);
       res.status(200).json({ status: 'success', tokens });
     } catch (err) {

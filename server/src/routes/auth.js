@@ -50,4 +50,8 @@ router.get(
   authController.googleOAuth
 );
 
+//  @desc Google OAuth
+//  @route POST /google
+router.post('/oauth/google', authController.googleFEOAuth);
+
 module.exports = router;
