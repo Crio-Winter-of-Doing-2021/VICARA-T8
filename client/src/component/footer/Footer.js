@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -6,18 +7,12 @@ const Footer = () => {
       <div className="max-w-screen-xl mx-auto px-4">
         <ul className="max-w-screen-md mx-auto text-lg font-light flex flex-wrap justify-around">
           <li className="my-2">
-            <a
-              className="text-gray-800 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
-              to="#"
-            >
+            <a className="text-gray-800 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200">
               Github
             </a>
           </li>
           <li className="my-2">
-            <a
-              className="text-gray-800 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
-              href="#"
-            >
+            <a className="text-gray-800 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200">
               LinkedIn
             </a>
           </li>
@@ -105,12 +100,12 @@ const Footer = () => {
             <i className="fas fa-heart " style={{ color: 'red' }}></i> by{' '}
             <span>
               {' '}
-              <a href="https://www.github.com/ManasUniyal">Manas </a>
+              <Link to="https://www.github.com/ManasUniyal">Manas </Link>
             </span>
             and{' '}
             <span>
               {' '}
-              <a href="https://www.github.com/991rajat">Rajat </a>
+              <Link to="https://www.github.com/991rajat">Rajat </Link>
             </span>
           </p>
         </div>

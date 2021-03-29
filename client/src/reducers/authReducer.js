@@ -5,7 +5,7 @@ const intialState = {
   isAuthenticated: null,
   isLoading: false,
   user: null,
-  error: null,
+  error: { message: {} },
   success: false,
 };
 
@@ -58,13 +58,13 @@ export default function authReducer(state = intialState, action) {
         isAuthenticated: false,
         isLoading: false,
         user: null,
-        error: action.payload.message,
+        error: { message: action.payload.message },
         success: false,
       };
     case authConstants.AUTH_CLEAR_ERRORS:
       return {
         ...state,
-        error: null,
+        error: { message: {} },
         success: false,
       };
     default:

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import authConstants from '../constants/authConstants';
 import authHeader from '../helpers/authHeader';
-import { returnErrors } from './errorAction';
 import url from '../constants/BaseURL';
 
 // Register User

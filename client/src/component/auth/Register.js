@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { register } from '../../actions/authAction';
 import authConstants from '../../constants/authConstants';
-import errorConstants from '../../constants/errorConstants';
 import GoogleOAuth from './GoogleOAuth';
+import Loader from '../styles/Loader';
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -12,8 +12,7 @@ const Register = () => {
     email: '',
     password: '',
   });
-  const error = useSelector((state) => state.error);
-  const isLoading = useSelector((state) => state.auth.isLoading);
+  const { isLoading, success, error } = useSelector((state) => state.auth);
   const [submitted, setSubmitted] = useState(false);
   const dispatch = useDispatch();
   function handleChange(e) {
@@ -31,7 +30,7 @@ const Register = () => {
 
     setTimeout(() => {
       setSubmitted(false);
-      dispatch({ type: errorConstants.CLEAR_ERRORS });
+      dispatch({ type: authConstants.AUTH_CLEAR_ERRORS });
     }, 3000);
   }
 
@@ -58,16 +57,19 @@ const Register = () => {
         </div>
         <div className="py-16 w-full  lg:w-4/6 relative flex justify-center items-center bg-white">
           <div className="    flex justify-center items-center sm:max-w-md  w-full">
-            <div class="flex flex-col overflow-hidden  max md:flex-row md:flex-1 ">
-              <div class="p-5 bg-white md:flex-1">
-                <h3 class="my-4 text-2xl font-semibold text-gray-700 text-center">
+            <div className="flex flex-col overflow-hidden  max md:flex-row md:flex-1 ">
+              <div className="p-5 bg-white md:flex-1">
+                <h3 className="my-4 text-2xl font-semibold text-gray-700 text-center">
                   Register
                 </h3>
-                <form onSubmit={handleSubmit} class="flex flex-col space-y-5">
-                  <div class="flex flex-col space-y-1">
+                <form
+                  onSubmit={handleSubmit}
+                  className="flex flex-col space-y-5"
+                >
+                  <div className="flex flex-col space-y-1">
                     <label
                       htmlFor="name"
-                      class="text-sm font-semibold text-gray-500"
+                      className="text-sm font-semibold text-gray-500"
                     >
                       Name
                     </label>
@@ -77,26 +79,21 @@ const Register = () => {
                       name="name"
                       value={user.name}
                       onChange={handleChange}
-                      autofocus
+                      autoFocus="true"
                       autoComplete="off"
-                      class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
+                      className="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                     />
                     {submitted && !user.name && (
                       <div className="text-red-500"> Name is required</div>
                     )}
-                    {submitted &&
-                      error.id === authConstants.REGISTER_FAILURE &&
-                      error.message.name && (
-                        <div className="text-red-500">
-                          {' '}
-                          {error.message.name}
-                        </div>
-                      )}
+                    {submitted && !success && error.message.name && (
+                      <div className="text-red-500"> {error.message.name}</div>
+                    )}
                   </div>
-                  <div class="flex flex-col space-y-1">
+                  <div className="flex flex-col space-y-1">
                     <label
                       htmlFor="email"
-                      class="text-sm font-semibold text-gray-500"
+                      className="text-sm font-semibold text-gray-500"
                     >
                       Email address
                     </label>
@@ -107,31 +104,23 @@ const Register = () => {
                       value={user.email}
                       onChange={handleChange}
                       autofocus
-                      class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
+                      className="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                     />
                     {submitted && !user.email && (
                       <div className="text-red-500">Email is required</div>
                     )}
-                    {submitted &&
-                      error.id === authConstants.REGISTER_FAILURE &&
-                      error.message.email && (
-                        <div className="text-red-500">
-                          {' '}
-                          {error.message.email}
-                        </div>
-                      )}
-                    {submitted &&
-                      error.id === authConstants.REGISTER_FAILURE &&
-                      error.status === 403 &&
-                      error.message && (
-                        <div className="text-red-500"> {error.message}</div>
-                      )}
+                    {submitted && !success && error.message.email && (
+                      <div className="text-red-500"> {error.message.email}</div>
+                    )}
+                    {submitted && !success && error.message && (
+                      <div className="text-red-500"> {error.message}</div>
+                    )}
                   </div>
-                  <div class="flex flex-col space-y-1">
-                    <div class="flex items-center justify-between">
+                  <div className="flex flex-col space-y-1">
+                    <div className="flex items-center justify-between">
                       <label
                         htmlFor="password"
-                        class="text-sm font-semibold text-gray-500"
+                        className="text-sm font-semibold text-gray-500"
                       >
                         Password
                       </label>
@@ -142,29 +131,27 @@ const Register = () => {
                       name="password"
                       value={user.password}
                       onChange={handleChange}
-                      class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
+                      className="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                     />
                     {submitted && !user.password && (
                       <div className="text-red-500">Password is required</div>
                     )}
-                    {submitted &&
-                      error.id == 'REGISTER_FAILURE' &&
-                      error.message.password && (
-                        <div className="text-red-500">
-                          {' '}
-                          {error.message.password}
-                        </div>
-                      )}
+                    {submitted && !success && error.message.password && (
+                      <div className="text-red-500">
+                        {' '}
+                        {error.message.password}
+                      </div>
+                    )}
                   </div>
-                  <div class="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2">
                     <input
                       type="checkbox"
                       id="remember"
-                      class="w-4 h-4 transition duration-300 rounded focus:ring-2 focus:ring-offset-0 focus:outline-none focus:ring-blue-200"
+                      className="w-4 h-4 transition duration-300 rounded focus:ring-2 focus:ring-offset-0 focus:outline-none focus:ring-blue-200"
                     />
                     <label
                       htmlFor="remember"
-                      class="text-sm font-semibold text-gray-500"
+                      className="text-sm font-semibold text-gray-500"
                     >
                       Remember me
                     </label>
@@ -173,58 +160,19 @@ const Register = () => {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      class="flex justify-center items-center w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-blue-500 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-blue-200 focus:ring-4"
+                      className="flex justify-center items-center w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-blue-500 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-blue-200 focus:ring-4"
                     >
-                      {isLoading && (
-                        <div class="loader mr-3" title="0">
-                          <svg
-                            version="1.1"
-                            id="loader-1"
-                            xmlns="http://www.w3.org/2000/svg"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            x="0px"
-                            y="0px"
-                            width="30"
-                            height="30"
-                            viewBox="0 0 40 40"
-                            enable-background="new 0 0 40 40"
-                            xmlSpace="preserve"
-                          >
-                            <path
-                              opacity="0.2"
-                              fill="#fff"
-                              d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
-    s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
-    c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"
-                            />
-                            <path
-                              fill="#fff"
-                              d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
-    C22.32,8.481,24.301,9.057,26.013,10.047z"
-                            >
-                              <animateTransform
-                                attributeType="xml"
-                                attributeName="transform"
-                                type="rotate"
-                                from="0 20 20"
-                                to="360 20 20"
-                                dur="0.5s"
-                                repeatCount="indefinite"
-                              />
-                            </path>
-                          </svg>
-                        </div>
-                      )}
+                      {isLoading && <Loader></Loader>}
                       <span>Register</span>
                     </button>
                   </div>
-                  <div class="flex flex-col space-y-5">
-                    <span class="flex items-center justify-center space-x-2">
-                      <span class="h-px bg-gray-400 w-14"></span>
-                      <span class="font-normal text-gray-500">
+                  <div className="flex flex-col space-y-5">
+                    <span className="flex items-center justify-center space-x-2">
+                      <span className="h-px bg-gray-400 w-14"></span>
+                      <span className="font-normal text-gray-500">
                         or Register with
                       </span>
-                      <span class="h-px bg-gray-400 w-14"></span>
+                      <span className="h-px bg-gray-400 w-14"></span>
                     </span>
                     <div>
                       <GoogleOAuth></GoogleOAuth>
