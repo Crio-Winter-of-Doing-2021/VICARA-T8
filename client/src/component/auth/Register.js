@@ -79,7 +79,6 @@ const Register = () => {
                       name="name"
                       value={user.name}
                       onChange={handleChange}
-                      autoFocus="true"
                       autoComplete="off"
                       className="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                     />
@@ -103,7 +102,6 @@ const Register = () => {
                       name="email"
                       value={user.email}
                       onChange={handleChange}
-                      autofocus
                       className="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                     />
                     {submitted && !user.email && (

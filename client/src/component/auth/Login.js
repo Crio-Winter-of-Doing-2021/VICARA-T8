@@ -12,7 +12,7 @@ const Login = () => {
     password: '',
   });
 
-  const { isLoading, success, error } = useSelector((state) => state.auth);
+  const { isLoading, isError, error } = useSelector((state) => state.auth);
   const [submitted, setSubmitted] = useState(false);
   const dispatch = useDispatch();
   function handleChange(e) {
@@ -55,9 +55,9 @@ const Login = () => {
             </Link>
           </div>
         </div>
-        <div className="py-16 w-full  lg:w-4/6 relative flex justify-center items-center bg-white">
+        <div className="md:py-16 py-2 w-full lg:w-4/6 relative flex justify-center items-center bg-white border">
           <div className="    flex justify-center items-center sm:max-w-md w-full">
-            <div className="flex flex-col overflow-hidden  max md:flex-row md:flex-1 ">
+            <div className="flex flex-col overflow-hidden  max md:flex-row md:flex-1 w-full">
               <div className="p-5 bg-white md:flex-1">
                 <h3 className="my-4 text-2xl font-semibold text-gray-700 text-center">
                   Login
@@ -65,7 +65,7 @@ const Login = () => {
                 <form action="#" className="flex flex-col space-y-5">
                   <div className="flex flex-col space-y-1">
                     <label
-                      forHtml="email"
+                      htmlFor="email"
                       className="text-sm font-semibold text-gray-500"
                     >
                       Email address
@@ -81,14 +81,14 @@ const Login = () => {
                     {submitted && !user.email && (
                       <div className="text-red-500">Email is required</div>
                     )}
-                    {submitted && !success && error.message && (
+                    {submitted && isError && error.message && (
                       <div className="text-red-500"> {error.message}</div>
                     )}
                   </div>
                   <div className="flex flex-col space-y-1">
                     <div className="flex items-center justify-between">
                       <label
-                        forHtml="password"
+                        htmlFor="password"
                         className="text-sm font-semibold text-gray-500"
                       >
                         Password
@@ -119,7 +119,7 @@ const Login = () => {
                       className="w-4 h-4 transition duration-300 rounded focus:ring-2 focus:ring-offset-0 focus:outline-none focus:ring-blue-200"
                     />
                     <label
-                      forHtml="remember"
+                      htmlFor="remember"
                       className="text-sm font-semibold text-gray-500"
                     >
                       Remember me
@@ -129,7 +129,7 @@ const Login = () => {
                     <button
                       type="submit"
                       onClick={handleSubmit}
-                      className="w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-blue-500 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-blue-200 focus:ring-4"
+                      className="flex justify-center items-center w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-blue-500 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-blue-200 focus:ring-4"
                     >
                       {isLoading && <Loader></Loader>}
                       Log in

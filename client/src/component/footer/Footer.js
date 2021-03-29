@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -7,12 +6,18 @@ const Footer = () => {
       <div className="max-w-screen-xl mx-auto px-4">
         <ul className="max-w-screen-md mx-auto text-lg font-light flex flex-wrap justify-around">
           <li className="my-2">
-            <a className="text-gray-800 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200">
+            <a
+              className="text-gray-800 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
+              href="https://www.linkedin.com/in/991rajat"
+            >
               Github
             </a>
           </li>
           <li className="my-2">
-            <a className="text-gray-800 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200">
+            <a
+              className="text-gray-800 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
+              href="https://github.com/Crio-Winter-of-Doing-2021"
+            >
               LinkedIn
             </a>
           </li>
@@ -100,12 +105,12 @@ const Footer = () => {
             <i className="fas fa-heart " style={{ color: 'red' }}></i> by{' '}
             <span>
               {' '}
-              <Link to="https://www.github.com/ManasUniyal">Manas </Link>
+              <a href="https://www.github.com/ManasUniyal">Manas </a>
             </span>
             and{' '}
             <span>
               {' '}
-              <Link to="https://www.github.com/991rajat">Rajat </Link>
+              <a href="https://www.github.com/991rajat">Rajat </a>
             </span>
           </p>
         </div>

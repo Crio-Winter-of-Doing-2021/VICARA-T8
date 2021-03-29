@@ -6,7 +6,7 @@ const intialState = {
   isLoading: false,
   user: null,
   error: { message: {} },
-  success: false,
+  isError: false,
 };
 
 export default function authReducer(state = intialState, action) {
@@ -22,7 +22,8 @@ export default function authReducer(state = intialState, action) {
         isAuthenticated: true,
         isLoading: false,
         user: action.payload.user,
-        success: true,
+        error: { message: {} },
+        isError: false,
       };
     case authConstants.LOGIN_REQUEST:
     case authConstants.REGISTER_REQUEST:
@@ -44,7 +45,8 @@ export default function authReducer(state = intialState, action) {
         isAuthenticated: true,
         isLoading: false,
         user: null,
-        success: true,
+        error: { message: {} },
+        isError: false,
       };
     case authConstants.AUTH_ERROR:
     case authConstants.LOGIN_FAILURE:
@@ -59,13 +61,13 @@ export default function authReducer(state = intialState, action) {
         isLoading: false,
         user: null,
         error: { message: action.payload.message },
-        success: false,
+        isError: true,
       };
     case authConstants.AUTH_CLEAR_ERRORS:
       return {
         ...state,
         error: { message: {} },
-        success: false,
+        isError: false,
       };
     default:
       return state;
