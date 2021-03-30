@@ -23,7 +23,7 @@ const Home = () => {
               )}
             </button>
           </div>
-          <div className="w-3/5 p-2">
+          <div className="w-2/5 p-2">
             {' '}
             <button
               className="p-2 w-full h-full flex flex-row items-center hover:bg-gray-100 rounded-sm focus:outline-none"
@@ -38,9 +38,33 @@ const Home = () => {
               )}
             </button>
           </div>
+          <div className="w-1/5"></div>
         </div>
-        <div className="w-full">
-          <span className="relative flex flex-row  h-0.5 bg-gray-200"></span>
+
+        <div className="flex flex-row items-center w-full  border ">
+          <div className="w-2/5 ">
+            <div className="w-full h-full flex flex-row items-center ">
+              <img
+                src="https://cdn1.iconfinder.com/data/icons/file-types-32/128/js_icon-512.png"
+                className="p-1"
+                width="50"
+                height="50"
+              ></img>
+              <span className="ml-2">Name</span>
+            </div>
+          </div>
+          <div className="w-2/5">
+            <div className="w-full h-full flex flex-row items-center ">
+              <span className="ml-4">12 December 2002</span>
+            </div>
+          </div>
+          <div className="w-1/5">
+            <div className="w-full h-full flex flex-row items-center ">
+              <button className="rounded-full h-10 w-10 bg-gray-50 hover:bg-gray-100 focus:outline-none hover:ring-gray-200 hover:ring-1 flex justify-center items-center">
+                ...
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
