@@ -30,7 +30,7 @@ const Header = () => {
             </nav>
             <button
               onClick={handleToggle}
-              className=" w-6 h-3 flex items-center lg:hidden"
+              className=" w-6 h-3 flex items-center lg:hidden focus:outline-none"
             >
               {!navbarOpen ? (
                 <div className="lg:hidden flex flex-col ">

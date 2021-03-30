@@ -19,7 +19,7 @@ const SideNav = () => {
                 </button>
               </li>
               <li>
-                <span className="relative flex flex-row  h-1 bg-gray-200"></span>
+                <span className="relative flex flex-row  h-0.5 bg-gray-200"></span>
               </li>
               <li></li>
               <li>
@@ -47,7 +47,7 @@ const SideNav = () => {
                 </a>
               </li>
               <li>
-                <span className="relative flex flex-row  h-1 bg-gray-200"></span>
+                <span className="relative flex flex-row  h-0.5 bg-gray-200"></span>
               </li>
               <li className="">
                 <div class="relative flex flex-row items-center h-11  text-gray-600 hover:text-gray-800  pr-6">
