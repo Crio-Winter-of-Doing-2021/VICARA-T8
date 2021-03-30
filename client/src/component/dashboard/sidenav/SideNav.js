@@ -1,7 +1,16 @@
 import React from 'react';
 import StorageCard from '../cards/StorageCard';
+import { setUploadFile } from '../../../actions/uploadFileAction';
+import { useDispatch } from 'react-redux';
 
 const SideNav = () => {
+  const dispatch = useDispatch();
+  const handleAttachFile = (e) => {
+    e.preventDefault();
+    dispatch(setUploadFile(e.target.files));
+    e.target.value = '';
+  };
+
   return (
     <div className="rounded-sm">
       <div class="h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white text-white">
@@ -9,14 +18,34 @@ const SideNav = () => {
           <div class="overflow-y-hidden overflow-x-hidden flex-grow">
             <ul class="flex flex-col  space-y-1">
               <li className="p-1">
-                <button class="flex justify-center items-center  bg-gray-200 hover:bg-blue-200 focus:ring-gray-500 focus:ring-offset-gray-200 text-gray-900 w-full transition ease-in duration-200 text-center text-base font-semibold  focus:ring-2 focus:ring-offset-2  rounded-sm  relative  flex-row  h-11 focus:outline-none    pr-6">
+                <input
+                  type="file"
+                  id="actual-btn"
+                  multiple
+                  onChange={handleAttachFile}
+                  hidden
+                />
+                <label
+                  htmlFor="actual-btn"
+                  className="flex justify-center items-center  bg-gray-200 hover:bg-blue-200 hover:text-white focus:ring-gray-500 focus:ring-offset-gray-200 text-gray-900 w-full transition ease-in duration-200 text-center text-base font-semibold  focus:ring-2 focus:ring-offset-2  rounded-sm  relative  flex-row  h-11 focus:outline-none    pr-6 cursor-pointer"
+                >
+                  {' '}
                   <span class="inline-flex justify-center items-center ml-4">
                     <i class="fas fa-upload text-gray-800 hover:text-white"></i>
                   </span>
                   <span class="ml-2 text-sm tracking-wide truncate">
                     Upload
                   </span>
-                </button>
+                </label>
+                {/* <button class="flex justify-center items-center  bg-gray-200 hover:bg-blue-200 focus:ring-gray-500 focus:ring-offset-gray-200 text-gray-900 w-full transition ease-in duration-200 text-center text-base font-semibold  focus:ring-2 focus:ring-offset-2  rounded-sm  relative  flex-row  h-11 focus:outline-none    pr-6">
+                  <span class="inline-flex justify-center items-center ml-4">
+                    <i class="fas fa-upload text-gray-800 hover:text-white"></i>
+                  </span>
+
+                  <span class="ml-2 text-sm tracking-wide truncate">
+                    Upload
+                  </span>
+                </button> */}
               </li>
               <li>
                 <span className="relative flex flex-row  h-0.5 bg-gray-200"></span>

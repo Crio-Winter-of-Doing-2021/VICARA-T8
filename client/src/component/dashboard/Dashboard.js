@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './header/Header';
 import Home from './sections/Home';
 import SideNav from './sidenav/SideNav';
+import UploadProgress from './cards/UploadProgress';
 
 const Dashboard = () => {
   return (
@@ -13,6 +14,7 @@ const Dashboard = () => {
         </div>
         <div className="w-5/6">
           <Home></Home>
+          <UploadProgress></UploadProgress>
         </div>
       </div>
     </div>
