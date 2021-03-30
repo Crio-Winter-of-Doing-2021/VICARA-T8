@@ -3,5 +3,5 @@ import authReducer from './authReducer';
 import uploadFileReducer from './uploadFileReducer';
 export default combineReducers({
   auth: authReducer,
-  upload: uploadFileReducer,
+  uploadFile: uploadFileReducer,
 });

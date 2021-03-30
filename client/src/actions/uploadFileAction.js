@@ -26,16 +26,19 @@ export const failureUploadFile = (id) => ({
   payload: id,
 });
 
-export const uploadFile = (files) => (dispatch) => {
+export const uploadFile = (files) => (dispatch, getState) => {
   const config = { headers: authHeader(getState) };
+  console.log(config);
   if (files.length) {
     files.forEach(async (file) => {
       const formPayload = new FormData();
+      formPayload.append('size', file.size);
       formPayload.append('file', file.file);
+      console.log(formPayload);
       try {
         await axios({
           baseURL: url,
-          url: '/file',
+          url: '/files/upload',
           method: 'post',
           data: formPayload,
           config,

@@ -1,6 +1,8 @@
 import React from 'react';
 
-const UploadCard = ({ file, progress }) => {
+const UploadCard = (props) => {
+  const file = props.file.file.name;
+  const progress = props.file.progress;
   return (
     <div>
       <div class="w-72 rounded-md px-2 bg-white dark:bg-gray-800 relative overflow-hidden">

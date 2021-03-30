@@ -12,8 +12,8 @@ const SideNav = () => {
   };
 
   return (
-    <div className="rounded-sm">
-      <div class="h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white text-white">
+    <div className="h-full rounded-sm">
+      <div class="h-full flex flex-col flex-auto flex-shrink-0 antialiased bg-white text-white">
         <div class=" flex flex-colleft-0 bg-wite h-full border-r">
           <div class="overflow-y-hidden overflow-x-hidden flex-grow">
             <ul class="flex flex-col  space-y-1">

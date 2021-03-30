@@ -9,7 +9,7 @@ export const modifyFiles = (existingFiles, files) => {
       ...fileToUpload,
       [id]: {
         id,
-        size: sz,
+        size: files[i].size,
         file: files[i],
         progress: 0,
       },
