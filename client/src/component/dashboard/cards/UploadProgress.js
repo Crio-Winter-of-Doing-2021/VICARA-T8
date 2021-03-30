@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import UploadCard from './UploadCard';
 import { size, toArray } from 'lodash';
+import { uploadFile } from '../../../actions/uploadFileAction';
 const UploadProgress = () => {
   const fileProgress = useSelector((state) => state.upload.fileProgress);
   const uploadedFileAmount = size(fileProgress);
+  useEffect(() => {
+    const fileToUpload = toArray(fileProgress).filter(
+      (file) => file.progress === 0
+    );
+    uploadFile(fileToUpload);
+  }, [uploadedFileAmount]);
   return uploadedFileAmount > 0 ? (
     <div className="fixed bottom-5 right-10 bg-white-200 rounded-md ">
       <div className="flex flex-col justify-center items-center pb-4">

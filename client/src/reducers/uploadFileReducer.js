@@ -15,6 +15,43 @@ const fileProgressReducer = (state = INITIAL_STATE, action) => {
         },
       };
 
+    case uploadFileConstants.SET_UPLOAD_PROGRESS:
+      return {
+        ...state,
+        fileProgress: {
+          ...state.fileProgress,
+          [action.payload.id]: {
+            ...state.fileProgress[action.payload.id],
+            progress: action.payload.progress,
+          },
+        },
+      };
+
+    case uploadFileConstants.SUCCESS_UPLOAD_FILE:
+      return {
+        ...state,
+        fileProgress: {
+          ...state.fileProgress,
+          [action.payload]: {
+            ...state.fileProgress[action.payload],
+            status: 1,
+          },
+        },
+      };
+
+    case uploadFileConstants.FAILURE_UPLOAD_FILE:
+      return {
+        ...state,
+        fileProgress: {
+          ...state.fileProgress,
+          [action.payload]: {
+            ...state.fileProgress[action.payload],
+            status: 0,
+            progress: 0,
+          },
+        },
+      };
+
     default:
       return state;
   }
