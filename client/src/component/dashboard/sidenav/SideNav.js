@@ -1,4 +1,5 @@
 import React from 'react';
+import StorageCard from '../cards/StorageCard';
 
 const SideNav = () => {
   return (
@@ -16,6 +17,9 @@ const SideNav = () => {
                     Upload
                   </span>
                 </button>
+              </li>
+              <li>
+                <span className="relative flex flex-row  h-1 bg-gray-200"></span>
               </li>
               <li></li>
               <li>
@@ -41,6 +45,20 @@ const SideNav = () => {
                     Favourites
                   </span>
                 </a>
+              </li>
+              <li>
+                <span className="relative flex flex-row  h-1 bg-gray-200"></span>
+              </li>
+              <li className="">
+                <div class="relative flex flex-row items-center h-11  text-gray-600 hover:text-gray-800  pr-6">
+                  <span class="inline-flex justify-center items-center ml-4">
+                    <i class="fas fa-database"></i>
+                  </span>
+                  <span class="ml-2 text-sm tracking-wide truncate">
+                    Storage
+                  </span>
+                </div>
+                <StorageCard></StorageCard>
               </li>
             </ul>
           </div>
