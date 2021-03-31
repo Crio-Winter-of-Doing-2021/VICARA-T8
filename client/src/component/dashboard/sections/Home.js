@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import SideNav from '../sidenav/SideNav';
+import FileIcon, { ColorScheme, IconStyle } from 'react-fileicons';
 
 const Home = () => {
   const [sortByName, setSortByName] = useState(false);
@@ -44,12 +45,14 @@ const Home = () => {
         <div className="flex flex-row items-center w-full  border ">
           <div className="w-2/5 ">
             <div className="w-full h-full flex flex-row items-center ">
-              <img
-                src="https://cdn1.iconfinder.com/data/icons/file-types-32/128/js_icon-512.png"
-                className="p-1"
-                width="50"
-                height="50"
-              ></img>
+              <div className=" pl-2 focus:outline-none">
+                <FileIcon
+                  extension="docx"
+                  colorScheme={ColorScheme.blue}
+                  iconStyle={IconStyle.gradient}
+                  size={32}
+                />
+              </div>
               <span className="ml-2">Name</span>
             </div>
           </div>
