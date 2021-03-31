@@ -1,5 +1,4 @@
-const { default: fileConstants } = require('../constants/fileConstants');
-
+import fileConstants from '../constants/fileConstants';
 const INTIAL_STATE = {
   isLoading: false,
   length: 0,

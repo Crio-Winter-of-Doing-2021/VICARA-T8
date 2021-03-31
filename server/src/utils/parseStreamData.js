@@ -17,7 +17,7 @@ function parseStreamData(busboy) {
       });
     });
 
-    reject(createHttpError.BadRequest('No File Found'));
+    if (formData.size > 0) reject(createHttpError.BadRequest('No File Found'));
     // busboy.on('finish',()=>{
 
     // })

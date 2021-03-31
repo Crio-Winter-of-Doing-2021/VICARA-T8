@@ -49,7 +49,7 @@ export const uploadFile = (files) => (dispatch, getState) => {
     files.forEach(async (file) => {
       const formPayload = new FormData();
       formPayload.append('size', file.size);
-      formPayload.append('', file.file);
+      formPayload.append('file', file.file);
       console.log(formPayload);
       try {
         await axios({

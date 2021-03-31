@@ -2,13 +2,20 @@ import React from 'react';
 import StorageCard from '../cards/StorageCard';
 import { setUploadFile } from '../../../actions/uploadFileAction';
 import { useDispatch } from 'react-redux';
+import componentConstant from '../../../constants/componentConsants';
 
-const SideNav = () => {
+const SideNav = ({ component, setComponent }) => {
+  const objects = ['Home', 'Favourites'];
   const dispatch = useDispatch();
   const handleAttachFile = (e) => {
     e.preventDefault();
     dispatch(setUploadFile(e.target.files));
     e.target.value = '';
+  };
+
+  const onHandleClick = (e, value) => {
+    e.preventDefault();
+    setComponent(value);
   };
 
   return (
@@ -50,31 +57,28 @@ const SideNav = () => {
               <li>
                 <span className="relative flex flex-row  h-0.5 bg-gray-200"></span>
               </li>
-              <li></li>
-              <li>
-                <a
-                  href="#"
-                  class="bg-gray-100 border-blue-500 relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-blue-500 pr-6"
-                >
-                  <span class="inline-flex justify-center items-center ml-4">
-                    <i class="fas fa-home"></i>
-                  </span>
-                  <span class="ml-2 text-sm tracking-wide truncate">Home</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-blue-500 pr-6"
-                >
-                  <span class="inline-flex justify-center items-center ml-4">
-                    <i class="far fa-star" aria-hidden="true"></i>
-                  </span>
-                  <span class="ml-2 text-sm tracking-wide truncate">
-                    Favourites
-                  </span>
-                </a>
-              </li>
+              {objects.map((value) => (
+                <li>
+                  <button
+                    onClick={(e) => onHandleClick(e, value)}
+                    class={`w-full  relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-blue-500 pr-6 ${
+                      component === value ? 'bg-gray-100 border-blue-500' : ''
+                    }`}
+                  >
+                    <span class="inline-flex justify-center items-center ml-4">
+                      <i
+                        class={`fas ${
+                          value === 'Home' ? 'fa-home' : 'fa-star'
+                        }`}
+                      ></i>
+                    </span>
+                    <span class="ml-2 text-sm tracking-wide truncate">
+                      {value}
+                    </span>
+                  </button>
+                </li>
+              ))}
+
               <li>
                 <span className="relative flex flex-row  h-0.5 bg-gray-200"></span>
               </li>

@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SideNav from '../sidenav/SideNav';
 import FileIcon, { ColorScheme, IconStyle } from 'react-fileicons';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadFiles } from '../../../actions/fileAction';
+import dateFormat from 'dateformat';
+import componentConstant from '../../../constants/componentConsants';
 
-const Home = () => {
+const Home = ({ component, search }) => {
   const [sortByName, setSortByName] = useState(false);
   const [sortByDate, setSortByDate] = useState(false);
-  const obj = {};
+
+  const { length, data } = useSelector((state) => state.files);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const options = {};
+    if (component === componentConstant.FAVOURITES) options.fav = true;
+    if (search.length > 0) options.s = search;
+    dispatch(loadFiles(options));
+  }, [component]);
   return (
     <div className="">
       <div className="flex flex-col ">
@@ -41,34 +53,39 @@ const Home = () => {
           </div>
           <div className="w-1/5"></div>
         </div>
-
-        <div className="flex flex-row items-center w-full  border ">
-          <div className="w-2/5 ">
-            <div className="w-full h-full flex flex-row items-center ">
-              <div className=" pl-2 focus:outline-none">
-                <FileIcon
-                  extension="docx"
-                  colorScheme={ColorScheme.blue}
-                  iconStyle={IconStyle.gradient}
-                  size={32}
-                />
+        {length > 0
+          ? data.map((file) => (
+              <div className="flex flex-row items-center w-full  border ">
+                <div className="w-2/5 ">
+                  <div className="w-full h-full flex flex-row items-center ">
+                    <div className=" pl-2 focus:outline-none">
+                      <FileIcon
+                        extension={file.metadata.mimetype}
+                        colorScheme={ColorScheme.blue}
+                        iconStyle={IconStyle.gradient}
+                        size={32}
+                      />
+                    </div>
+                    <span className="ml-2 truncate">{file.name}</span>
+                  </div>
+                </div>
+                <div className="w-2/5">
+                  <div className="w-full h-full flex flex-row items-center ">
+                    <span className="ml-4">
+                      {dateFormat(file.createdAt, 'mediumDate')}
+                    </span>
+                  </div>
+                </div>
+                <div className="w-1/5">
+                  <div className="w-full h-full flex flex-row items-center ">
+                    <button className="rounded-full h-10 w-10 bg-gray-50 hover:bg-gray-100 focus:outline-none hover:ring-gray-200 hover:ring-1 flex justify-center items-center">
+                      ...
+                    </button>
+                  </div>
+                </div>
               </div>
-              <span className="ml-2">Name</span>
-            </div>
-          </div>
-          <div className="w-2/5">
-            <div className="w-full h-full flex flex-row items-center ">
-              <span className="ml-4">12 December 2002</span>
-            </div>
-          </div>
-          <div className="w-1/5">
-            <div className="w-full h-full flex flex-row items-center ">
-              <button className="rounded-full h-10 w-10 bg-gray-50 hover:bg-gray-100 focus:outline-none hover:ring-gray-200 hover:ring-1 flex justify-center items-center">
-                ...
-              </button>
-            </div>
-          </div>
-        </div>
+            ))
+          : null}
       </div>
     </div>
   );
