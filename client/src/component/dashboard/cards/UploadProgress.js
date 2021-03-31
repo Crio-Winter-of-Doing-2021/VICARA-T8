@@ -11,7 +11,7 @@ const UploadProgress = () => {
     const fileToUpload = toArray(fileProgress).filter(
       (file) => file.progress === 0
     );
-    dispatch(uploadFile(fileToUpload));
+    if (size(fileToUpload) > 0) dispatch(uploadFile(fileToUpload));
   }, [uploadedFileAmount]);
   return uploadedFileAmount > 0 ? (
     <div className="fixed bottom-5 right-10 bg-white-200 rounded-md ">

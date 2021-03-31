@@ -51,6 +51,14 @@ const fileProgressReducer = (state = INITIAL_STATE, action) => {
           },
         },
       };
+    case uploadFileConstants.REMOVE_UPLOADED_FILE:
+      delete state.fileProgress[action.payload];
+      return {
+        ...state,
+        fileProgress: {
+          ...state.fileProgress,
+        },
+      };
 
     default:
       return state;

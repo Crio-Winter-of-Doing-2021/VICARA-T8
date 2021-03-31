@@ -26,22 +26,37 @@ export const failureUploadFile = (id) => ({
   payload: id,
 });
 
+export const removeUploadedFile = (id) => (dispatch) => {
+  setTimeout(
+    () =>
+      dispatch({
+        type: uploadFileConstants.REMOVE_UPLOADED_FILE,
+        payload: id,
+      }),
+    3000
+  );
+};
+
 export const uploadFile = (files) => (dispatch, getState) => {
-  const config = { headers: authHeader(getState) };
+  const config = {
+    headers: {
+      Authorization: authHeader(getState).Authorization,
+      'Content-Type': 'multipart/form-data',
+    },
+  };
   console.log(config);
   if (files.length) {
     files.forEach(async (file) => {
       const formPayload = new FormData();
       formPayload.append('size', file.size);
-      formPayload.append('file', file.file);
+      formPayload.append('', file.file);
       console.log(formPayload);
       try {
         await axios({
-          baseURL: url,
-          url: '/files/upload',
           method: 'post',
+          url: `${url}/files/upload`,
           data: formPayload,
-          config,
+          headers: config.headers,
           onUploadProgress: (progress) => {
             const { loaded, total } = progress;
             const percentageProgress = Math.floor((loaded / total) * 100);
@@ -49,6 +64,7 @@ export const uploadFile = (files) => (dispatch, getState) => {
           },
         });
         dispatch(successUploadFile(file.id));
+        dispatch(removeUploadedFile(file.id));
       } catch (error) {
         dispatch(failureUploadFile(file.id));
       }
