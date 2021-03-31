@@ -61,7 +61,7 @@ const SideNav = ({ component, setComponent }) => {
                 <li>
                   <button
                     onClick={(e) => onHandleClick(e, value)}
-                    class={`w-full  relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-blue-500 pr-6 ${
+                    class={`w-full transition ease-linear  relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-blue-500 pr-6 ${
                       component === value ? 'bg-gray-100 border-blue-500' : ''
                     }`}
                   >
