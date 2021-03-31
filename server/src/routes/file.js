@@ -30,6 +30,10 @@ router.get('/files/:id/download', fileController.download);
 //  @route get /files
 router.get('/files', fileController.getList);
 
+//  @desc Add to fav file
+//  @route put /files
+router.put('/files/:id', fileController.favourites);
+
 //  @desc Delete
 //  @route delete /files/:id
 router.delete('/files/:id', fileController.delete);

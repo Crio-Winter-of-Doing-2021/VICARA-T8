@@ -1,6 +1,7 @@
 const parseStreamData = require('../utils/parseStreamData');
 const uuid = require('uuid');
 const createError = require('http-errors');
+const { fileFavouiteSchema } = require('../utils/validator');
 
 //TODO Encryption and Zipping
 class FileService {
@@ -48,7 +49,7 @@ class FileService {
       const updateFileStatus = await this.fileDAO.add(object);
       if (!updateFileStatus) throw createError.InternalServerError();
 
-      return { status: 'success' };
+      return { status: 'success', data: updateFileStatus };
     } catch (err) {
       throw err;
     }
@@ -70,6 +71,33 @@ class FileService {
       throw err;
     }
   };
+  //@desc Add to Favourites
+  favourites = async (userId, fileId, isFavourite) => {
+    try {
+      const validate = await fileFavouiteSchema.validateAsync(
+        { isFavourite },
+        {
+          abortEarly: false,
+        }
+      );
+
+      const exist = await this.fileDAO.getInfo(userId, fileId);
+      if (!exist) throw createError.NotFound('File Not Found');
+
+      const updated = await this.fileDAO.favourites(
+        userId,
+        fileId,
+        isFavourite
+      );
+      if (!updated)
+        throw createError.NotAcceptable('Cannot be add to favouites');
+
+      return { status: 'success', data: updated };
+    } catch (err) {
+      throw err;
+    }
+  };
+
   //@desc File Delete Service
   delete = async (userId, fileId) => {
     try {

@@ -9,7 +9,7 @@ class AuthController {
     try {
       const id = req.payload.aud;
       const user = await this.authService.getUser(id);
-      res.status(201).json({ status: 'success', user: user });
+      res.status(200).json({ status: 'success', user: user });
     } catch (err) {
       next(err);
     }

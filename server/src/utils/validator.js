@@ -24,7 +24,14 @@ const loginSchema = Joi.object({
   }),
 });
 
+const fileFavouiteSchema = Joi.object({
+  isFavourite: Joi.boolean().required().messages({
+    'boolean.base': 'Favourite must be boolean.',
+  }),
+});
+
 module.exports = {
   registerSchema,
   loginSchema,
+  fileFavouiteSchema,
 };

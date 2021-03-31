@@ -10,6 +10,21 @@ class FileDAO {
       throw err;
     }
   }
+  //@desc Add to Favouites
+  async favourites(userId, fileId, isFavourite) {
+    try {
+      return await this.file.updateOne(
+        {
+          'metadata.ownerId': userId,
+          'metadata.fileId': fileId,
+        },
+        { isFavourite: isFavourite }
+      );
+    } catch (err) {
+      throw err;
+    }
+  }
+
   //@desc Delete
   async delete(userId, fileId) {
     try {

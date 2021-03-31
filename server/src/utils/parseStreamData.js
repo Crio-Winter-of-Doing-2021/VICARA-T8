@@ -1,3 +1,6 @@
+const createHttpError = require('http-errors');
+
+createHttpError;
 function parseStreamData(busboy) {
   return new Promise((resolve, reject) => {
     const formData = new Map();
@@ -14,6 +17,7 @@ function parseStreamData(busboy) {
       });
     });
 
+    reject(createHttpError.BadRequest('No File Found'));
     // busboy.on('finish',()=>{
 
     // })

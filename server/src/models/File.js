@@ -6,6 +6,10 @@ const FileSchema = mongoose.Schema(
       type: String,
       require: true,
     },
+    isFavourite: {
+      type: Boolean,
+      default: false,
+    },
     metadata: {
       type: {
         ownerId: String,

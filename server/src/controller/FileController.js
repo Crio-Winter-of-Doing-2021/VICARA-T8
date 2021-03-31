@@ -57,6 +57,23 @@ class FileController {
     }
   };
 
+  //@desc Add to Favourites
+  favourites = async (req, res, next) => {
+    try {
+      const fileId = req.params.id;
+      const userId = req.payload.aud;
+      const { isFavourite } = req.body;
+      const data = await this.fileService.favourites(
+        userId,
+        fileId,
+        isFavourite
+      );
+      res.status(200).json(data);
+    } catch (err) {
+      next(err);
+    }
+  };
+
   //@desc Delete the File
   delete = async (req, res, next) => {
     try {
