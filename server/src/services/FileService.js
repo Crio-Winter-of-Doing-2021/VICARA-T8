@@ -134,6 +134,7 @@ class FileService {
     try {
       let match = { 'metadata.ownerId': userId };
       if (query.s) match.name = { $regex: query.s, $options: 'i' };
+      if (query.fav) match.isFavourite = query.fav;
       let limit = parseInt(query.limit) || 5;
       let sort = { createdAt: 1, name: 1 };
       sort.createdAt = query.sortByDate && query.sortByDate === 'desc' ? -1 : 1;
