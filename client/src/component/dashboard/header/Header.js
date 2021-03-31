@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/favicon.ico';
 
-const Header = () => {
+const Header = ({ setSearch }) => {
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -23,6 +23,9 @@ const Header = () => {
                 class="border-2 border-blue-200 bg-gray-50 h-10 px-5 w-full rounded-md text-md focus:bg-white focus:outline-none placeholder-gray-400"
                 type="text"
                 name="search"
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
                 placeholder="Search"
               />
               <button type="submit" class="absolute right-0 top-0 mt-2 mr-3">

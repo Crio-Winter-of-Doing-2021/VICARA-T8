@@ -7,10 +7,10 @@ import componentConstant from '../../constants/componentConsants';
 
 const Dashboard = () => {
   const [component, setComponent] = useState(componentConstant.HOME);
-  const [search, setsearch] = useState('');
+  const [search, setSearch] = useState('');
   return (
     <div className="h-screen flex flex-col">
-      <Header></Header>
+      <Header setSearch={setSearch}></Header>
       <div className="flex flex-row h-full ">
         <div className="w-1/6 h-full">
           <SideNav setComponent={setComponent} component={component}></SideNav>

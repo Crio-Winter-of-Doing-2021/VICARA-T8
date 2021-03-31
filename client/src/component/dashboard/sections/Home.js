@@ -7,17 +7,26 @@ import dateFormat from 'dateformat';
 import componentConstant from '../../../constants/componentConsants';
 
 const Home = ({ component, search }) => {
-  const [sortByName, setSortByName] = useState(false);
-  const [sortByDate, setSortByDate] = useState(false);
+  const [sortByName, setSortByName] = useState(true);
+  //const [sortByDate, setSortByDate] = useState(true);
 
   const { length, data } = useSelector((state) => state.files);
   const dispatch = useDispatch();
   useEffect(() => {
-    const options = {};
+    let options = { sortByName: 'desc' };
     if (component === componentConstant.FAVOURITES) options.fav = true;
-    if (search.length > 0) options.s = search;
+
+    if (sortByName) {
+      options.sortByName = 'asc';
+    }
+
+    if (search.length > 0) {
+      options.s = search;
+      delete options.sortByName;
+    }
+
     dispatch(loadFiles(options));
-  }, [component]);
+  }, [component, search, sortByName]);
   return (
     <div className="">
       <div className="flex flex-col ">
@@ -38,17 +47,14 @@ const Home = ({ component, search }) => {
           </div>
           <div className="w-2/5 p-2">
             {' '}
-            <button
-              className="p-2 w-full h-full flex flex-row items-center hover:bg-gray-100 rounded-sm focus:outline-none"
-              onClick={() => setSortByDate((prev) => !prev)}
-            >
+            <button className="p-2 w-full h-full flex flex-row items-center hover:bg-gray-100 rounded-sm focus:outline-none">
               {' '}
               Uploaded Date{' '}
-              {sortByDate ? (
+              {/* {sortByDate ? (
                 <i class="fas fa-caret-up pl-2 text-sm text-gray-700"></i>
               ) : (
                 <i class="fas fa-caret-down pl-2 text-sm text-gray-700"></i>
-              )}
+              )} */}
             </button>
           </div>
           <div className="w-1/5"></div>

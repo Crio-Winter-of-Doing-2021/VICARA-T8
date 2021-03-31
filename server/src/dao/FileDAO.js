@@ -49,9 +49,9 @@ class FileDAO {
     }
   }
   //@desc Filter
-  async getList(match, sort, limit) {
+  async getList(match, sort, limit, startIndex) {
     try {
-      return await this.file.find(match).sort(sort).limit(limit);
+      return await this.file.find(match).collation({ locale: 'en' }).sort(sort);
     } catch (err) {
       throw err;
     }
@@ -60,6 +60,14 @@ class FileDAO {
   async update(object) {
     try {
       // To Be Implemented
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async getCount(match) {
+    try {
+      return await this.file.countDocuments();
     } catch (err) {
       throw err;
     }

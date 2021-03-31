@@ -50,8 +50,10 @@ class FileController {
     try {
       const userId = req.payload.aud;
       const query = req.query;
-      const data = await this.fileService.getList(userId, query);
-      res.status(200).json({ status: 'success', length: data.length, data });
+      const { data, results } = await this.fileService.getList(userId, query);
+      res
+        .status(200)
+        .json({ status: 'success', length: data.length, ...results, data });
     } catch (err) {
       next(err);
     }

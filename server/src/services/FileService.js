@@ -133,15 +133,40 @@ class FileService {
   getList = async (userId, query) => {
     try {
       let match = { 'metadata.ownerId': userId };
-      if (query.s) match.name = { $regex: query.s, $options: 'i' };
+
       if (query.fav) match.isFavourite = query.fav;
-      let limit = parseInt(query.limit) || 5;
-      let sort = { createdAt: 1, name: 1 };
-      sort.createdAt = query.sortByDate && query.sortByDate === 'desc' ? -1 : 1;
+      let page = parseInt(query.page || 1);
+      let limit = parseInt(query.limit) || 20;
+      let sort = {};
       sort.name = query.sortByName && query.sortByName === 'desc' ? -1 : 1;
+      //sort.createdAt = query.sortByDate && query.sortByDate === 'desc' ? -1 : 1;
+
+      if (query.s) {
+        match.name = { $regex: query.s, $options: 'i' };
+        sort = {};
+      }
+      const startIndex = (page - 1) * limit;
+      const endIndex = page * limit;
+
+      const results = {};
+      results.hasPrevious = false;
+      results.hasNext = false;
+      const DOCS = await this.fileDAO.getList(match, sort);
+      const count = DOCS.length;
+      const data = DOCS.slice(startIndex, endIndex);
+      results.total = count;
+      if (startIndex > 0) {
+        results.hasPrevious = true;
+        results.previousPage = page - 1;
+      }
+      if (endIndex < count) {
+        results.hasNext = true;
+        results.nextPage = page + 1;
+      }
+
       console.log(match, sort, limit);
-      const data = await this.fileDAO.getList(match, sort, limit);
-      return data;
+
+      return { data, results };
     } catch (err) {
       throw err;
     }

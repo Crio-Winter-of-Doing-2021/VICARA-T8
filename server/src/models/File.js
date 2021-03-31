@@ -4,7 +4,7 @@ const FileSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      require: true,
+      required: true,
     },
     isFavourite: {
       type: Boolean,
@@ -17,7 +17,7 @@ const FileSchema = mongoose.Schema(
         size: Number,
         mimetype: String,
       },
-      require: true,
+      required: true,
     },
   },
   { timestamps: true }
