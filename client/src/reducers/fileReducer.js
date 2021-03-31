@@ -1,8 +1,6 @@
 import fileConstants from '../constants/fileConstants';
 const INTIAL_STATE = {
   isLoading: false,
-  length: 0,
-  data: [],
 };
 
 export default function fileReducer(state = INTIAL_STATE, action) {
@@ -16,16 +14,13 @@ export default function fileReducer(state = INTIAL_STATE, action) {
       return {
         ...state,
         isLoading: false,
-        length: action.payload.length,
-        data: action.payload.data,
+        ...action.payload,
       };
 
     case fileConstants.FILES_FAILURE:
       return {
         ...state,
         isLoading: false,
-        length: 0,
-        data: [],
       };
     default:
       return state;
