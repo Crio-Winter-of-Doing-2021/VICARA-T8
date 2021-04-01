@@ -4,7 +4,7 @@ import { setUploadFile } from '../../../actions/uploadFileAction';
 import { useDispatch } from 'react-redux';
 import componentConstant from '../../../constants/componentConsants';
 
-const SideNav = ({ component, setComponent }) => {
+const SideNav = ({ component, setComponent, profile }) => {
   const objects = ['Home', 'Favourites'];
   const dispatch = useDispatch();
   const handleAttachFile = (e) => {
@@ -91,7 +91,7 @@ const SideNav = ({ component, setComponent }) => {
                     Storage
                   </span>
                 </div>
-                <StorageCard></StorageCard>
+                <StorageCard profile={profile}></StorageCard>
               </li>
             </ul>
           </div>

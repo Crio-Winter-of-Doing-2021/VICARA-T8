@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/favicon.ico';
 
-const Header = ({ setSearch }) => {
+const Header = ({ setSearch, profile }) => {
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -63,7 +63,7 @@ const Header = ({ setSearch }) => {
                       role="menuitem"
                     >
                       <span class="flex flex-col">
-                        <span>Profile</span>
+                        <span>{profile.name}</span>
                       </span>
                     </a>
 

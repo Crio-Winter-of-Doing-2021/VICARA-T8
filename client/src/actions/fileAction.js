@@ -1,7 +1,7 @@
 import axios from 'axios';
 import url from '../constants/BaseURL';
 import authHeader from '../helpers/authHeader';
-
+import streamSaver from 'streamsaver';
 import fileConstants from '../constants/fileConstants';
 
 export const loadFiles = (options) => async (dispatch, getState) => {
@@ -78,6 +78,38 @@ export const getPublicShareableLink = (id) => async (dispatch, getState) => {
       type: fileConstants.PUBLIC_SHAREABLE_LINK_FAILURE,
       payload: err.response.data,
     });
+    console.log(err);
+  }
+};
+
+export const downloadFile = async (file) => {
+  try {
+    const extension = file.metadata.mimetype.split('/');
+    const fileStream = streamSaver.createWriteStream(`${file.name}`);
+
+    fetch(`${url}/${file.metadata.fileId}/public`).then((res) => {
+      const readableStream = res.body;
+
+      // more optimized
+      if (window.WritableStream && readableStream.pipeTo) {
+        return readableStream
+          .pipeTo(fileStream)
+          .then(() => console.log('done writing'));
+      }
+
+      // window.writer = fileStream.getWriter();
+
+      // const reader = res.body.getReader();
+      // const pump = () =>
+      //   reader
+      //     .read()
+      //     .then((res) =>
+      //       res.done ? writer.close() : writer.write(res.value).then(pump)
+      //     );
+
+      // pump();
+    });
+  } catch (err) {
     console.log(err);
   }
 };

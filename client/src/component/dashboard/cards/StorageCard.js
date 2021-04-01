@@ -1,6 +1,11 @@
 import React from 'react';
 
-const StorageCard = () => {
+const StorageCard = ({ profile }) => {
+  // const size = (profile.storage?.size / 1073741824).toFixed(2);
+  // const limit = (profile.storage?.limit / 1073741824).toFixed(2);
+  const size = 1;
+  const limit = 1;
+  const progress = (size * 100) / limit;
   return (
     <div>
       <div class=" rounded-md w-full px-2 bg-white dark:bg-gray-800 relative overflow-hidden">
@@ -9,11 +14,11 @@ const StorageCard = () => {
             <div className="w-full flex justify-center items-center my-2">
               <p className="">
                 <span className="text-gray-800 text-md text-left dark:text-white  ">
-                  8.45GB{' Used '}
+                  {size} GB{' Used '}
                 </span>
                 <span className="text-gray-800 text-xl text-left dark:text-white font-bold ">
                   {' of '}
-                  15 GB
+                  {limit} GB
                 </span>
               </p>
             </div>
@@ -22,7 +27,7 @@ const StorageCard = () => {
           <div class="w-full h-1 bg-blue-200 rounded-full">
             <div
               class=" h-full text-center text-xs text-white bg-blue-600 rounded-full"
-              style={{ width: '44%' }}
+              style={{ width: `${progress}%` }}
             ></div>
           </div>
         </div>

@@ -2,6 +2,7 @@ import uploadFileConstants from '../constants/uploadFileConstants';
 import url from '../constants/BaseURL';
 import axios from 'axios';
 import authHeader from '../helpers/authHeader';
+import { loadUser } from './authAction';
 
 export const setUploadFile = (data) => ({
   type: uploadFileConstants.SET_UPLOAD_FILE,
@@ -63,6 +64,7 @@ export const uploadFile = (files) => (dispatch, getState) => {
             dispatch(setUploadProgress(file.id, percentageProgress));
           },
         });
+        dispatch(loadUser());
         dispatch(successUploadFile(file.id));
         dispatch(removeUploadedFile(file.id));
       } catch (error) {
