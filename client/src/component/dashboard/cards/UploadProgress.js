@@ -12,7 +12,7 @@ const UploadProgress = () => {
       (file) => file.progress === 0
     );
     if (size(fileToUpload) > 0) dispatch(uploadFile(fileToUpload));
-  }, [uploadedFileAmount]);
+  }, [uploadedFileAmount, dispatch, fileProgress]);
   return uploadedFileAmount > 0 ? (
     <div className="fixed bottom-5 right-10 bg-white-200 rounded-md ">
       <div className="flex flex-col justify-center items-center pb-4">
@@ -22,7 +22,6 @@ const UploadProgress = () => {
         {uploadedFileAmount > 0
           ? toArray(fileProgress).map((file) => (
               <div className="border border-t-0 pb-2">
-                {console.log(file)}
                 <UploadCard key={file.id} file={file}></UploadCard>
               </div>
             ))

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import SideNav from '../sidenav/SideNav';
 import FileCard from '../cards/FileCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadFiles } from '../../../actions/fileAction';
@@ -14,7 +13,7 @@ const Home = ({ component, search, page, setPage }) => {
   //const { length, data } = useSelector((state) => state.files);
   const dispatch = useDispatch();
   useEffect(() => {
-    let options = { sortByName: 'desc', page: page, limit: '1' };
+    let options = { sortByName: 'desc', page: page };
     if (component === componentConstant.FAVOURITES) options.fav = true;
 
     if (sortByName) {
@@ -27,7 +26,7 @@ const Home = ({ component, search, page, setPage }) => {
     }
 
     dispatch(loadFiles(options));
-  }, [component, search, sortByName, page]);
+  }, [component, search, sortByName, page, dispatch]);
 
   const onClickPreviousPage = (e) => {
     e.preventDefault();
@@ -51,9 +50,9 @@ const Home = ({ component, search, page, setPage }) => {
               {' '}
               Name{' '}
               {sortByName ? (
-                <i class="fas fa-caret-up pl-2 text-sm text-gray-700"></i>
+                <i className="fas fa-caret-up pl-2 text-sm text-gray-700"></i>
               ) : (
-                <i class="fas fa-caret-down pl-2 text-sm text-gray-700"></i>
+                <i className="fas fa-caret-down pl-2 text-sm text-gray-700"></i>
               )}
             </button>
           </div>
@@ -63,9 +62,9 @@ const Home = ({ component, search, page, setPage }) => {
               {' '}
               Uploaded Date{' '}
               {/* {sortByDate ? (
-                <i class="fas fa-caret-up pl-2 text-sm text-gray-700"></i>
+                <i className="fas fa-caret-up pl-2 text-sm text-gray-700"></i>
               ) : (
-                <i class="fas fa-caret-down pl-2 text-sm text-gray-700"></i>
+                <i className="fas fa-caret-down pl-2 text-sm text-gray-700"></i>
               )} */}
             </button>
           </div>
@@ -73,16 +72,32 @@ const Home = ({ component, search, page, setPage }) => {
             <button
               disabled={!pagination.hasPrevious}
               onClick={(e) => onClickPreviousPage(e)}
-              className="focus:outline-none mr-2"
+              className={`focus:outline-none ml-2 ${
+                pagination.hasPrevious ? '' : 'cursor-default'
+              }`}
             >
-              <i class="fas fa-chevron-left  w-10 h-10 rounded-full bg-gray-200  flex justify-center items-center hover:bg-blue-200 transition ease-linear hover:text-white"></i>
+              <i
+                className={` ${
+                  pagination.hasPrevious
+                    ? 'hover:bg-blue-200 hover:text-white bg-gray-200 '
+                    : 'bg-gray-50'
+                } fas fa-chevron-left  w-10 h-10 rounded-full  flex justify-center items-center  transition ease-linear `}
+              ></i>
             </button>
             <button
               disabled={!pagination.hasNext}
               onClick={(e) => onClickNextPage(e)}
-              className="focus:outline-none ml-2"
+              className={`focus:outline-none ml-2 ${
+                pagination.hasNext ? '' : 'cursor-default '
+              }`}
             >
-              <i class="fas fa-chevron-right  w-10 h-10 rounded-full bg-gray-200 flex justify-center items-center hover:bg-blue-200 transition ease-linear hover:text-white"></i>
+              <i
+                className={` ${
+                  pagination.hasNext
+                    ? 'hover:bg-blue-200 hover:text-white bg-gray-200 '
+                    : 'bg-gray-50'
+                } fas fa-chevron-right  w-10 h-10 rounded-full flex justify-center items-center  transition ease-linear `}
+              ></i>
             </button>
           </div>
         </div>

@@ -49,7 +49,7 @@ const Login = () => {
           <div className="flex mt-2">
             <Link
               to="/register"
-              className="uppercase py-2 px-4 rounded-lg bg-gray-900 border-2 border-transparent text-white text-md mr-4 hover:bg-gray-700"
+              className="uppercase py-2 px-4 rounded-lg bg-gray-900 border-2 border-transparent  transition ease-linear text-white text-md mr-4 hover:bg-gray-700"
             >
               Create One
             </Link>

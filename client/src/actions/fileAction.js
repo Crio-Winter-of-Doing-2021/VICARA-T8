@@ -11,7 +11,7 @@ export const loadFiles = (options) => async (dispatch, getState) => {
     const { data } = await axios.get(`${url}/files`, config);
     dispatch({ type: fileConstants.FILES_SUCCESS, payload: data });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
   }
 };
 
@@ -29,7 +29,10 @@ export const addToFavourites = (id) => async (dispatch, getState) => {
         type: 'ADD_TO_FAV_SUCCESS',
       },
     });
-    //setTimeout(()=>{dispatch()},5000);
+    dispatch(loadFiles());
+    setTimeout(() => {
+      dispatch({ type: 'CLEAR_TOAST_MENU' });
+    }, 5000);
   } catch (err) {
     dispatch({
       type: fileConstants.ADD_TO_FAV_FAILURE,
@@ -53,12 +56,16 @@ export const removeFromFavourites = (id) => async (dispatch, getState) => {
         type: 'REMOVE_FROM_FAV_SUCCESS',
       },
     });
+    dispatch(loadFiles());
+    setTimeout(() => {
+      dispatch({ type: 'CLEAR_TOAST_MENU' });
+    }, 5000);
   } catch (err) {
     dispatch({
       type: fileConstants.REMOVE_FROM_FAV_FAILURE,
       payload: { error: err.response.data, type: 'REMOVE_FROM_FAV_FAILURE' },
     });
-    console.log(err);
+    //console.log(err);
   }
 };
 
@@ -76,12 +83,16 @@ export const deleteFile = (id) => async (dispatch, getState) => {
         type: 'DELETE_SUCCESS',
       },
     });
+    dispatch(loadFiles());
+    setTimeout(() => {
+      dispatch({ type: 'CLEAR_TOAST_MENU' });
+    }, 5000);
   } catch (err) {
     dispatch({
       type: fileConstants.DELETE_FAILURE,
       payload: { data: err.response.data, type: 'DELETE_FAILURE' },
     });
-    console.log(err);
+    //console.log(err);
   }
 };
 
@@ -107,13 +118,13 @@ export const getPublicShareableLink = (id) => async (dispatch, getState) => {
         type: 'PUBLIC_SHAREABLE_LINK_FAILURE',
       },
     });
-    console.log(err);
+    //console.log(err);
   }
 };
 
 export const downloadFile = async (file) => {
   try {
-    const extension = file.metadata.mimetype.split('/');
+    //const extension = file.metadata.mimetype.split('/');
     const fileStream = streamSaver.createWriteStream(`${file.name}`);
 
     fetch(`${url}/${file.metadata.fileId}/public`).then((res) => {
@@ -139,6 +150,6 @@ export const downloadFile = async (file) => {
       // pump();
     });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
   }
 };

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/favicon.ico';
 
-const Header = () => {
+const Header = ({ isAuth }) => {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const handleToggle = () => {
     setNavbarOpen(!navbarOpen);
@@ -21,9 +21,17 @@ const Header = () => {
           </div>
           <div className="flex items-center">
             <nav className="font-sen text-gray-800 dark:text-white uppercase text-lg lg:flex items-center hidden ">
-              <Link to="/login" className="py-2 px-6 flex">
-                Log In
-              </Link>
+              {isAuth ? (
+                <Link to="/drive">
+                  <div className=" border-2 border-white transition ease-linear rounded-md hover:bg-white p-2">
+                    Go to Drive
+                  </div>
+                </Link>
+              ) : (
+                <Link to="/login" className="py-2 px-6 flex">
+                  Log In
+                </Link>
+              )}
               <Link to="/docs" className="py-2 px-6 flex">
                 Docs
               </Link>

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import fileConstants from '../../../constants/fileConstants';
 
 const Toast = ({ item }) => {
   //const [text, setText] = useState('');
+  const dispatch = useDispatch();
   let message = '';
   let type = 'INTIAL';
   if (
@@ -16,12 +18,18 @@ const Toast = ({ item }) => {
     message = item.data.data.url;
     type = 'INFO';
   }
+
+  const CopyText = (e) => {
+    navigator.clipboard.writeText(message);
+    dispatch({ type: 'CLEAR_TOAST_MENU' });
+  };
+
   const TYPE = {
     SUCCESS: (
-      <div class="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
-        <div class="flex items-center justify-center w-12 bg-green-500">
+      <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <div className="flex items-center justify-center w-12 bg-green-500">
           <svg
-            class="w-6 h-6 text-white fill-current"
+            className="w-6 h-6 text-white fill-current"
             viewBox="0 0 40 40"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -29,21 +37,23 @@ const Toast = ({ item }) => {
           </svg>
         </div>
 
-        <div class="px-4 py-2 -mx-3">
-          <div class="mx-3">
-            <span class="font-semibold text-green-500 dark:text-green-400">
+        <div className="px-4 py-2 -mx-3">
+          <div className="mx-3">
+            <span className="font-semibold text-green-500 dark:text-green-400">
               Success
             </span>
-            <p class="text-sm text-gray-600 dark:text-gray-200">{message}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-200">
+              {message}
+            </p>
           </div>
         </div>
       </div>
     ),
     FAILURE: (
-      <div class="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
-        <div class="flex items-center justify-center w-12 bg-red-500">
+      <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <div className="flex items-center justify-center w-12 bg-red-500">
           <svg
-            class="w-6 h-6 text-white fill-current"
+            className="w-6 h-6 text-white fill-current"
             viewBox="0 0 40 40"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -51,12 +61,12 @@ const Toast = ({ item }) => {
           </svg>
         </div>
 
-        <div class="px-4 py-2 -mx-3">
-          <div class="mx-3">
-            <span class="font-semibold text-red-500 dark:text-red-400">
+        <div className="px-4 py-2 -mx-3">
+          <div className="mx-3">
+            <span className="font-semibold text-red-500 dark:text-red-400">
               Error
             </span>
-            <p class="text-sm text-gray-600 dark:text-gray-200">
+            <p className="text-sm text-gray-600 dark:text-gray-200">
               Your email is already used!
             </p>
           </div>
@@ -64,13 +74,13 @@ const Toast = ({ item }) => {
       </div>
     ),
     INFO: (
-      <div class="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
-        <div class="px-4 py-2 -mx-3">
-          <div class="mx-3">
-            <span class="font-semibold text-blue-500 dark:text-blue-400">
+      <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <div className="px-4 py-2 -mx-3">
+          <div className="mx-3">
+            <span className="font-semibold text-blue-500 dark:text-blue-400">
               Shareable Public URL
             </span>
-            <p class="text-md text-gray-800 dark:text-gray-200">
+            <p className="text-md text-gray-800 dark:text-gray-200">
               <input
                 type="text"
                 className="border rounded-sm focus:border-gray-500 focus:outline-none bg-gray-50 px-1"
@@ -80,11 +90,11 @@ const Toast = ({ item }) => {
             </p>
           </div>
         </div>
-        <div class="flex items-center justify-center w-12 bg-blue-500">
+        <div className="flex items-center justify-center w-12 bg-blue-500 ">
           <i
-            class="text-2xl fas fa-clipboard text-white fill-current cursor-pointer"
-            onClick={() => {
-              navigator.clipboard.writeText(message);
+            className="text-2xl fas fa-clipboard text-white fill-current cursor-pointer hover:text-gray-900"
+            onClick={(e) => {
+              CopyText(e);
             }}
           ></i>
         </div>

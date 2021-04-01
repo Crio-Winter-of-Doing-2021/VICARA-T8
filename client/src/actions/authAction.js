@@ -8,13 +8,13 @@ export const register = ({ name, email, password }) => async (dispatch) => {
   try {
     dispatch({ type: authConstants.REGISTER_REQUEST });
     const body = JSON.parse(JSON.stringify({ name, email, password }));
-    console.log(body);
+    //console.log(body);
     const { data } = await axios.post(`${url}/auth/register`, body);
-    console.log(data);
+    //console.log(data);
 
     dispatch({ type: authConstants.REGISTER_SUCCESS, payload: data });
   } catch (err) {
-    console.log(err.response.data);
+    //console.log(err.response.data);
     // dispatch(
     //   returnErrors(
     //     err.response.data.message,
@@ -34,13 +34,13 @@ export const login = ({ email, password }) => async (dispatch) => {
   try {
     dispatch({ type: authConstants.LOGIN_REQUEST });
     const body = JSON.parse(JSON.stringify({ email, password }));
-    console.log(body);
+    //console.log(body);
     const { data } = await axios.post(`${url}/auth/login`, body);
-    console.log(data);
+    //console.log(data);
 
     dispatch({ type: authConstants.LOGIN_SUCCESS, payload: data });
   } catch (err) {
-    console.log(err.response.data);
+    //console.log(err.response.data);
     // dispatch(
     //   returnErrors(
     //     err.response.data.message,
@@ -63,7 +63,7 @@ export const googleOAuth = (user, token) => async (dispatch) => {
     const { data } = await axios.post(`${url}/auth/oauth/google`, body);
     dispatch({ type: authConstants.OAUTH_SUCCESS, payload: data });
   } catch (err) {
-    console.log(err.response.data);
+    //console.log(err.response.data);
     // dispatch(
     //   returnErrors(
     //     err.response.data.message,
@@ -83,20 +83,26 @@ export const loadUser = () => async (dispatch, getState) => {
   try {
     dispatch({ type: authConstants.USER_LOADING });
     const config = { headers: authHeader(getState) };
-    console.log(config);
+    //console.log(config);
     const { data } = await axios.get(`${url}/auth/user`, config);
-    console.log(data);
+    //console.log(data);
 
     dispatch({
       type: authConstants.USER_LOADED,
       payload: data,
     });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     // dispatch(returnErrors(err.response.data.message, err.response.status));
     dispatch({
       type: authConstants.AUTH_ERROR,
       payload: err.response.data,
     });
   }
+};
+
+export const logout = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: authConstants.LOGOUT });
+  } catch (err) {}
 };

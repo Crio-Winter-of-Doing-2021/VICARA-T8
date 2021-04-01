@@ -33,6 +33,11 @@ export default function fileMenuReducer(state = INTIAL_STATE, action) {
         ...action.payload,
         status: 'faliure',
       };
+    case fileConstants.CLEAR_TOAST_MENU:
+      return {
+        isLoading: false,
+        status: 'faliure',
+      };
     default:
       return {
         isLoading: false,

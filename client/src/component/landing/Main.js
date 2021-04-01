@@ -23,7 +23,7 @@ const Main = () => {
             <div className="flex mt-8">
               <Link
                 to="/register"
-                className="uppercase py-2 px-4 rounded-lg bg-gray-900 border-2 border-transparent text-white text-md mr-4 hover:bg-gray-700"
+                className="uppercase py-2 px-4 rounded-lg bg-gray-900 border-2 border-transparent text-white text-md mr-4 hover:bg-gray-700  transition ease-linear"
               >
                 Get started
               </Link>

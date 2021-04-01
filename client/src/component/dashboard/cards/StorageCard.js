@@ -8,9 +8,9 @@ const StorageCard = () => {
   // const progress = (size * 100) / limit;
   return !profile.user ? null : (
     <div>
-      <div class=" rounded-md w-full px-2 bg-white dark:bg-gray-800 relative overflow-hidden">
-        <div class="w-full h-full block">
-          <div class="w-full flex-row flex items-center">
+      <div className=" rounded-md w-full px-2 bg-white dark:bg-gray-800 relative overflow-hidden">
+        <div className="w-full h-full block">
+          <div className="w-full flex-row flex items-center">
             <div className="w-full flex justify-center items-center my-2">
               <p className="">
                 <span className="text-gray-800 text-md text-left dark:text-white  ">
@@ -25,9 +25,9 @@ const StorageCard = () => {
             </div>
           </div>
 
-          <div class="w-full h-1 bg-blue-200 rounded-full">
+          <div className="w-full h-1 bg-blue-200 rounded-full">
             <div
-              class=" h-full text-center text-xs text-white bg-blue-600 rounded-full"
+              className=" h-full text-center text-xs text-white bg-blue-600 rounded-full"
               style={{
                 width: `${
                   ((profile.user.storage.size / 1073741824).toFixed(2) * 100) /

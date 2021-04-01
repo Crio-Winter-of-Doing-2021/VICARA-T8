@@ -43,7 +43,7 @@ const Register = () => {
             Let's Get
             <span className="text-5xl sm:text-7xl"> Started.</span>
           </h1>
-          <p className="text-sm sm:text-base text-gray-700 dark:text-white">
+          <p className="text-sm sm:text-base text-gray-700 dark:text-white  transition ease-linear">
             Already have an account?
           </p>
           <div className="flex mt-2">

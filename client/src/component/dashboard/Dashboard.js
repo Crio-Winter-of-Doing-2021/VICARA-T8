@@ -5,7 +5,8 @@ import SideNav from './sidenav/SideNav';
 import UploadProgress from './cards/UploadProgress';
 import componentConstant from '../../constants/componentConsants';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadUser } from '../../actions/authAction';
+import { loadUser, logout } from '../../actions/authAction';
+
 import Toast from './cards/Toast';
 
 const Dashboard = () => {
@@ -17,8 +18,11 @@ const Dashboard = () => {
   const profile = useSelector((state) => state.auth);
   useEffect(() => {
     dispatch(loadUser());
-  }, []);
+  }, [dispatch]);
   const menuStatus = useSelector((state) => state.menu);
+  const logoutUser = () => {
+    dispatch(logout());
+  };
 
   return !profile.user ? null : (
     <div className="h-screen flex flex-col">
@@ -27,6 +31,7 @@ const Dashboard = () => {
         setSearch={setSearch}
         profile={profile.user}
         setPage={setPage}
+        logoutUser={logoutUser}
       ></Header>
 
       <div className="flex flex-row h-full ">

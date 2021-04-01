@@ -15,7 +15,6 @@ const FileCard = ({ file }) => {
   const dispatch = useDispatch();
   const addToFav = (e, id) => {
     e.preventDefault();
-
     dispatch(addToFavourites(id));
   };
 
@@ -35,6 +34,9 @@ const FileCard = ({ file }) => {
         break;
       case fileOptions[2]:
         downloadFile(file);
+        break;
+      default:
+        return;
     }
   };
 
@@ -62,12 +64,12 @@ const FileCard = ({ file }) => {
               className="focus:outline-none mr-36 "
               onClick={() => setToggle((prev) => !prev)}
             >
-              <i class="fas fa-ellipsis-v w-10 h-10 rounded-full text-gray-600 flex justify-center items-center hover:text-gray-800 transition ease-linear "></i>
+              <i className="fas fa-ellipsis-v w-10 h-10 rounded-full text-gray-600 flex justify-center items-center hover:text-gray-800 transition ease-linear "></i>
             </button>
             {toggle && (
-              <div class="origin-top-right absolute left-16 top-0 mt-2 w-42 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
+              <div className="z-30 origin-top-right absolute left-16 top-0 mt-2 w-42 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
                 <div
-                  class="py-1 divide-y divide-gray-100"
+                  className="py-1 divide-y divide-gray-100"
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="options-menu"
@@ -75,18 +77,18 @@ const FileCard = ({ file }) => {
                   {!file.isFavourite ? (
                     <button
                       onClick={(e) => addToFav(e, file.metadata.fileId)}
-                      class="flex items-center w-full  px-4 p-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+                      className=" focus:outline-none flex items-center w-full  px-4 p-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                     >
-                      <span class="flex flex-col ">
+                      <span className="flex flex-col ">
                         <span>Add to Fav</span>
                       </span>
                     </button>
                   ) : (
                     <button
                       onClick={(e) => removeFromFav(e, file.metadata.fileId)}
-                      class="flex items-center w-full  px-4 p-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+                      className=" flex items-center w-full  px-4 p-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600 focus:outline-none"
                     >
-                      <span class="flex flex-col ">
+                      <span className="flex flex-col ">
                         <span>Remove from Fav</span>
                       </span>
                     </button>
@@ -95,9 +97,9 @@ const FileCard = ({ file }) => {
                   {fileOptions.map((option) => (
                     <button
                       onClick={(e) => onClickMenu(e, option, file)}
-                      class="flex items-center w-full  px-4 p-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+                      className="flex items-center w-full  px-4 p-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600 focus:outline-none"
                     >
-                      <span class="flex flex-col ">
+                      <span className="flex flex-col ">
                         <span>{option}</span>
                       </span>
                     </button>
