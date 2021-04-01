@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
+
 import FileIcon, { ColorScheme, IconStyle } from 'react-fileicons';
 import dateFormat from 'dateformat';
+import {
+  addToFavourites,
+  removeFromFavourites,
+} from '../../../actions/fileAction';
+import { useDispatch } from 'react-redux';
 const FileCard = ({ file }) => {
   const [toggle, setToggle] = useState(false);
   const fileOptions = ['Share', 'Delete'];
-  const addToFav = (e) => {
+  const dispatch = useDispatch();
+  const addToFav = (e, id) => {
     e.preventDefault();
+    console.log(id);
+    dispatch(addToFavourites(id));
   };
 
-  const removeFromFav = (e) => {
+  const removeFromFav = (e, id) => {
     e.preventDefault();
+    dispatch(removeFromFavourites(id));
   };
 
   const onClickMenu = (e, operation) => {
@@ -61,7 +71,7 @@ const FileCard = ({ file }) => {
                 >
                   {!file.isFavourite ? (
                     <button
-                      onClick={addToFav}
+                      onClick={(e) => addToFav(e, file.metadata.fileId)}
                       class="flex items-center w-full  px-4 p-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                     >
                       <span class="flex flex-col ">
@@ -70,7 +80,7 @@ const FileCard = ({ file }) => {
                     </button>
                   ) : (
                     <button
-                      onClick={removeFromFav}
+                      onClick={(e) => removeFromFav(e, file.metadata.fileId)}
                       class="flex items-center w-full  px-4 p-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                     >
                       <span class="flex flex-col ">
