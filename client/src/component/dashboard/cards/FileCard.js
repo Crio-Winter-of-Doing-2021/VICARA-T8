@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FileThumbnail from './FileThumbnail';
+import FileThumbnail from './FileThmbnail';
 import dateFormat from 'dateformat';
 import {
   addToFavourites,
@@ -28,10 +28,10 @@ const FileCard = ({ file }) => {
     e.preventDefault();
     switch (operation) {
       case fileOptions[0]:
-        dispatch(getPublicShareableLink(file.metadata.id));
+        dispatch(getPublicShareableLink(file.metadata.fileId));
         break;
       case fileOptions[1]:
-        dispatch(deleteFile(file.metadata.id));
+        dispatch(deleteFile(file.metadata.fileId));
         break;
       case fileOptions[2]:
         downloadFile(file);
@@ -40,16 +40,16 @@ const FileCard = ({ file }) => {
 
   return (
     <div>
-      <div className="flex flex-row items-center w-full  border ">
+      <div className="flex flex-row items-center w-full border-b p-1 hover:bg-gray-100 transition ease-linear ">
         <div className="w-2/5 ">
           <div className="w-full h-full flex flex-row items-center ">
-            <div className=" pl-2 focus:outline-none">
+            <div className="pl-2 flex flex-row items-center  focus:outline-none ">
               <FileThumbnail ext={file.metadata.mimetype.split('/')[0]} />
             </div>
             <span className="ml-2 truncate">{file.name}</span>
           </div>
         </div>
-        <div className="w-2/5">
+        <div className="w-2/5 ">
           <div className="w-full h-full flex flex-row items-center ">
             <span className="ml-4">
               {dateFormat(file.createdAt, 'mediumDate')}

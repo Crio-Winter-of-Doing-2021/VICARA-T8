@@ -6,16 +6,15 @@ import { loadFiles } from '../../../actions/fileAction';
 
 import componentConstant from '../../../constants/componentConsants';
 
-const Home = ({ component, search }) => {
+const Home = ({ component, search, page, setPage }) => {
   const [sortByName, setSortByName] = useState(true);
-  const [page, setPage] = useState(1);
 
   //const [sortByDate, setSortByDate] = useState(true);
   const pagination = useSelector((state) => state.files);
   //const { length, data } = useSelector((state) => state.files);
   const dispatch = useDispatch();
   useEffect(() => {
-    let options = { sortByName: 'desc', page: page };
+    let options = { sortByName: 'desc', page: page, limit: '1' };
     if (component === componentConstant.FAVOURITES) options.fav = true;
 
     if (sortByName) {
@@ -43,10 +42,10 @@ const Home = ({ component, search }) => {
   return (
     <div className="">
       <div className="flex flex-col ">
-        <div className="flex flex-row items-center w-full ">
-          <div className="w-2/5 p-2">
+        <div className="flex flex-row items-center w-full border-b">
+          <div className="w-2/5 p-2 hover:bg-gray-100 rounded-sm focus:outline-none">
             <button
-              className="p-2 w-full h-full flex flex-row items-center hover:bg-gray-100 rounded-sm focus:outline-none"
+              className="p-2 w-full h-full flex flex-row items-center "
               onClick={() => setSortByName((prev) => !prev)}
             >
               {' '}
@@ -58,9 +57,9 @@ const Home = ({ component, search }) => {
               )}
             </button>
           </div>
-          <div className="w-2/5 p-2">
+          <div className="w-2/5 p-2 hover:bg-gray-100 rounded-sm focus:outline-none">
             {' '}
-            <button className="p-2 w-full h-full flex flex-row items-center hover:bg-gray-100 rounded-sm focus:outline-none">
+            <button className="p-2 w-full h-full flex flex-row items-center ">
               {' '}
               Uploaded Date{' '}
               {/* {sortByDate ? (

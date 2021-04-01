@@ -21,13 +21,21 @@ export const addToFavourites = (id) => async (dispatch, getState) => {
     const config = { headers: authHeader(getState) };
     const body = { isFavourite: true };
     const { data } = await axios.put(`${url}/files/${id}`, body, config);
-    dispatch({ type: fileConstants.ADD_TO_FAV_SUCCESS, payload: data });
+    dispatch({
+      type: fileConstants.ADD_TO_FAV_SUCCESS,
+      payload: {
+        data: data,
+        message: 'Added to Favourites',
+        type: 'ADD_TO_FAV_SUCCESS',
+      },
+    });
+    //setTimeout(()=>{dispatch()},5000);
   } catch (err) {
     dispatch({
       type: fileConstants.ADD_TO_FAV_FAILURE,
-      payload: err.response.data,
+      payload: { error: err.response.data, type: 'ADD_TO_FAV_ERROR' },
     });
-    console.log(err.response.data);
+    //console.log(err.response.data);
   }
 };
 
@@ -37,11 +45,18 @@ export const removeFromFavourites = (id) => async (dispatch, getState) => {
     const config = { headers: authHeader(getState) };
     const body = { isFavourite: false };
     const { data } = await axios.put(`${url}/files/${id}`, body, config);
-    dispatch({ type: fileConstants.REMOVE_FROM_FAV_SUCCESS, payload: data });
+    dispatch({
+      type: fileConstants.REMOVE_FROM_FAV_SUCCESS,
+      payload: {
+        data: data,
+        message: 'Removed from favourites.',
+        type: 'REMOVE_FROM_FAV_SUCCESS',
+      },
+    });
   } catch (err) {
     dispatch({
       type: fileConstants.REMOVE_FROM_FAV_FAILURE,
-      payload: err.response.data,
+      payload: { error: err.response.data, type: 'REMOVE_FROM_FAV_FAILURE' },
     });
     console.log(err);
   }
@@ -53,11 +68,18 @@ export const deleteFile = (id) => async (dispatch, getState) => {
     const config = { headers: authHeader(getState) };
 
     const { data } = await axios.delete(`${url}/files/${id}`, config);
-    dispatch({ type: fileConstants.DELETE_SUCCESS, payload: data });
+    dispatch({
+      type: fileConstants.DELETE_SUCCESS,
+      payload: {
+        data: data,
+        message: 'File deleted successfully.',
+        type: 'DELETE_SUCCESS',
+      },
+    });
   } catch (err) {
     dispatch({
       type: fileConstants.DELETE_FAILURE,
-      payload: err.response.data,
+      payload: { data: err.response.data, type: 'DELETE_FAILURE' },
     });
     console.log(err);
   }
@@ -71,12 +93,19 @@ export const getPublicShareableLink = (id) => async (dispatch, getState) => {
     const { data } = await axios.get(`${url}/files/${id}/public`, config);
     dispatch({
       type: fileConstants.PUBLIC_SHAREABLE_LINK_SUCCESS,
-      payload: data,
+      payload: {
+        data,
+        message: 'Public link',
+        type: 'PUBLIC_SHAREABLE_LINK_SUCCESS',
+      },
     });
   } catch (err) {
     dispatch({
       type: fileConstants.PUBLIC_SHAREABLE_LINK_FAILURE,
-      payload: err.response.data,
+      payload: {
+        data: err.response.data,
+        type: 'PUBLIC_SHAREABLE_LINK_FAILURE',
+      },
     });
     console.log(err);
   }

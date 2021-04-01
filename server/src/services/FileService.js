@@ -103,16 +103,16 @@ class FileService {
     try {
       const exist = await this.fileDAO.getInfo(userId, fileId);
       if (!exist) throw createError.NotFound('File Not Found');
+      const params = {
+        Key: fileId,
+        Bucket: process.env.BUCKET_NAME,
+      };
 
       const status = await this.s3DAO.delete(params);
       if (!status) throw createError.InternalServerError();
 
       const deleted = await this.fileDAO.delete(userId, fileId);
       if (!deleted) throw createError.NotAcceptable('Cannot be Deleted');
-      const params = {
-        Key: fileId,
-        Bucket: process.env.BUCKET_NAME,
-      };
 
       return { status: 'success' };
     } catch (err) {

@@ -3,6 +3,7 @@ import url from '../constants/BaseURL';
 import axios from 'axios';
 import authHeader from '../helpers/authHeader';
 import { loadUser } from './authAction';
+import { loadFiles } from './fileAction';
 
 export const setUploadFile = (data) => ({
   type: uploadFileConstants.SET_UPLOAD_FILE,
@@ -65,6 +66,7 @@ export const uploadFile = (files) => (dispatch, getState) => {
           },
         });
         dispatch(loadUser());
+        dispatch(loadFiles());
         dispatch(successUploadFile(file.id));
         dispatch(removeUploadedFile(file.id));
       } catch (error) {

@@ -34,6 +34,9 @@ export default function fileMenuReducer(state = INTIAL_STATE, action) {
         status: 'faliure',
       };
     default:
-      return state;
+      return {
+        isLoading: false,
+        status: 'faliure',
+      };
   }
 }

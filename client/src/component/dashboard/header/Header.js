@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/favicon.ico';
 
-const Header = ({ setSearch, profile }) => {
+const Header = ({ setSearch, profile, setPage }) => {
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -24,6 +24,7 @@ const Header = ({ setSearch, profile }) => {
                 type="text"
                 name="search"
                 onChange={(e) => {
+                  setPage(1);
                   setSearch(e.target.value);
                 }}
                 placeholder="Search"

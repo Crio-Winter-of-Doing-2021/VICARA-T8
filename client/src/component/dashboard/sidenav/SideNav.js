@@ -4,7 +4,7 @@ import { setUploadFile } from '../../../actions/uploadFileAction';
 import { useDispatch } from 'react-redux';
 import componentConstant from '../../../constants/componentConsants';
 
-const SideNav = ({ component, setComponent, profile }) => {
+const SideNav = ({ component, setComponent, profile, setPage }) => {
   const objects = ['Home', 'Favourites'];
   const dispatch = useDispatch();
   const handleAttachFile = (e) => {
@@ -15,6 +15,7 @@ const SideNav = ({ component, setComponent, profile }) => {
 
   const onHandleClick = (e, value) => {
     e.preventDefault();
+    setPage(1);
     setComponent(value);
   };
 
@@ -24,7 +25,7 @@ const SideNav = ({ component, setComponent, profile }) => {
         <div class=" flex flex-colleft-0 bg-wite h-full border-r">
           <div class="overflow-y-hidden overflow-x-hidden flex-grow">
             <ul class="flex flex-col  space-y-1">
-              <li className="p-1">
+              <li className="p-1 ">
                 <input
                   type="file"
                   id="actual-btn"
@@ -55,7 +56,7 @@ const SideNav = ({ component, setComponent, profile }) => {
                 </button> */}
               </li>
               <li>
-                <span className="relative flex flex-row  h-0.5 bg-gray-200"></span>
+                <span className="relative flex flex-row border-b"></span>
               </li>
               {objects.map((value) => (
                 <li>
@@ -80,7 +81,7 @@ const SideNav = ({ component, setComponent, profile }) => {
               ))}
 
               <li>
-                <span className="relative flex flex-row  h-0.5 bg-gray-200"></span>
+                <span className="relative flex flex-row border-b"></span>
               </li>
               <li className="">
                 <div class="relative flex flex-row items-center h-11  text-gray-600 hover:text-gray-800  pr-6">
