@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import SideNav from '../sidenav/SideNav';
-import FileIcon, { ColorScheme, IconStyle } from 'react-fileicons';
+import FileCard from '../cards/FileCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadFiles } from '../../../actions/fileAction';
-import dateFormat from 'dateformat';
+
 import componentConstant from '../../../constants/componentConsants';
 
 const Home = ({ component, search }) => {
   const [sortByName, setSortByName] = useState(true);
   const [page, setPage] = useState(1);
+
   //const [sortByDate, setSortByDate] = useState(true);
   const pagination = useSelector((state) => state.files);
   //const { length, data } = useSelector((state) => state.files);
   const dispatch = useDispatch();
   useEffect(() => {
-    let options = { sortByName: 'desc', page: page, limit: 1 };
+    let options = { sortByName: 'desc', page: page };
     if (component === componentConstant.FAVOURITES) options.fav = true;
 
     if (sortByName) {
@@ -38,6 +39,7 @@ const Home = ({ component, search }) => {
     console.log('hagsjdh');
     if (pagination.hasNext) setPage(pagination.nextPage);
   };
+
   return (
     <div className="">
       <div className="flex flex-col ">
@@ -87,35 +89,7 @@ const Home = ({ component, search }) => {
         </div>
         {pagination.length > 0
           ? pagination.data.map((file) => (
-              <div className="flex flex-row items-center w-full  border ">
-                <div className="w-2/5 ">
-                  <div className="w-full h-full flex flex-row items-center ">
-                    <div className=" pl-2 focus:outline-none">
-                      <FileIcon
-                        extension={file.metadata.mimetype}
-                        colorScheme={ColorScheme.blue}
-                        iconStyle={IconStyle.gradient}
-                        size={32}
-                      />
-                    </div>
-                    <span className="ml-2 truncate">{file.name}</span>
-                  </div>
-                </div>
-                <div className="w-2/5">
-                  <div className="w-full h-full flex flex-row items-center ">
-                    <span className="ml-4">
-                      {dateFormat(file.createdAt, 'mediumDate')}
-                    </span>
-                  </div>
-                </div>
-                <div className="w-1/5">
-                  <div className="w-full h-full flex flex-row items-center ">
-                    <button className="rounded-full h-10 w-10 bg-gray-50 hover:bg-gray-100 focus:outline-none hover:ring-gray-200 hover:ring-1 flex justify-center items-center">
-                      ...
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <FileCard key={file.id} file={file}></FileCard>
             ))
           : null}
       </div>
