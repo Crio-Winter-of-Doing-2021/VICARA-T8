@@ -4,6 +4,8 @@ import FileIcon, { ColorScheme, IconStyle } from 'react-fileicons';
 import dateFormat from 'dateformat';
 import {
   addToFavourites,
+  deleteFile,
+  getPublicShareableLink,
   removeFromFavourites,
 } from '../../../actions/fileAction';
 import { useDispatch } from 'react-redux';
@@ -13,7 +15,7 @@ const FileCard = ({ file }) => {
   const dispatch = useDispatch();
   const addToFav = (e, id) => {
     e.preventDefault();
-    console.log(id);
+
     dispatch(addToFavourites(id));
   };
 
@@ -22,12 +24,16 @@ const FileCard = ({ file }) => {
     dispatch(removeFromFavourites(id));
   };
 
-  const onClickMenu = (e, operation) => {
+  const onClickMenu = (e, operation, id) => {
     e.preventDefault();
+    console.log(id);
     switch (operation) {
       case fileOptions[0]:
-
+        dispatch(getPublicShareableLink(id));
+        break;
       case fileOptions[1]:
+        dispatch(deleteFile(id));
+        break;
     }
   };
   return (
@@ -91,7 +97,9 @@ const FileCard = ({ file }) => {
 
                   {fileOptions.map((option) => (
                     <button
-                      onClick={(e) => onClickMenu(e, option)}
+                      onClick={(e) =>
+                        onClickMenu(e, option, file.metadata.fileId)
+                      }
                       class="flex items-center w-full  px-4 p-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                     >
                       <span class="flex flex-col ">

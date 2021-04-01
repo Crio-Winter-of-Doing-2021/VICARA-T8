@@ -46,3 +46,38 @@ export const removeFromFavourites = (id) => async (dispatch, getState) => {
     console.log(err);
   }
 };
+
+export const deleteFile = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: fileConstants.DELETE_REQUEST });
+    const config = { headers: authHeader(getState) };
+
+    const { data } = await axios.delete(`${url}/files/${id}`, config);
+    dispatch({ type: fileConstants.DELETE_SUCCESS, payload: data });
+  } catch (err) {
+    dispatch({
+      type: fileConstants.DELETE_FAILURE,
+      payload: err.response.data,
+    });
+    console.log(err);
+  }
+};
+
+export const getPublicShareableLink = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: fileConstants.PUBLIC_SHAREABLE_LINK_REQUEST });
+    const config = { headers: authHeader(getState) };
+
+    const { data } = await axios.get(`${url}/files/${id}/public`, config);
+    dispatch({
+      type: fileConstants.PUBLIC_SHAREABLE_LINK_SUCCESS,
+      payload: data,
+    });
+  } catch (err) {
+    dispatch({
+      type: fileConstants.PUBLIC_SHAREABLE_LINK_FAILURE,
+      payload: err.response.data,
+    });
+    console.log(err);
+  }
+};
