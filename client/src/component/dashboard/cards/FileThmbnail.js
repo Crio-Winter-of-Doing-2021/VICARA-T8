@@ -13,7 +13,7 @@ const FileThumbnail = ({ ext }) => {
         extension={ext}
         colorScheme={constant[ext]}
         iconStyle={IconStyle.gradient}
-        size={26}
+        size={22}
         background="#efefef"
       />
     </div>

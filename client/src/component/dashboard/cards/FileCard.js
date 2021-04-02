@@ -33,7 +33,7 @@ const FileCard = ({ file }) => {
         dispatch(deleteFile(file.metadata.fileId));
         break;
       case fileOptions[2]:
-        downloadFile(file);
+        dispatch(downloadFile(file));
         break;
       default:
         return;
@@ -42,32 +42,38 @@ const FileCard = ({ file }) => {
 
   return (
     <div>
-      <div className="flex flex-row items-center w-full border-b p-1 hover:bg-gray-100 transition ease-linear ">
-        <div className="w-2/5 ">
+      <div className=" flex flex-row items-center w-full border-b p-1 hover:bg-gray-100 transition ease-linear ">
+        <div className="w-5/12 ">
           <div className="w-full h-full flex flex-row items-center ">
             <div className="pl-2 flex flex-row items-center  focus:outline-none ">
               <FileThumbnail ext={file.metadata.mimetype.split('/')[0]} />
             </div>
-            <span className="ml-2 truncate">{file.name}</span>
+            <span className="ml-2 truncate lg:text-md text-sm">
+              {file.name}
+            </span>
           </div>
         </div>
-        <div className="w-2/5 ">
+        <div className="w-4/12">
           <div className="w-full h-full flex flex-row items-center ">
-            <span className="ml-4">
+            <span className="ml-4 lg:text-md text-sm">
               {dateFormat(file.createdAt, 'mediumDate')}
             </span>
           </div>
         </div>
-        <div className="w-1/5 ">
-          <div className="w-full h-full flex flex-row-reverse items-center relative ">
+        <div className="w-3/12 pr-4 flex flex-row    ">
+          <div className="w-full  flex flex-row justify-items-center relative ">
             <button
-              className="focus:outline-none mr-36 "
+              className="focus:outline-none   ml-5"
               onClick={() => setToggle((prev) => !prev)}
             >
-              <i className="fas fa-ellipsis-v w-10 h-10 rounded-full text-gray-600 flex justify-center items-center hover:text-gray-800 transition ease-linear "></i>
+              <i className="fas fa-ellipsis-v w-8 h-8 lg:w-10 lg:h-10 rounded-full text-gray-600 flex justify-center items-center hover:text-gray-800 transition ease-linear "></i>
             </button>
             {toggle && (
-              <div className="z-30 origin-top-right absolute left-16 top-0 mt-2 w-42 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
+              <div
+                onFocus={() => setToggle(true)}
+                onBlur={() => setToggle(false)}
+                className="z-30 absolute right-16 top-0 mt-2  w-42 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5"
+              >
                 <div
                   className="py-1 divide-y divide-gray-100"
                   role="menu"
@@ -96,6 +102,7 @@ const FileCard = ({ file }) => {
 
                   {fileOptions.map((option) => (
                     <button
+                      key={option}
                       onClick={(e) => onClickMenu(e, option, file)}
                       className="flex items-center w-full  px-4 p-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600 focus:outline-none"
                     >

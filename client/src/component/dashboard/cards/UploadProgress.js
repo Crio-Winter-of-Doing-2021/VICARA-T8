@@ -14,9 +14,9 @@ const UploadProgress = () => {
     if (size(fileToUpload) > 0) dispatch(uploadFile(fileToUpload));
   }, [uploadedFileAmount, dispatch, fileProgress]);
   return uploadedFileAmount > 0 ? (
-    <div className="fixed bottom-5 right-10 bg-white-200 rounded-md ">
-      <div className="flex flex-col justify-center items-center pb-4">
-        <div className="w-full border text-center p-2 bg-gray-300 text-gray-800 font-bold">
+    <div className="fixed bottom-5 bg-white-200 rounded-md z-30  w-full">
+      <div className="flex flex-col justify-center items-center pb-4 ">
+        <div className="w-72 border text-center p-2 bg-gray-300 text-gray-800 font-bold">
           Uploading Files ...
         </div>
         {uploadedFileAmount > 0

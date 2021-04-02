@@ -19,10 +19,10 @@ const SideNav = ({ component, setComponent, profile, setPage }) => {
   };
 
   return (
-    <div className="h-full rounded-sm">
+    <div className="h-full rounded-sm ">
       <div className="h-full flex flex-col flex-auto flex-shrink-0 antialiased bg-white text-white">
         <div className=" flex flex-colleft-0 bg-wite h-full border-r">
-          <div className="overflow-y-hidden overflow-x-hidden flex-grow">
+          <div className="overflow-y-d overflow-x-hidden flex-grow">
             <ul className="flex flex-col  space-y-1">
               <li className="p-1 ">
                 <input

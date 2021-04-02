@@ -14,10 +14,19 @@ const Dashboard = () => {
   const [component, setComponent] = useState(componentConstant.HOME);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileToggle, setmobileToggle] = useState(false);
+  const updateDimensions = () => {
+    const width = window.innerWidth;
+    if (width < 1024) setIsMobile(true);
+  };
   const profile = useSelector((state) => state.auth);
   useEffect(() => {
     dispatch(loadUser());
+    updateDimensions();
+
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
   }, [dispatch]);
   const menuStatus = useSelector((state) => state.menu);
   const logoutUser = () => {
@@ -25,29 +34,54 @@ const Dashboard = () => {
   };
 
   return !profile.user ? null : (
-    <div className="h-screen flex flex-col">
+    <div className="h-screen flex flex-col relative">
       {menuStatus.status && <Toast item={menuStatus}></Toast>}
       <Header
         setSearch={setSearch}
         profile={profile.user}
         setPage={setPage}
         logoutUser={logoutUser}
+        isMobile={isMobile}
+        setmobileToggle={setmobileToggle}
       ></Header>
-
-      <div className="flex flex-row h-full ">
-        <div className="w-1/6 h-full">
-          <SideNav
-            setComponent={setComponent}
-            component={component}
-            setPage={setPage}
-          ></SideNav>
+      {isMobile && (
+        <div
+          className={` ${
+            mobileToggle
+              ? 'w-full flex flex-row absolute t-0 l-0 h-full z-10 transition duration-150 ease-in-out'
+              : 'hidden  transition duration-150 ease-in-out'
+          }`}
+        >
+          <div className={` w-4/6 h-full`}>
+            <SideNav
+              setComponent={setComponent}
+              component={component}
+              setPage={setPage}
+            ></SideNav>
+          </div>
+          <div
+            className="w-2/6 h-full "
+            onClick={() => setmobileToggle(false)}
+          ></div>
         </div>
-        <div className="w-5/6">
+      )}
+      <div className={`flex flex-row`}>
+        {!isMobile && (
+          <div className={` w-1/6 h-full `}>
+            <SideNav
+              setComponent={setComponent}
+              component={component}
+              setPage={setPage}
+            ></SideNav>
+          </div>
+        )}
+        <div className={` ${isMobile ? 'w-full' : 'w-5/6'}`}>
           <Home
             component={component}
             search={search}
             page={page}
             setPage={setPage}
+            isMobile={isMobile}
           ></Home>
           <UploadProgress></UploadProgress>
         </div>

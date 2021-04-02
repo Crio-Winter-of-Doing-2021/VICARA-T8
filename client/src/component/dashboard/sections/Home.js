@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadFiles } from '../../../actions/fileAction';
 
 import componentConstant from '../../../constants/componentConsants';
+import FileCardLoader from '../cards/FileCardLoader';
+import FileNotFound from '../cards/FileNotFound';
 
-const Home = ({ component, search, page, setPage }) => {
+const Home = ({ component, search, page, setPage, isMobile }) => {
   const [sortByName, setSortByName] = useState(true);
 
   //const [sortByDate, setSortByDate] = useState(true);
@@ -13,7 +15,8 @@ const Home = ({ component, search, page, setPage }) => {
   //const { length, data } = useSelector((state) => state.files);
   const dispatch = useDispatch();
   useEffect(() => {
-    let options = { sortByName: 'desc', page: page };
+    let options = { sortByName: 'desc', page: page, limit: 10 };
+    if (isMobile) options.limit = 5;
     if (component === componentConstant.FAVOURITES) options.fav = true;
 
     if (sortByName) {
@@ -39,12 +42,12 @@ const Home = ({ component, search, page, setPage }) => {
   };
 
   return (
-    <div className="">
-      <div className="flex flex-col ">
+    <div className=" w-full ">
+      <div className="flex flex-col w-full ">
         <div className="flex flex-row items-center w-full border-b">
-          <div className="w-2/5 p-2 hover:bg-gray-100 rounded-sm focus:outline-none">
+          <div className="w-5/12 pl-1 lg:pl-2 lg:p-2  hover:bg-gray-100 rounded-sm ">
             <button
-              className="p-2 w-full h-full flex flex-row items-center "
+              className="p-2 w-full h-full flex flex-row items-center lg:text-sm text-md focus:outline-none "
               onClick={() => setSortByName((prev) => !prev)}
             >
               {' '}
@@ -56,9 +59,9 @@ const Home = ({ component, search, page, setPage }) => {
               )}
             </button>
           </div>
-          <div className="w-2/5 p-2 hover:bg-gray-100 rounded-sm focus:outline-none">
+          <div className="w-4/12  lg:pt-2 lg:pb-2 hover:bg-gray-100 rounded-sm">
             {' '}
-            <button className="p-2 w-full h-full flex flex-row items-center ">
+            <button className="p-2 w-full h-full flex flex-row items-center truncate lg:text-md text-sm  focus:outline-none">
               {' '}
               Uploaded Date{' '}
               {/* {sortByDate ? (
@@ -68,44 +71,50 @@ const Home = ({ component, search, page, setPage }) => {
               )} */}
             </button>
           </div>
-          <div className="w-1/5 p-2 flex flex-row">
+          <div className="w-3/12  flex flex-row ">
             <button
               disabled={!pagination.hasPrevious}
               onClick={(e) => onClickPreviousPage(e)}
-              className={`focus:outline-none ml-2 ${
+              className={` focus:outline-none mr-1 ${
                 pagination.hasPrevious ? '' : 'cursor-default'
               }`}
             >
               <i
-                className={` ${
+                className={`text-xs lg:text-md ${
                   pagination.hasPrevious
                     ? 'hover:bg-blue-200 hover:text-white bg-gray-200 '
                     : 'bg-gray-50'
-                } fas fa-chevron-left  w-10 h-10 rounded-full  flex justify-center items-center  transition ease-linear `}
+                } fas fa-chevron-left w-8 h-8  lg:w-10 lg:h-10 rounded-full  flex justify-center items-center  transition ease-linear `}
               ></i>
             </button>
             <button
               disabled={!pagination.hasNext}
               onClick={(e) => onClickNextPage(e)}
-              className={`focus:outline-none ml-2 ${
+              className={`focus:outline-none  ${
                 pagination.hasNext ? '' : 'cursor-default '
               }`}
             >
               <i
-                className={` ${
+                className={` text-xs lg:text-md ${
                   pagination.hasNext
                     ? 'hover:bg-blue-200 hover:text-white bg-gray-200 '
                     : 'bg-gray-50'
-                } fas fa-chevron-right  w-10 h-10 rounded-full flex justify-center items-center  transition ease-linear `}
+                } fas fa-chevron-right  w-8 h-8  lg:w-10 lg:h-10 rounded-full flex justify-center items-center  transition ease-linear `}
               ></i>
             </button>
           </div>
         </div>
-        {pagination.length > 0
-          ? pagination.data.map((file) => (
-              <FileCard key={file.id} file={file}></FileCard>
-            ))
-          : null}
+        {pagination.isLoading ? (
+          Array(5)
+            .fill('')
+            .map((e, i) => <FileCardLoader key={i}></FileCardLoader>)
+        ) : pagination.length > 0 ? (
+          pagination.data.map((file) => (
+            <FileCard key={file.metadata.fileId} file={file}></FileCard>
+          ))
+        ) : (
+          <FileNotFound />
+        )}
       </div>
     </div>
   );

@@ -48,6 +48,11 @@ export default function authReducer(state = intialState, action) {
         error: { message: null },
         isError: false,
       };
+    case 'REFRESH_TOKENS':
+      return {
+        ...state,
+        tokens: action.payload,
+      };
     case authConstants.AUTH_ERROR:
     case authConstants.LOGIN_FAILURE:
     case authConstants.REGISTER_FAILURE:

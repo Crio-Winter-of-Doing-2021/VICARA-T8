@@ -11,6 +11,7 @@ export default function fileMenuReducer(state = INTIAL_STATE, action) {
     case fileConstants.DELETE_REQUEST:
     case fileConstants.PUBLIC_SHAREABLE_LINK_REQUEST:
       return {
+        ...state,
         isLoading: true,
         status: 'faliure',
       };
@@ -19,6 +20,7 @@ export default function fileMenuReducer(state = INTIAL_STATE, action) {
     case fileConstants.DELETE_SUCCESS:
     case fileConstants.PUBLIC_SHAREABLE_LINK_SUCCESS:
       return {
+        ...state,
         isLoading: false,
         ...action.payload,
         status: 'success',
@@ -29,6 +31,7 @@ export default function fileMenuReducer(state = INTIAL_STATE, action) {
     case fileConstants.DELETE_FAILURE:
     case fileConstants.PUBLIC_SHAREABLE_LINK_FAILURE:
       return {
+        ...state,
         isLoading: false,
         ...action.payload,
         status: 'faliure',
@@ -39,9 +42,6 @@ export default function fileMenuReducer(state = INTIAL_STATE, action) {
         status: 'faliure',
       };
     default:
-      return {
-        isLoading: false,
-        status: 'faliure',
-      };
+      return state;
   }
 }
