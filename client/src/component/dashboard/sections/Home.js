@@ -29,7 +29,7 @@ const Home = ({ component, search, page, setPage, isMobile }) => {
     }
 
     dispatch(loadFiles(options));
-  }, [component, search, sortByName, page, dispatch]);
+  }, [component, search, sortByName, page, dispatch, isMobile]);
 
   const onClickPreviousPage = (e) => {
     e.preventDefault();
