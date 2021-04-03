@@ -35,11 +35,11 @@ export const removeUploadedFile = (id) => (dispatch) => {
         type: uploadFileConstants.REMOVE_UPLOADED_FILE,
         payload: id,
       }),
-    3000
+    1000
   );
 };
 
-export const uploadFile = (files) => (dispatch, getState) => {
+export const uploadFile = (files, isMobile) => (dispatch, getState) => {
   const config = {
     headers: {
       Authorization: authHeader(getState).Authorization,
@@ -66,7 +66,7 @@ export const uploadFile = (files) => (dispatch, getState) => {
           },
         });
         dispatch(loadUser());
-        dispatch(loadFiles());
+        dispatch(loadFiles({ isMobile }));
         dispatch(successUploadFile(file.id));
         dispatch(removeUploadedFile(file.id));
       } catch (error) {

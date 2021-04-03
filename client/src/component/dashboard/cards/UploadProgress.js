@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import UploadCard from './UploadCard';
 import { size, toArray } from 'lodash';
 import { uploadFile } from '../../../actions/uploadFileAction';
-const UploadProgress = () => {
+const UploadProgress = ({ isMobile }) => {
   const dispatch = useDispatch();
   const fileProgress = useSelector((state) => state.uploadFile.fileProgress);
   const uploadedFileAmount = size(fileProgress);
@@ -11,7 +11,7 @@ const UploadProgress = () => {
     const fileToUpload = toArray(fileProgress).filter(
       (file) => file.progress === 0
     );
-    if (size(fileToUpload) > 0) dispatch(uploadFile(fileToUpload));
+    if (size(fileToUpload) > 0) dispatch(uploadFile(fileToUpload, isMobile));
   }, [uploadedFileAmount, dispatch, fileProgress]);
   return uploadedFileAmount > 0 ? (
     <div className="fixed bottom-5 bg-white-200 rounded-md z-30  w-full">
@@ -21,7 +21,7 @@ const UploadProgress = () => {
         </div>
         {uploadedFileAmount > 0
           ? toArray(fileProgress).map((file) => (
-              <div className="border border-t-0 pb-2">
+              <div className="border border-t-0 z-30">
                 <UploadCard key={file.id} file={file}></UploadCard>
               </div>
             ))

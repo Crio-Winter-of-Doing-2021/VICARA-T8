@@ -12,6 +12,7 @@ const Home = ({ component, search, page, setPage, isMobile }) => {
 
   //const [sortByDate, setSortByDate] = useState(true);
   const pagination = useSelector((state) => state.files);
+
   //const { length, data } = useSelector((state) => state.files);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -105,7 +106,7 @@ const Home = ({ component, search, page, setPage, isMobile }) => {
           </div>
         </div>
         {pagination.isLoading ? (
-          Array(5)
+          Array(isMobile ? 5 : 10)
             .fill('')
             .map((e, i) => <FileCardLoader key={i}></FileCardLoader>)
         ) : pagination.length > 0 ? (

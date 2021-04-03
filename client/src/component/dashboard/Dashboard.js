@@ -65,7 +65,7 @@ const Dashboard = () => {
           ></div>
         </div>
       )}
-      <div className={`flex flex-row`}>
+      <div className={`h-full flex flex-row`}>
         {!isMobile && (
           <div className={` w-1/6 h-full `}>
             <SideNav
@@ -75,7 +75,7 @@ const Dashboard = () => {
             ></SideNav>
           </div>
         )}
-        <div className={` ${isMobile ? 'w-full' : 'w-5/6'}`}>
+        <div className={`h-full ${isMobile ? 'w-full' : 'w-5/6'}`}>
           <Home
             component={component}
             search={search}
@@ -83,8 +83,8 @@ const Dashboard = () => {
             setPage={setPage}
             isMobile={isMobile}
           ></Home>
-          <UploadProgress></UploadProgress>
         </div>
+        <UploadProgress isMobile={isMobile}></UploadProgress>
       </div>
     </div>
   );

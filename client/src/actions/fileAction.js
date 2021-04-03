@@ -7,6 +7,12 @@ import fileConstants from '../constants/fileConstants';
 
 export const loadFiles = (options) => async (dispatch, getState) => {
   try {
+    if (options.hasOwnProperty('isMobile')) {
+      if (options.isMobile) options.limit = 5;
+      else options.limit = 10;
+      options.sortByName = 'desc';
+      delete options.isMobile;
+    }
     dispatch({ type: fileConstants.FILES_REQUEST });
     const interceptor = attachInterceptorForTokenChecks(dispatch, getState);
     const config = { headers: authHeader(getState), params: options };
