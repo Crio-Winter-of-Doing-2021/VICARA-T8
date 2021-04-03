@@ -61,9 +61,19 @@ const Header = ({ isAuth }) => {
         <div className="flex flex-col bg-blue-200 ">
           {' '}
           <nav className="font-sen text-gray-800 dark:text-white uppercase text-lg lg:flex items-center ">
-            <Link to="/login" className="py-2 px-6 flex">
-              Log In
-            </Link>
+            {isAuth ? (
+              <Link to="/drive">
+                <div className="w-2/6 px-5">
+                  <span className=" flex border-2 border-white transition ease-linear rounded-md hover:bg-white p-2">
+                    Go to Drive
+                  </span>
+                </div>
+              </Link>
+            ) : (
+              <Link to="/login" className="py-2 px-6 flex">
+                Log In
+              </Link>
+            )}
             <Link to="/docs" className="py-2 px-6 flex">
               Documentation
             </Link>
