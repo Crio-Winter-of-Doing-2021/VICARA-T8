@@ -62,6 +62,7 @@ class AuthController {
   // @method Google Frontend
   googleFEOAuth = async (req, res, next) => {
     try {
+      //console.log(req.body.user);
       const userData = req.body.user;
       const tokens = await this.authService.googleOAuth(userData);
       res.status(200).json({ status: 'success', tokens });

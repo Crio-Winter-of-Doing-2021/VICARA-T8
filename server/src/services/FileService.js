@@ -107,12 +107,21 @@ class FileService {
         Key: fileId,
         Bucket: process.env.BUCKET_NAME,
       };
-
+      console.log(exist);
+      const size = exist.metadata.size;
       const status = await this.s3DAO.delete(params);
       if (!status) throw createError.InternalServerError();
 
       const deleted = await this.fileDAO.delete(userId, fileId);
       if (!deleted) throw createError.NotAcceptable('Cannot be Deleted');
+
+      const updateStorageStatus = await this.userDAO.UpdateStorage(
+        userId,
+        size,
+        'substract'
+      );
+      if (!updateStorageStatus)
+        throw createError.NotAcceptable('Storage Limit Exceed');
 
       return { status: 'success' };
     } catch (err) {

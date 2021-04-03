@@ -4,6 +4,7 @@ import authHeader from '../helpers/authHeader';
 import { WritableStream } from 'web-streams-polyfill/ponyfill';
 import streamSaver from 'streamsaver';
 import fileConstants from '../constants/fileConstants';
+import { loadUser } from './authAction';
 
 export const loadFiles = (options) => async (dispatch, getState) => {
   try {
@@ -40,7 +41,7 @@ export const addToFavourites = (id) => async (dispatch, getState) => {
         type: 'ADD_TO_FAV_SUCCESS',
       },
     });
-    dispatch(loadFiles());
+    dispatch(loadFiles({ isMobile: true }));
     setTimeout(() => {
       dispatch({ type: 'CLEAR_TOAST_MENU' });
     }, 5000);
@@ -69,7 +70,7 @@ export const removeFromFavourites = (id) => async (dispatch, getState) => {
         type: 'REMOVE_FROM_FAV_SUCCESS',
       },
     });
-    dispatch(loadFiles());
+    dispatch(loadFiles({ isMobile: true }));
     setTimeout(() => {
       dispatch({ type: 'CLEAR_TOAST_MENU' });
     }, 5000);
@@ -97,7 +98,8 @@ export const deleteFile = (id) => async (dispatch, getState) => {
         type: 'DELETE_SUCCESS',
       },
     });
-    dispatch(loadFiles());
+    dispatch(loadUser());
+    dispatch(loadFiles({ isMobile: true }));
     setTimeout(() => {
       dispatch({ type: 'CLEAR_TOAST_MENU' });
     }, 5000);

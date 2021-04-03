@@ -38,7 +38,7 @@ const Home = ({ component, search, page, setPage, isMobile }) => {
   };
   const onClickNextPage = (e) => {
     e.preventDefault();
-    console.log('hagsjdh');
+    //console.log('hagsjdh');
     if (pagination.hasNext) setPage(pagination.nextPage);
   };
 

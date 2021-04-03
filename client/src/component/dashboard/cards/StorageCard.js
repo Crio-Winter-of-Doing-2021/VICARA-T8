@@ -5,7 +5,8 @@ const StorageCard = () => {
   const profile = useSelector((state) => state.auth);
   // const size = (profile.storage.size / 1073741824).toFixed(2);
   // const limit = (profile.storage.limit / 1073741824).toFixed(2);
-  // const progress = (size * 100) / limit;
+  //const progress = (size * 100) / limit;
+  console.log(profile.user.storage.size);
   return !profile.user ? null : (
     <div>
       <div className=" rounded-md w-full px-2 bg-white dark:bg-gray-800 relative overflow-hidden">

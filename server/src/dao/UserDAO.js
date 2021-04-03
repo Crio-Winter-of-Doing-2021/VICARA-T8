@@ -33,10 +33,11 @@ class UserDAO {
       const userobject = await this.user.findById(id);
 
       let newsize;
-      let limit = userobject.storage.limit;
+      let limit = parseInt(userobject.storage.limit);
+
       switch (operation) {
         case 'add':
-          newsize = parseInt(userobject.storage.size) + size;
+          newsize = parseInt(userobject.storage.size) + parseInt(size);
           if (limit > newsize) {
             let success = await this.user.findByIdAndUpdate(
               id,
@@ -48,7 +49,7 @@ class UserDAO {
           }
           break;
         case 'substract':
-          newsize = parseInt(userobject.size) - size;
+          newsize = parseInt(userobject.storage.size) - parseInt(size);
           let success = await this.user.findByIdAndUpdate(
             id,
             { 'storage.size': newsize },
