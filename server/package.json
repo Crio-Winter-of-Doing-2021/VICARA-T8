@@ -6,6 +6,7 @@
   "scripts": {
     "start-prod": "NODE_ENV=production npm run build && npm run server",
     "server": "npm run build && node ./build/index.js",
+    "start": " npm run server",
     "build": "npm run clean && npm run build-babel",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel -d ./build ./src -s",
