@@ -177,11 +177,15 @@ class FileService {
   getPublicLink = async (userId, fileId) => {
     try {
       const exist = await this.fileDAO.getInfo(userId, fileId);
+      console.log(exist);
       if (!exist) throw createError.NotFound('File Not Found');
       const param = {
         Key: fileId,
         Bucket: process.env.BUCKET_NAME,
+        ResponseContentDisposition: `attachment; filename=${exist.name}`,
+        Expires: 604800,
       };
+      console.log(param);
       const url = await this.s3DAO.getPublicLink(param);
       if (!url) throw createError.Forbidden();
       return { success: 'true', url: url };

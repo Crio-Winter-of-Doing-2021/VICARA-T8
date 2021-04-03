@@ -28,7 +28,7 @@ const Header = ({
               </Link>
             )}
             <div className="pl-2 uppercase text-gray-800 dark:text-white font-black text-1xl lg:text-3xl">
-              <Link to="/drive">Drive</Link>
+              Drive
             </div>
           </div>
           <div className="flex items-center w-7/12 ">

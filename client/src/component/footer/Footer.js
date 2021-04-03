@@ -2,13 +2,13 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-200 dark:bg-gray-800 w-full py-4  mt-40 md:mt-20">
+    <footer className="bg-gray-200 dark:bg-gray-800 w-full py-4 ">
       <div className="max-w-screen-xl mx-auto px-4">
         <ul className="max-w-screen-md mx-auto text-lg font-light flex flex-wrap justify-around">
           <li className="my-2">
             <a
               className="text-gray-800 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
-              href="https://www.linkedin.com/in/991rajat"
+              href=" https://github.com/Crio-Winter-of-Doing-2021"
             >
               Github
             </a>
@@ -16,7 +16,7 @@ const Footer = () => {
           <li className="my-2">
             <a
               className="text-gray-800 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200"
-              href="https://github.com/Crio-Winter-of-Doing-2021"
+              href="https://www.linkedin.com/in/991rajat"
             >
               LinkedIn
             </a>
@@ -103,11 +103,6 @@ const Footer = () => {
           <p>
             Developed with{' '}
             <i className="fas fa-heart " style={{ color: 'red' }}></i> by{' '}
-            <span>
-              {' '}
-              <a href="https://www.github.com/ManasUniyal">Manas </a>
-            </span>
-            and{' '}
             <span>
               {' '}
               <a href="https://www.github.com/991rajat">Rajat </a>

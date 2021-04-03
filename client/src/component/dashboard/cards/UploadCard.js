@@ -6,9 +6,9 @@ const UploadCard = (props) => {
   const { file, progress } = props.file;
   return (
     <div>
-      <div className="w-72 rounded-md px-2 bg-white dark:bg-gray-800 relative overflow-hidden pb-2">
-        <div className="w-full h-full block px-2">
-          <div className="w-full flex-row flex items-center">
+      <div className="w-72 rounded-sm px-2 bg-white dark:bg-gray-800 relative overflow-hidden border-2 border-t-0 ">
+        <div className="w-full h-full block px-2 pb-2">
+          <div className="w-full flex-row flex items-center ">
             <div className="w-full flex  items-center my-2 ">
               <p className="w-full flex flex-row justify-between items-center">
                 <span className="text-gray-800 text-sm text-left dark:text-white truncate pr-4">

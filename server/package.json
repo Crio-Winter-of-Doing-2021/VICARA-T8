@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "server",
   "main": "index.js",
+  "engines": {
+    "node": "14.16.0"
+  },
   "scripts": {
     "start-prod": "NODE_ENV=production npm run build && npm run server",
     "server": "npm run build && node ./build/index.js",
-    "start": " npm run server",
+    "start": " node src/index.js",
     "build": "npm run clean && npm run build-babel",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel -d ./build ./src -s",

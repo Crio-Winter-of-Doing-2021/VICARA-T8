@@ -46,13 +46,13 @@ export const uploadFile = (files, isMobile) => (dispatch, getState) => {
       'Content-Type': 'multipart/form-data',
     },
   };
-  console.log(config);
+
   if (files.length) {
     files.forEach(async (file) => {
       const formPayload = new FormData();
       formPayload.append('size', file.size);
       formPayload.append('', file.file);
-      console.log(file);
+
       try {
         await axios({
           method: 'post',

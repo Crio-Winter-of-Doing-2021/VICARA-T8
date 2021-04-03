@@ -1,0 +1,21 @@
+2021-04-03 11:25:25 info: 	Server is listening on port 8080 
+2021-04-03 11:25:28 info: 	Mongoose Connected: cluster0-shard-00-01.raai7.mongodb.net 
+2021-04-03 11:25:43 info: 	Server is listening on port 8080 
+2021-04-03 11:25:46 info: 	Mongoose Connected: cluster0-shard-00-02.raai7.mongodb.net 
+2021-04-03 11:25:52 info: 	Server is listening on port 8080 
+2021-04-03 11:25:54 info: 	Mongoose Connected: cluster0-shard-00-02.raai7.mongodb.net 
+2021-04-03 11:25:58 info: 	Server is listening on port 8080 
+2021-04-03 11:26:01 info: 	Mongoose Connected: cluster0-shard-00-02.raai7.mongodb.net 
+2021-04-03 11:26:17 info: 	Server is listening on port 8080 
+2021-04-03 11:26:19 info: 	Mongoose Connected: cluster0-shard-00-02.raai7.mongodb.net 
+2021-04-03 11:26:31 info: 	Server is listening on port 8080 
+2021-04-03 11:26:34 info: 	Mongoose Connected: cluster0-shard-00-00.raai7.mongodb.net 
+2021-04-03 11:27:01 info: 	Server is listening on port 8080 
+2021-04-03 11:27:04 info: 	Mongoose Connected: cluster0-shard-00-02.raai7.mongodb.net 
+2021-04-03 11:27:36 info: 	Server is listening on port 8080 
+2021-04-03 11:27:38 info: 	Mongoose Connected: cluster0-shard-00-02.raai7.mongodb.net 
+2021-04-03 11:29:49 info: 	Server is listening on port 8080 
+2021-04-03 11:29:52 info: 	Mongoose Connected: cluster0-shard-00-00.raai7.mongodb.net 
+2021-04-03 11:41:27 info: 	Server is listening on port 8080 
+2021-04-03 11:41:29 info: 	Mongoose Connected: cluster0-shard-00-01.raai7.mongodb.net 
+2021-04-03 11:42:12 error: 	UnauthorizedError Unauthorized {"stack":"UnauthorizedError: Unauthorized\n    at verifyAccessToken (/home/rajat/Desktop/crio/VICARA-T8/server/build/utils/jwtHelper.js:26:64)\n    at Layer.handle [as handle_request] (/home/rajat/Desktop/crio/VICARA-T8/server/node_modules/express/lib/router/layer.js:95:5)\n    at trim_prefix (/home/rajat/Desktop/crio/VICARA-T8/server/node_modules/express/lib/router/index.js:317:13)\n    at /home/rajat/Desktop/crio/VICARA-T8/server/node_modules/express/lib/router/index.js:284:7\n    at Function.process_params (/home/rajat/Desktop/crio/VICARA-T8/server/node_modules/express/lib/router/index.js:335:12)\n    at next (/home/rajat/Desktop/crio/VICARA-T8/server/node_modules/express/lib/router/index.js:275:10)\n    at /home/rajat/Desktop/crio/VICARA-T8/server/node_modules/connect-busboy/index.js:14:14\n    at Layer.handle [as handle_request] (/home/rajat/Desktop/crio/VICARA-T8/server/node_modules/express/lib/router/layer.js:95:5)\n    at trim_prefix (/home/rajat/Desktop/crio/VICARA-T8/server/node_modules/express/lib/router/index.js:317:13)\n    at /home/rajat/Desktop/crio/VICARA-T8/server/node_modules/express/lib/router/index.js:284:7\n    at Function.process_params (/home/rajat/Desktop/crio/VICARA-T8/server/node_modules/express/lib/router/index.js:335:12)\n    at next (/home/rajat/Desktop/crio/VICARA-T8/server/node_modules/express/lib/router/index.js:275:10)\n    at initialize (/home/rajat/Desktop/crio/VICARA-T8/server/node_modules/passport/lib/middleware/initialize.js:53:5)\n    at Layer.handle [as handle_request] (/home/rajat/Desktop/crio/VICARA-T8/server/node_modules/express/lib/router/layer.js:95:5)\n    at trim_prefix (/home/rajat/Desktop/crio/VICARA-T8/server/node_modules/express/lib/router/index.js:317:13)\n    at /home/rajat/Desktop/crio/VICARA-T8/server/node_modules/express/lib/router/index.js:284:7"}

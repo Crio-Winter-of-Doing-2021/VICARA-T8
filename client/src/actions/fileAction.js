@@ -8,7 +8,7 @@ import fileConstants from '../constants/fileConstants';
 export const loadFiles = (options) => async (dispatch, getState) => {
   try {
     if (options.hasOwnProperty('isMobile')) {
-      if (options.isMobile) options.limit = 5;
+      if (options.isMobile) options.limit = 10;
       else options.limit = 10;
       options.sortByName = 'desc';
       delete options.isMobile;

@@ -17,7 +17,7 @@ const Home = ({ component, search, page, setPage, isMobile }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     let options = { sortByName: 'desc', page: page, limit: 10 };
-    if (isMobile) options.limit = 5;
+    if (isMobile) options.limit = 10;
     if (component === componentConstant.FAVOURITES) options.fav = true;
 
     if (sortByName) {
