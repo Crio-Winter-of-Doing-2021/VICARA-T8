@@ -64,6 +64,9 @@ class AuthService {
       //TODO: Error Handler
       throw createError.NotFound('User Not Found');
     }
+    if (!user.password) {
+      throw createError.Forbidden('Create a account or User Google ');
+    }
     const isMatch = await bcrypt.compare(entity.password, user.password);
 
     if (!isMatch) {

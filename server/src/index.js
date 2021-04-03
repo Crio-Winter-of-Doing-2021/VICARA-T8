@@ -10,6 +10,7 @@ const errorHandler = require('./middleware/errorHandler');
 const passport = require('passport');
 const busboy = require('connect-busboy');
 const cors = require('cors');
+const path = require('path');
 const helmet = require('helmet');
 const compression = require('compression');
 const connectDB = require('./config/connectDB.js');
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
 app.use(passport.initialize());
 app.use(
   busboy({
