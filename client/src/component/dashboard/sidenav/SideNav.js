@@ -4,7 +4,12 @@ import { setUploadFile } from '../../../actions/uploadFileAction';
 import { useDispatch } from 'react-redux';
 
 const SideNav = ({ component, setComponent, profile, setPage }) => {
-  const objects = ['Home', 'Favourites'];
+  const objects = ['Home', 'Favourites', 'Recent'];
+  const iconsObject = {
+    Home: 'fa-home',
+    Favourites: 'fa-star',
+    Recent: 'fa-history',
+  };
   const dispatch = useDispatch();
   const handleAttachFile = (e) => {
     e.preventDefault();
@@ -66,11 +71,7 @@ const SideNav = ({ component, setComponent, profile, setPage }) => {
                     }`}
                   >
                     <span className="inline-flex justify-center items-center ml-4">
-                      <i
-                        className={`fas ${
-                          value === 'Home' ? 'fa-home' : 'fa-star'
-                        }`}
-                      ></i>
+                      <i className={`fas ${iconsObject[value]}`}></i>
                     </span>
                     <span className="ml-2 text-sm tracking-wide truncate">
                       {value}

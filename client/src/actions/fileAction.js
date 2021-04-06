@@ -25,6 +25,18 @@ export const loadFiles = (options) => async (dispatch, getState) => {
   }
 };
 
+export const recentFiles = () => async (dispatch, getState) => {
+  try {
+    const options = { sortByDate: 'desc' };
+    dispatch({ type: fileConstants.FILES_REQUEST });
+    const interceptor = attachInterceptorForTokenChecks(dispatch, getState);
+    const config = { headers: authHeader(getState), params: options };
+    const { data } = await axios.get(`${url}/files`, config);
+    dispatch({ type: fileConstants.FILES_SUCCESS, payload: data });
+    axios.interceptors.request.eject(interceptor);
+  } catch (err) {}
+};
+
 export const addToFavourites = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: fileConstants.ADD_TO_FAV_REQUEST });

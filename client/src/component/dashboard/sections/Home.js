@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import FileCard from '../cards/FileCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadFiles } from '../../../actions/fileAction';
+import { loadFiles, recentFiles } from '../../../actions/fileAction';
 
 import componentConstant from '../../../constants/componentConsants';
 import FileCardLoader from '../cards/FileCardLoader';
@@ -23,7 +23,9 @@ const Home = ({ component, search, page, setPage, isMobile }) => {
     if (sortByName) {
       options.sortByName = 'asc';
     }
-
+    if (component === componentConstant.RECENT) {
+      options = { sortByDate: 'desc' };
+    }
     if (search.length > 0) {
       options.s = search;
       delete options.sortByName;
