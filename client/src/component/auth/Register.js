@@ -55,7 +55,7 @@ const Register = () => {
             </Link>
           </div>
         </div>
-        <div className="md:py-8 py-0 w-full lg:w-4/6 relative flex justify-center items-center bg-white ">
+        <div className="md:py-8 py-0 w-full lg:w-4/6 relative flex justify-center items-center bg-white md:h-screen">
           <div className="    flex justify-center items-center sm:max-w-md w-full">
             <div className="flex flex-col overflow-hidden  max md:flex-row md:flex-1 w-full">
               <div className="p-5 bg-white md:flex-1">

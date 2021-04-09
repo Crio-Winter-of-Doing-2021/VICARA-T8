@@ -37,7 +37,7 @@ const Login = () => {
   return (
     <div className=" bg-blue-200  ">
       <div className=" mx-auto flex items-center relative ">
-        <div className="hidden md:block lg:w-3/6 px-10 py-20">
+        <div className="hidden md:block lg:w-3/6 px-10 py-20 ">
           <span className="w-20 h-2 bg-gray-800 dark:bg-white mb-5"></span>
           <h1 className="font-bebas-neue uppercase text-6xl sm:text-8xl font-black flex flex-col leading-none dark:text-white text-gray-800">
             A little
@@ -55,7 +55,7 @@ const Login = () => {
             </Link>
           </div>
         </div>
-        <div className="md:py-20 py-0 w-full lg:w-4/6 relative flex justify-center items-center bg-white ">
+        <div className="md:py-20 py-0 w-full lg:w-4/6 relative flex justify-center items-center bg-white md:h-screen">
           <div className="    flex justify-center items-center sm:max-w-md w-full">
             <div className="flex flex-col overflow-hidden  max md:flex-row md:flex-1 w-full">
               <div className="p-5 bg-white md:flex-1">

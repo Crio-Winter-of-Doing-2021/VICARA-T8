@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 
 const Main = () => {
   return (
-    <div className="flex flex-col ">
-      <div className="bg-white dark:bg-gray-800 flex relative z-20 items-center overflow-hidden ">
+    <div className="flex flex-col h-full">
+      <div className="bg-white dark:bg-gray-800 flex relative z-20 items-center overflow-hidden h-full">
         <div className="container mx-auto px-6 flex relative py-12">
           <div className="sm:w-2/3 lg:w-3/5 flex flex-col relative z-20">
             <span className="w-20 h-2 bg-gray-800 dark:bg-white mb-12"></span>

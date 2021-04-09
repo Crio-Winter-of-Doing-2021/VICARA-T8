@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import FileCard from '../cards/FileCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadFiles, recentFiles } from '../../../actions/fileAction';
+import { loadFiles } from '../../../actions/fileAction';
 
 import componentConstant from '../../../constants/componentConsants';
 import FileCardLoader from '../cards/FileCardLoader';
