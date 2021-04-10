@@ -22,7 +22,7 @@ const GoogleOAuth = () => {
   return (
     <div className="flex flex-col space-y-4">
       <GoogleLogin
-        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+        clientId="1086132226878-7lmuo2095ogm6ede5t732fr6mrstclbk.apps.googleusercontent.com"
         render={(renderProps) => (
           <button
             onClick={renderProps.onClick}
