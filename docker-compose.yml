@@ -1,0 +1,22 @@
+version: '3'
+services:
+  server:
+    image: storage-drive-server
+    build: ./server/
+    ports:
+      - '8080:8080'
+    networks:
+      - app-network
+  client:
+    image: storage-drive-client
+    build: ./client/
+    ports:
+      - '3000:3000'
+    networks:
+      - app-network
+    depends_on:
+      - server
+
+networks:
+  app-network:
+    driver: bridge
