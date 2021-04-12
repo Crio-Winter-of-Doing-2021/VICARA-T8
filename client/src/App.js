@@ -33,11 +33,6 @@ const App = () => {
             isAuth={isAuth}
             exact
           ></AuthRoute>
-          <PublicRoute
-            component={Documentation}
-            path="/docs"
-            exact
-          ></PublicRoute>
           <ProtectedRoute
             component={Dashboard}
             path="/drive"

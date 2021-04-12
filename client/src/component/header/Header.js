@@ -32,9 +32,12 @@ const Header = ({ isAuth }) => {
                   Log In
                 </Link>
               )}
-              <Link to="/docs" className="py-2 px-6 flex">
+              <a
+                href="https://github.com/Crio-Winter-of-Doing-2021/VICARA-T8/wiki/Installation-Instructions"
+                className="py-2 px-6 flex"
+              >
                 Docs
-              </Link>
+              </a>
             </nav>
             <button
               onClick={handleToggle}
