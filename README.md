@@ -15,7 +15,7 @@
 	<strong>
 		<a href="https://storage-drive-frontend.herokuapp.com/">Website</a>
 		•
-		<a href="https://github.com/Crio-Winter-of-Doing-2021/VICARA-T8/wiki/Installation-Instructions">Docs</a>
+		<a href="https://github.com/Crio-Winter-of-Doing-2021/VICARA-T8/wiki">Docs</a>
 		•
 		<a href="">Demo Video</a>
 	</strong>
@@ -50,10 +50,14 @@ Storage Drive for digital assets which can be adopted by enterprises and integra
 - Data Streams for file Upload / Download : Data streams are used for both upload and download. DataStream used to reduce load on server for both upload and download.StreamSaver JS used for reduce load on client side downloading.Since our application deals large number of concurrent users with high volume of data and want the most reliability from your server, the best option is to not store intermediate files on the Node.js server at all. Instead, we push the same files to the server as soon as we receive them. The file server can be a cloud storage service such as AWS S3.To make this happen, streams are the optimal way of handling the incoming file data. Read <a href="https://github.com/Crio-Winter-of-Doing-2021/VICARA-T8/wiki">this</a>.
 - Database : Mapping of data from Mongo Cloud DB to AWS S3.
 <p align="center">
-  <img src="./assets/arch.png" alt="architecture"">
+  <img src="./assets/arch.png" alt="architecture">
 </p>
 
 ### UI / UX
+
+<p align="center">
+  <img src="./assets/UI.gif" alt="UI">
+</p>
 
 <!-- GIF NEEDED -->
 
