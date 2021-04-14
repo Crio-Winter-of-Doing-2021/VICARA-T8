@@ -45,11 +45,12 @@ Storage Drive for digital assets which can be adopted by enterprises and integra
 
 ### Architecture
 
+- Services: Frontend and Backend are hosted differenlty and are communicating thorugh REST services.
 - Authentication Flow : Auth 2.0 Access/Refresh Token Implementation.
-- Data Streams for file Upload / Download : Data streams are used for both upload and download. DataStream used to reduce load on server for both upload and download.StreamSaver JS used for reduce load on client side downloading.
+- Data Streams for file Upload / Download : Data streams are used for both upload and download. DataStream used to reduce load on server for both upload and download.StreamSaver JS used for reduce load on client side downloading.Since our application deals large number of concurrent users with high volume of data and want the most reliability from your server, the best option is to not store intermediate files on the Node.js server at all. Instead, we push the same files to the server as soon as we receive them. The file server can be a cloud storage service such as AWS S3.To make this happen, streams are the optimal way of handling the incoming file data. Read <a href="https://github.com/Crio-Winter-of-Doing-2021/VICARA-T8/wiki">this</a>.
 - Database : Mapping of data from Mongo Cloud DB to AWS S3.
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/38184186/114436546-152bb700-9be3-11eb-89e8-eec86bc3d71a.png" alt="architecture"">
+  <img src="./assets/arch.png" alt="architecture"">
 </p>
 
 ### UI / UX
@@ -72,6 +73,12 @@ Storage Drive for digital assets which can be adopted by enterprises and integra
 - Mobile responsive code.
 - Object oriented style followed.
 - Dependency Injection used with separation of code in controller / service / database layers.
+
+### DB Schema
+
+<p align="center">
+  <img src="./assets/db_schema.png" alt="architecture"">
+</p>
 
 ### Installation
 
