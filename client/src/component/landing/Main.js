@@ -6,6 +6,10 @@ import { Link } from 'react-router-dom';
 const Main = () => {
   return (
     <div className="flex flex-col h-full">
+      <marquee className="bg-blue-400 h-8 px-4 text-white font-white text-sm flex justify-items-center items-center">
+        File services like upload / download / delete may not work due to credit
+        limit exceeded.
+      </marquee>
       <div className="bg-white dark:bg-gray-800 flex relative z-20 items-center overflow-hidden h-full">
         <div className="container mx-auto px-6 flex relative py-12">
           <div className="sm:w-2/3 lg:w-3/5 flex flex-col relative z-20">
