@@ -17,7 +17,7 @@
 		•
 		<a href="https://github.com/Crio-Winter-of-Doing-2021/VICARA-T8/wiki">Docs</a>
 		•
-		<a href="">Demo Video</a>
+		<a href="https://drive.google.com/file/d/1pCPZybgSJNcLAKiaXgzdxP50_2Q0cESO/view?usp=sharing">Demo Video</a>
 	</strong>
 </p>
 
